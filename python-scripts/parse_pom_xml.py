@@ -14,9 +14,14 @@ def output_xml_results(xml_file):
             if (not s[0].isdigit()) or (not s[1].isdigit()):
                 print str.format("Unknown maven surefire version {}.", vers)
                 continue
-            mmvers = float(str.format("{}.{}", s[0], s[1]))
+            minvers = s[1]
+            if len(s[1]) == 1:
+                minvers = str.format("0{}", s[1])
+            mmvers = float(str.format("{}.{}", s[0], minvers))
+
             newvers = "2.8"
-            if mmvers < 2.7:
+            newverscomp = 2.08
+            if mmvers < newverscomp:
                 print str.format("Detected maven surefire version {}. Changing to {}.", vers, newvers)
                 vers.string.replace_with(newvers)
                 with open(xml_file[1], 'wb') as f:
