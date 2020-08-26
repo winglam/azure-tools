@@ -135,7 +135,7 @@ echo "================Parsing test list"
 
 echo "" > test-results.csv
 for f in $(find -name "TEST*.xml"); do
-    python $dir/python-scripts/parse_surefire_report.py $f -1 $fullTestName  >> test-results.csv
+    python $dir/python-scripts/parse_surefire_report.py $f 1 $fullTestName  >> test-results.csv
 done
 cat test-results.csv | sort -u | awk NF > ${RESULTSDIR}/test-results.csv
 
@@ -164,7 +164,7 @@ for ((i=2;i<=rounds;i++)); do
 	mvn test -pl $module ${testarg} ${MVNOPTIONS} |& tee mvn-test-$i.log
     fi
     
-    for f in $(find -name "TEST*.xml"); do python parse_surefire_report.py $f $i $fullTestName; done >> rounds-test-results.csv
+    for f in $(find -name "TEST*.xml"); do python $dir/parse_surefire_report.py $f $i $fullTestName; done >> rounds-test-results.csv
 
     mkdir -p ${RESULTSDIR}/isolation/$i
     mv mvn-test-$i.log ${RESULTSDIR}/isolation/$i
