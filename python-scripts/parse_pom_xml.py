@@ -1,0 +1,23 @@
+from bs4 import BeautifulSoup
+import os
+import sys
+
+def output_xml_results(xml_file):
+    with open(xml_file[1]) as fp:
+        y=BeautifulSoup(fp, features="xml")
+        for f in y.findAll("plugin"):
+            if f.find("artifactId") == None or f.artifactId.string != "maven-surefire-plugin" or f.find("version") == None:
+                continue
+
+            vers = f.version.string
+            s = vers.split(".")
+            mmvers = float(str.format("{}.{}", s[0], s[1]))
+            newvers = "2.8"
+            if mmvers < 2.7:
+                print str.format("================ Detected maven surefire version {}. Changing to {}.", vers, newvers)
+                vers.string.replace_with(newvers)
+                with open(xml_file[1], 'wb') as f:
+                    f.write(y.prettify())
+
+if __name__ == '__main__':
+    output_xml_results(sys.argv)
