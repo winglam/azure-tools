@@ -6,10 +6,12 @@ def output_xml_results(xml_file):
     with open(xml_file[1]) as fp:
         y=BeautifulSoup(fp, features="xml")
         for f in y.findAll("plugin"):
-            if f.find("artifactId") == None or f.artifactId.string != "maven-surefire-plugin" or f.find("version") == None:
+            ai = f.find("artifactId", recursive=False)
+            v = f.find("version", recursive=False)
+            if ai == None or ai.string != "maven-surefire-plugin" or v == None:
                 continue
 
-            vers = f.version.string
+            vers = v.string
             s = vers.split(".")
             if (not s[0].isdigit()) or (not s[1].isdigit()):
                 print str.format("Unknown maven surefire version {}.", vers)
@@ -23,7 +25,7 @@ def output_xml_results(xml_file):
             newverscomp = 2.08
             if mmvers < newverscomp:
                 print str.format("Detected maven surefire version {}. Changing to {}.", vers, newvers)
-                vers.string.replace_with(newvers)
+                vers.replace_with(newvers)
                 with open(xml_file[1], 'wb') as f:
                     f.write(y.prettify())
 
