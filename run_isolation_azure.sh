@@ -114,12 +114,14 @@ echo "================Running maven test"
 if [[ "$slug" == "dropwizard/dropwizard" ]]; then
     # dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
     mvn test ${testarg} ${MVNOPTIONS} |& tee mvn-test.log
+elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
+    mvn test -pl $module ${testarg} ${MVNOPTIONS} -DskipITs |& tee mvn-test.log
 else
     mvn test -pl $module ${testarg} ${MVNOPTIONS} |& tee mvn-test.log
 fi
 
 ret=${PIPESTATUS[0]}
-mv mvn-test.log ${RESULTSDIR}
+cp mvn-test.log ${RESULTSDIR}
 
 testxml=$(find . -name TEST-*.xml | grep -E "target/surefire-reports/TEST-.*\.$class\.xml")
 if [[ -z $testxml ]]; then
@@ -156,6 +158,8 @@ for ((i=2;i<=rounds;i++)); do
     if [[ "$slug" == "dropwizard/dropwizard" ]]; then
 	# dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
 	mvn test ${testarg} ${MVNOPTIONS} |& tee mvn-test-$i.log
+    elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
+	mvn test -pl $module ${testarg} ${MVNOPTIONS} -DskipITs |& tee mvn-test-$i.log
     else
 	mvn test -pl $module ${testarg} ${MVNOPTIONS} |& tee mvn-test-$i.log
     fi
