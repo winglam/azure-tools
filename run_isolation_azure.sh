@@ -1,11 +1,16 @@
 #!/bin/bash
 
-echo "epoch: 1590346682"
-
 if [[ $1 == "" ]]; then
     echo "arg1 - Path to CSV file with project,sha,test"
     exit
 fi
+
+repo=$(git rev-parse HEAD)
+echo "script vers: $repo"
+dir=$(pwd)
+echo "script dir: $dir"
+starttime=$(date)
+echo "starttime: $starttime"
 
 RESULTSDIR=~/output/
 mkdir -p ${RESULTSDIR}
@@ -77,10 +82,9 @@ echo "================Checking surefire version"
 pip install BeautifulSoup4
 pip install lxml
 
-wget http://mir.cs.illinois.edu/winglam/personal/parse_pom_xml.py
 for f in $(find -name pom.xml); do
     echo "==== $f"
-    python parse_pom_xml.py $f
+    python $dir/python-scripts/parse_pom_xml.py $f
 done
 
 echo "================Installing the project"
@@ -126,11 +130,10 @@ if [[ -z $testxml ]]; then
 fi
 
 echo "================Parsing test list"
-wget http://mir.cs.illinois.edu/winglam/personal/parse_surefire_report-60449f52.py -O parse_surefire_report.py
 
 echo "" > test-results.csv
 for f in $(find -name "TEST*.xml"); do
-    python parse_surefire_report.py $f -1 $fullTestName  >> test-results.csv
+    python $dir/python-scripts/parse_surefire_report.py $f -1 $fullTestName  >> test-results.csv
 done
 cat test-results.csv | sort -u | awk NF > ${RESULTSDIR}/test-results.csv
 
@@ -165,3 +168,6 @@ for ((i=2;i<=rounds;i++)); do
 done
 
 mv rounds-test-results.csv ${RESULTSDIR}/isolation
+
+endtime=$(date)
+echo "endtime: $endtime"
