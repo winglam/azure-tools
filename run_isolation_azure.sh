@@ -147,6 +147,8 @@ if [[ -z $testxml ]]; then
 fi
 
 echo "================Parsing test list"
+pip install BeautifulSoup4
+pip install lxml
 
 echo "" > test-results.csv
 for f in $(find -name "TEST*.xml"); do
