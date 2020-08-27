@@ -29,12 +29,12 @@ module=$(echo ${line} | cut -d',' -f4)
 MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip"
 
 # echo "================Setting up maven-surefire"
-bash $dir/setup-custom-maven.sh ${RESULTSDIR} $dir
+bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir"
 
 set -x
 
 # echo "================Cloning the project"
-bash $dir/clone-project.sh $slug $sha
+bash $dir/clone-project.sh "$slug" "$sha"
 cd ~/$slug
 
 echo "================Setting up test name"
@@ -95,7 +95,7 @@ echo "Location of module: $module"
 # echo "================Installing the project"
 bi=$(pwd)
 echo "before install: $bi"
-bash $dir/install-project.sh $slug $MVNOPTIONS $USER $module $sha $dir
+bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir"
 ret=${PIPESTATUS[0]}
 mv mvn-install.log ${RESULTSDIR}
 if [[ $ret != 0 ]]; then
@@ -105,7 +105,7 @@ if [[ $ret != 0 ]]; then
 fi
 
 # echo "================Running maven test"
-bash $dir/mvn-test.sh $slug $module $testarg $MVNOPTIONS
+bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS"
 ret=${PIPESTATUS[0]}
 cp mvn-test.log ${RESULTSDIR}
 testxml=$(find . -name TEST-*.xml | grep -E "target/surefire-reports/TEST-.*\.$class\.xml")
@@ -117,10 +117,10 @@ if [[ -z $testxml ]]; then
 fi
 
 # echo "================Parsing test list"
-bash $dir/parse-test-list.sh $dir $fullTestName $RESULTSDIR
+bash $dir/parse-test-list.sh "$dir" "$fullTestName" "$RESULTSDIR"
 
 # echo "================Running rounds"
-bash $dir/rounds.sh $rounds $slug $testarg $MVNOPTIONS $RESULTSDIR $module $dir $fullTestName
+bash $dir/rounds.sh "$rounds" "$slug" "$testarg" "$MVNOPTIONS" "$RESULTSDIR" "$module" "$dir" "$fullTestName"
 
 endtime=$(date)
 echo "endtime: $endtime"
