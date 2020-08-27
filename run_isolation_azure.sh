@@ -26,6 +26,8 @@ sha=$(echo ${line} | cut -d',' -f2)
 fullTestName=$(echo ${line} | cut -d',' -f3)
 module=$(echo ${line} | cut -d',' -f4)
 
+MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip"
+
 # echo "================Setting up maven-surefire"
 bash $dir/setup-custom-maven.sh ${RESULTSDIR} $dir
 
