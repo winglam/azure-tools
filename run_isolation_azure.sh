@@ -31,8 +31,6 @@ MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -
 # echo "================Setting up maven-surefire"
 bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir"
 
-set -x
-
 # echo "================Cloning the project"
 bash $dir/clone-project.sh "$slug" "$sha"
 cd ~/$slug
@@ -93,8 +91,6 @@ echo "Location of module: $module"
 # done
 
 # echo "================Installing the project"
-bi=$(pwd)
-echo "before install: $bi"
 bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir"
 ret=${PIPESTATUS[0]}
 mv mvn-install.log ${RESULTSDIR}
