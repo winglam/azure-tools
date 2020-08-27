@@ -22,8 +22,7 @@ line=$(head -n 1 $projfile)
 echo "================Starting experiment for input: $line"
 slug=$(echo ${line} | cut -d',' -f1 | rev | cut -d'/' -f1-2 | rev)
 sha=$(echo ${line} | cut -d',' -f2)
-fullTestName=$(echo ${line} | cut -d',' -f3)
-module=$(echo ${line} | cut -d',' -f4)
+module=$(echo ${line} | cut -d',' -f3)
 
 echo "================Setting up maven-surefire"
 cd ~/
@@ -96,21 +95,13 @@ fi
 ret=${PIPESTATUS[0]}
 cp mvn-test.log ${RESULTSDIR}
 
-testxml=$(find . -name TEST-*.xml | grep -E "target/surefire-reports/TEST-.*\.$class\.xml")
-if [[ -z $testxml ]]; then
-    # did not find
-    # mvn install compiles but test is not run from mvn test - return 0
-    echo "Passed compilation but cannot find an xml for the test class: $class"
-    exit 1
-fi
-
 echo "================Parsing test list"
 pip install BeautifulSoup4
 pip install lxml
 
 echo "" > test-results.csv
 for f in $(find -name "TEST*.xml"); do
-    python $dir/python-scripts/parse_surefire_report.py $f 1 $fullTestName  >> test-results.csv
+    python $dir/python-scripts/parse_surefire_report.py $f 1 ""  >> test-results.csv
 done
 cat test-results.csv | sort -u | awk NF > ${RESULTSDIR}/test-results.csv
 
@@ -120,9 +111,6 @@ cat ${RESULTSDIR}/test-results.csv > rounds-test-results.csv
 mkdir -p ${RESULTSDIR}/isolation/1
 cp mvn-test.log ${RESULTSDIR}/isolation/1/mvn-test-1.log
 for f in $(find -name "TEST*.xml"); do mv $f ${RESULTSDIR}/isolation/1; done
-
-fullClass="$(echo $fullTestName | rev | cut -d. -f2- | rev)"
-testName="$(echo $fullTestName | rev | cut -d. -f1 | rev )"
 
 endtime=$(date)
 echo "endtime: $endtime"
