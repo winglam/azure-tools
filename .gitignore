@@ -1,0 +1,9 @@
+target/
+**/.DS_Store
+**/*~
+**/*.pyc
+**/#README#
+**/.#README
+
+.idea/*
+dt-fixing-tools.iml
