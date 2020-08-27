@@ -88,7 +88,7 @@ echo "Location of module: $module"
 # done
 
 # echo "================Installing the project"
-bash install-project.sh $slug $MVNOPTIONS $USER $module
+bash install-project.sh $slug $MVNOPTIONS $USER $module $sha $dir
 ret=${PIPESTATUS[0]}
 mv mvn-install.log ${RESULTSDIR}
 if [[ $ret != 0 ]]; then
