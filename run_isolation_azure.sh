@@ -31,6 +31,7 @@ bash $dir/setup-custom-maven.sh ${RESULTSDIR} $dir
 
 # echo "================Cloning the project"
 bash $dir/clone-project.sh $slug $sha
+cd ~/$slug
 
 echo "================Setting up test name"
 testarg=""

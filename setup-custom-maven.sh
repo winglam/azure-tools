@@ -1,5 +1,5 @@
-RESULTSDIR=
-dir=
+RESULTSDIR=$1
+dir=$2
 
 echo "================Setting up maven-surefire"
 cd ~/
