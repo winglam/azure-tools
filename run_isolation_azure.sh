@@ -89,6 +89,8 @@ echo "Location of module: $module"
 # done
 
 # echo "================Installing the project"
+bi=$(pwd)
+echo "before install: $bi"
 bash $dir/install-project.sh $slug $MVNOPTIONS $USER $module $sha $dir
 ret=${PIPESTATUS[0]}
 mv mvn-install.log ${RESULTSDIR}
