@@ -112,5 +112,29 @@ mkdir -p ${RESULTSDIR}/isolation/1
 cp mvn-test.log ${RESULTSDIR}/isolation/1/mvn-test-1.log
 for f in $(find -name "TEST*.xml"); do mv $f ${RESULTSDIR}/isolation/1; done
 
+echo "================Running rounds"
+set -x
+for ((i=2;i<=rounds;i++)); do
+    echo "Iteration: $i / $rounds"
+    find -name "TEST-*.xml" -delete
+
+    if [[ "$slug" == "dropwizard/dropwizard" ]]; then
+	# dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
+	mvn test ${MVNOPTIONS} |& tee mvn-test-$i.log
+    elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
+	mvn test -pl $module ${MVNOPTIONS} -DskipITs |& tee mvn-test-$i.log
+    else
+	mvn test -pl $module ${MVNOPTIONS} |& tee mvn-test-$i.log
+    fi
+    
+    for f in $(find -name "TEST*.xml"); do python $dir/python-scripts/parse_surefire_report.py $f $i ""; done >> rounds-test-results.csv
+
+    mkdir -p ${RESULTSDIR}/isolation/$i
+    mv mvn-test-$i.log ${RESULTSDIR}/isolation/$i
+    for f in $(find -name "TEST*.xml"); do mv $f ${RESULTSDIR}/isolation/$i; done
+done
+
+mv rounds-test-results.csv ${RESULTSDIR}/isolation
+
 endtime=$(date)
 echo "endtime: $endtime"
