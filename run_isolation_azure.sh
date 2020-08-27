@@ -29,6 +29,8 @@ module=$(echo ${line} | cut -d',' -f4)
 # echo "================Setting up maven-surefire"
 bash $dir/setup-custom-maven.sh ${RESULTSDIR} $dir
 
+set -x
+
 # echo "================Cloning the project"
 bash $dir/clone-project.sh $slug $sha
 cd ~/$slug
