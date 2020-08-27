@@ -25,7 +25,22 @@ sha=$(echo ${line} | cut -d',' -f2)
 fullTestName=$(echo ${line} | cut -d',' -f3)
 module=$(echo ${line} | cut -d',' -f4)
 
+echo "================Setting up maven-surefire"
+cd ~/
+git clone https://github.com/gmu-swe/maven-surefire.git
+cd maven-surefire/
+git checkout test-method-sorting
+mvn install -DskipTests -Drat.skip |& tee surefire-install.log
+mv surefire-install.log ${RESULTSDIR}
+
+echo "================Setting up maven-extension"
+cd $dir/archaeology/archaeology-maven-extension/
+mvn install -DskipTests |& tee extension-install.log
+mv extension-install.log ${RESULTSDIR}
+mv target/surefire-changing-maven-extension-1.0-SNAPSHOT.jar ~/apache-maven/lib/ext/
+
 echo "================Cloning the project"
+cd ~/
 MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip"
 git clone https://github.com/$slug $slug
 cd $slug
@@ -78,14 +93,14 @@ else
 fi
 echo "Location of module: $module"
 
-echo "================Checking surefire version"
-pip install BeautifulSoup4
-pip install lxml
+# echo "================Checking surefire version"
+# pip install BeautifulSoup4
+# pip install lxml
 
-for f in $(find -name pom.xml); do
-    echo "==== $f"
-    python $dir/python-scripts/parse_pom_xml.py $f
-done
+# for f in $(find -name pom.xml); do
+#     echo "==== $f"
+#     python $dir/python-scripts/parse_pom_xml.py $f
+# done
 
 echo "================Installing the project"
 if [[ "$slug" == "apache/incubator-dubbo" ]]; then
