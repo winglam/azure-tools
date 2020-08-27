@@ -1,11 +1,16 @@
 #!/bin/bash
 
-echo "epoch: 1590617255"
-
 if [[ $1 == "" ]]; then
     echo "arg1 - Path to CSV file with project,sha,test"
     exit
 fi
+
+repo=$(git rev-parse HEAD)
+echo "script vers: $repo"
+dir=$(pwd)
+echo "script dir: $dir"
+starttime=$(date)
+echo "starttime: $starttime"
 
 RESULTSDIR=~/output/
 mkdir -p ${RESULTSDIR}
@@ -20,69 +25,42 @@ sha=$(echo ${line} | cut -d',' -f2)
 fullTestName=$(echo ${line} | cut -d',' -f3)
 module=$(echo ${line} | cut -d',' -f4)
 
-echo "================Installing the project"
+echo "================Setting up maven-surefire"
+cd ~/
+git clone https://github.com/gmu-swe/maven-surefire.git
+cd maven-surefire/
+git checkout test-method-sorting
+mvn install -DskipTests -Drat.skip |& tee surefire-install.log
+mv surefire-install.log ${RESULTSDIR}
+
+echo "================Setting up maven-extension"
+cd $dir/archaeology/archaeology-maven-extension/
+mvn install -DskipTests |& tee extension-install.log
+mv extension-install.log ${RESULTSDIR}
+mv target/surefire-changing-maven-extension-1.0-SNAPSHOT.jar ~/apache-maven/lib/ext/
+
+echo "================Cloning the project"
+cd ~/
 MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip"
 git clone https://github.com/$slug $slug
 cd $slug
 git checkout $sha 
 
-if [[ $fullTestName == "org.apache.hadoop.hbase.regionserver.TestSyncTimeRangeTracker" || $fullTestName == "org.apache.hadoop.hbase.snapshot.TestMobRestoreSnapshotHelper" ]]; then
-    formatTest="$(echo $fullTestName | rev | cut -d. -f2 | rev)"
-    class="$(echo $fullTestName | rev | cut -d. -f2 | rev)"
-else
-    formatTest="$(echo $fullTestName | rev | cut -d. -f2 | rev)#$(echo $fullTestName | rev | cut -d. -f1 | rev )"
-    class="$(echo $fullTestName | rev | cut -d. -f2 | rev)"
-fi
-
-echo "formatTest: $formatTest"
-echo "class: $class"
-
-classloc=$(find -name $class.java)
-if [[ -z $classloc ]]; then
-    echo "exit: 100 No test class at this commit."
-    exit 100
-fi
-classcount=$(find -name $class.java | wc -l)
-if [[ "$classcount" != "1" ]]; then
-    classloc=$(find -name $class.java | head -n 1)
-    echo "Multiple test class found. Unsure which one to use. Choosing: $classloc. Other ones are:"
-    find -name $class.java
-fi
-
 if [[ -z $module ]]; then
     module=$classloc
-    if [[ "$fullTestName" == "retrofit2.adapter.rxjava.CancelDisposeTest.cancelDoesNotDispose" ]]; then
-	module="./retrofit-adapters/rxjava"
-    elif [[ "$fullTestName" == "retrofit2.adapter.rxjava.CompletableThrowingTest.bodyThrowingInOnErrorDeliveredToPlugin" ]]; then
-	module="./retrofit-adapters/rxjava"
-    elif [[ "$fullTestName" == "retrofit2.adapter.rxjava.CompletableThrowingTest.throwingInOnCompleteDeliveredToPlugin" ]]; then
-	module="./retrofit-adapters/rxjava"
-    elif [[ "$fullTestName" == "retrofit2.adapter.rxjava.ObservableThrowingTest.responseThrowingInOnCompleteDeliveredToPlugin" ]]; then
-	module="./retrofit-adapters/rxjava"
-    elif [[ "$fullTestName" == "retrofit2.adapter.rxjava.SingleThrowingTest.bodyThrowingInOnSuccessDeliveredToPlugin" ]]; then
-	module="./retrofit-adapters/rxjava"
-    elif [[ "$fullTestName" == "retrofit2.adapter.rxjava.SingleThrowingTest.responseThrowingInOnSuccessDeliveredToPlugin" ]]; then
-	module="./retrofit-adapters/rxjava"
-    elif [[ "$fullTestName" == "net.redpipe.templating.freemarker.ApiTest.checkMail" ]]; then
-	module="./redpipe-templating-freemarker"
-    elif [[ "$fullTestName" == "net.redpipe.templating.freemarker.ApiTest.checkTemplateNegociationText" ]]; then
-	module="./redpipe-templating-freemarker"
-    elif [[ "$fullTestName" == "net.redpipe.templating.freemarker.ApiTest.checkTemplateNegociationSingleHtml" ]]; then
-	module="./redpipe-templating-freemarker"
-    else
-	while [[ "$module" != "." && "$module" != "" ]]; do
-	    module=$(echo $module | rev | cut -d'/' -f2- | rev)
-	    echo "Checking for pom at: $module"
-	    if [[ -f $module/pom.xml ]]; then
-		break;
-	    fi
-	done
-    fi
+    while [[ "$module" != "." && "$module" != "" ]]; do
+	module=$(echo $module | rev | cut -d'/' -f2- | rev)
+	echo "Checking for pom at: $module"
+	if [[ -f $module/pom.xml ]]; then
+	    break;
+	fi
+    done
 else
     echo "Module passed in from csv."
 fi
 echo "Location of module: $module"
 
+echo "================Installing the project"
 if [[ "$slug" == "apache/incubator-dubbo" ]]; then
     sudo chown -R $USER .
     mvn clean install -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
@@ -92,10 +70,6 @@ elif [[ "$slug" == "openpojo/openpojo" ]]; then
     dir=$(pwd)
     export JAVA_HOME=$dir/jdk1.7.0_80/
     MVNOPTIONS="${MVNOPTIONS} -Dhttps.protocols=TLSv1.2"
-    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
-elif [[ "$slug" == "zalando/riptide" ]]; then
-    rm -rf pom.xml
-    wget -O pom.xml http://mir.cs.illinois.edu/winglam/personal/zalando-pom.xml
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 else
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
@@ -109,39 +83,46 @@ if [[ $ret != 0 ]]; then
     exit 1
 fi
 
-mvn test -pl $module ${MVNOPTIONS} -X |& tee mvn-test.log
+echo "================Running maven test"
+if [[ "$slug" == "dropwizard/dropwizard" ]]; then
+    # dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
+    mvn test ${MVNOPTIONS} |& tee mvn-test.log
+elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
+    mvn test -pl $module ${MVNOPTIONS} -DskipITs |& tee mvn-test.log
+else
+    mvn test -pl $module ${MVNOPTIONS} |& tee mvn-test.log
+fi
 
 ret=${PIPESTATUS[0]}
-mv mvn-test.log ${RESULTSDIR}
+cp mvn-test.log ${RESULTSDIR}
+
+testxml=$(find . -name TEST-*.xml | grep -E "target/surefire-reports/TEST-.*\.$class\.xml")
+if [[ -z $testxml ]]; then
+    # did not find
+    # mvn install compiles but test is not run from mvn test - return 0
+    echo "Passed compilation but cannot find an xml for the test class: $class"
+    exit 1
+fi
 
 echo "================Parsing test list"
 pip install BeautifulSoup4
 pip install lxml
 
-wget http://mir.cs.illinois.edu/winglam/personal/parse_surefire_report-a281abbecbac34c5de4d68e87d921ddd8f49c8c6.py -O parse_surefire_report.py
 echo "" > test-results.csv
 for f in $(find -name "TEST*.xml"); do
-    python parse_surefire_report.py $f -1  >> test-results.csv
+    python $dir/python-scripts/parse_surefire_report.py $f 1 $fullTestName  >> test-results.csv
 done
 cat test-results.csv | sort -u | awk NF > ${RESULTSDIR}/test-results.csv
+
+mkdir -p ${RESULTSDIR}/isolation
+
+cat ${RESULTSDIR}/test-results.csv > rounds-test-results.csv
+mkdir -p ${RESULTSDIR}/isolation/1
+cp mvn-test.log ${RESULTSDIR}/isolation/1/mvn-test-1.log
+for f in $(find -name "TEST*.xml"); do mv $f ${RESULTSDIR}/isolation/1; done
 
 fullClass="$(echo $fullTestName | rev | cut -d. -f2- | rev)"
 testName="$(echo $fullTestName | rev | cut -d. -f1 | rev )"
 
-set -x
-
-mkdir -p ${RESULTSDIR}/isolation
-echo "" > rounds-test-results.csv
-for ((i=1;i<=rounds;i++)); do
-    echo "Iteration: $i / $rounds"
-    find -name "TEST-*.xml" -delete
-
-    mvn test -pl $module ${MVNOPTIONS} |& tee mvn-test-$i.log
-    for f in $(find -name "TEST*.xml"); do python parse_surefire_report.py $f $i; done >> rounds-test-results.csv
-
-    mkdir -p ${RESULTSDIR}/isolation/$i
-    mv mvn-test-$i.log ${RESULTSDIR}/isolation/$i
-    for f in $(find -name "TEST*.xml"); do mv $f ${RESULTSDIR}/isolation/$i; done
-done
-
-mv rounds-test-results.csv ${RESULTSDIR}/isolation
+endtime=$(date)
+echo "endtime: $endtime"
