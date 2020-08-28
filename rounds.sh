@@ -6,6 +6,7 @@ RESULTSDIR=$5
 module=$6
 dir=$7
 fullTestName=$8
+ordering=$9
 
 echo "================Running rounds"
 set -x
@@ -15,13 +16,13 @@ for ((i=2;i<=rounds;i++)); do
 
     if [[ "$slug" == "dropwizard/dropwizard" ]]; then
 	# dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
-	mvn test -pl $module -am ${testarg} ${MVNOPTIONS} |& tee mvn-test-$i.log
+	mvn test -pl $module -am ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test-$i.log
     elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
-	mvn test -pl $module ${testarg} ${MVNOPTIONS} -DskipITs |& tee mvn-test-$i.log
+	mvn test -pl $module ${testarg} ${MVNOPTIONS} $ordering -DskipITs |& tee mvn-test-$i.log
     else
-	mvn test -pl $module ${testarg} ${MVNOPTIONS} |& tee mvn-test-$i.log
+	mvn test -pl $module ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test-$i.log
     fi
-    
+
     for f in $(find -name "TEST*.xml"); do python $dir/python-scripts/parse_surefire_report.py $f $i $fullTestName; done >> rounds-test-results.csv
 
     mkdir -p ${RESULTSDIR}/isolation/$i

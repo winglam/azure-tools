@@ -101,7 +101,7 @@ if [[ $ret != 0 ]]; then
 fi
 
 # echo "================Running maven test"
-bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS"
+bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering"
 ret=${PIPESTATUS[0]}
 cp mvn-test.log ${RESULTSDIR}
 testxml=$(find . -name TEST-*.xml | grep -E "target/surefire-reports/TEST-.*\.$class\.xml")
@@ -116,7 +116,7 @@ fi
 bash $dir/parse-test-list.sh "$dir" "$fullTestName" "$RESULTSDIR"
 
 # echo "================Running rounds"
-bash $dir/rounds.sh "$rounds" "$slug" "$testarg" "$MVNOPTIONS" "$RESULTSDIR" "$module" "$dir" "$fullTestName"
+bash $dir/rounds.sh "$rounds" "$slug" "$testarg" "$MVNOPTIONS" "$RESULTSDIR" "$module" "$dir" "$fullTestName" "$ordering"
 
 endtime=$(date)
 echo "endtime: $endtime"
