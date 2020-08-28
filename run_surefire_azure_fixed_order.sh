@@ -27,9 +27,6 @@ module=$(echo ${line} | cut -d',' -f3)
 
 MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip"
 
-# echo "================Setting up maven-surefire"
-bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir"
-
 # echo "================Cloning the project"
 bash $dir/clone-project.sh "$slug" "$sha"
 cd ~/$slug
@@ -58,6 +55,10 @@ if [[ $ret != 0 ]]; then
     echo "Compilation failed. Actual: $ret"
     exit 1
 fi
+
+# echo "================Setting up maven-surefire"
+bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir"
+cd ~/$slug
 
 echo "================Modifying pom for runOrder"
 bash $dir/pom-modify/modify-project.sh . modifyOrder
