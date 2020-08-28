@@ -64,7 +64,7 @@ echo "================Modifying pom for runOrder"
 bash $dir/pom-modify/modify-project.sh . modifyOrder
 ordering="-Dsurefire.runOrder=reversealphabetical"
 
-echo "================Running maven test"
+#echo "================Running maven test"
 bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering"
 ret=${PIPESTATUS[0]}
 cp mvn-test.log ${RESULTSDIR}
