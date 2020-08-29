@@ -61,7 +61,7 @@ fi
 bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir"
 cd ~/$slug
 
-# echo "================Modifying pom for runOrder"
+echo "================Modifying pom for runOrder"
 bash $dir/pom-modify/modify-project.sh . modifyOrder=$mavenorder
 #ordering="-Dsurefire.runOrder=$mavenorder" # Disabled because OBO plugin does not support setting runOrders on the command line
 #echo "Ordering to run: $ordering"
