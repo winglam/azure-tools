@@ -18,6 +18,7 @@ mkdir -p ${RESULTSDIR}
 cd ~/
 projfile=$1
 rounds=$2
+mavenorder=$3
 line=$(head -n 1 $projfile)
 
 echo "================Starting experiment for input: $line"
@@ -62,7 +63,7 @@ cd ~/$slug
 
 echo "================Modifying pom for runOrder"
 bash $dir/pom-modify/modify-project.sh . modifyOrder
-ordering="-Dsurefire.runOrder=reversealphabetical"
+ordering="-Dsurefire.runOrder=$mavenorder"
 
 #echo "================Running maven test"
 bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering"
