@@ -67,7 +67,7 @@ bash $dir/pom-modify/modify-project.sh . modifyOrder=$mavenorder
 #echo "Ordering to run: $ordering"
 
 #echo "================Running maven test"
-bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering" "$sha"
+bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering" "$sha" "$dir"
 ret=${PIPESTATUS[0]}
 cp mvn-test.log ${RESULTSDIR}
 

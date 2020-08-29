@@ -4,6 +4,7 @@ testarg=$3
 MVNOPTIONS=$4
 ordering=$5
 sha=$6
+dir=$7
 
 modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
