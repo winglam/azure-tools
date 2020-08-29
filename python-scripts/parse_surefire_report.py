@@ -14,7 +14,7 @@ def output_xml_results(xml_file):
                 s = "error"
             else:
                 s = "pass"
-            if len(xml_file) == 4 and len(xml_file[3]) != 0 and (f["classname"] == f["name"] or len(f["classname"]) == 0 or f["name"] == 0):
+            if len(xml_file) == 4 and len(xml_file[3]) != 0:
                 t = xml_file[3]
             else:
                 t = str.format("{}.{}", f["classname"], f["name"])
