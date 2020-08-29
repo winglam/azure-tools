@@ -3,6 +3,11 @@ module=$2
 testarg=$3
 MVNOPTIONS=$4
 ordering=$5
+sha=$6
+
+modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
+short_sha=${sha:0:7}
+modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 
 echo "================Running maven test"
 if [[ "$slug" == "dropwizard/dropwizard" ]]; then
