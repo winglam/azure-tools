@@ -59,6 +59,7 @@ public class PomFile {
         testrunner, rvPredict, wiretap, modifyOrder;
     }
 
+    private static String pluginArgs = "";
     private static Plugin pluginType;
     private static String testName;
     private static String jarPath;
@@ -277,14 +278,13 @@ public class PomFile {
                 plugins = doc.createElement("plugins");
                 build.appendChild(plugins);
             }
-
+            
             if (pluginType == Plugin.modifyOrder){
-                addModifyOrderPlugin(plugins, doc);
-            }
-            else if (pluginType == Plugin.testrunner) {
-              addTestRunnerPlugin(plugins, doc);
+                addModifyOrderPlugin(plugins, doc, pluginArgs);
+            } else if (pluginType == Plugin.testrunner) {
+                addTestRunnerPlugin(plugins, doc);
             } else if (pluginType == Plugin.rvPredict) {
-              addRVPredict(plugins, doc);
+                addRVPredict(plugins, doc);
             } else if (pluginType == Plugin.wiretap) {
                 addWiretap(plugins, doc);
             }
@@ -383,8 +383,8 @@ public class PomFile {
       }
     }
 
-    private void addModifyOrderPlugin(Node plugins, Document doc) {
-        Node plugin = createPluginNode(doc);
+    private void addModifyOrderPlugin(Node plugins, Document doc, String runorder) {
+        Node plugin = createPluginNode(doc, runorder);
         plugins.appendChild(plugin);
     }
 
@@ -417,7 +417,7 @@ public class PomFile {
     }
 
     //todo: add more parameters(for setTextContent) to re-use function
-    private Node createPluginNode(Document doc){
+    private Node createPluginNode(Document doc, String runorder){
         Node plugin = doc.createElement("plugin");
         {
             Node groupId = doc.createElement("groupId");
@@ -433,7 +433,7 @@ public class PomFile {
             Node configuration = doc.createElement("configuration");
             {
                 Node order = doc.createElement("runOrder");
-                order.setTextContent("reversealphabetical");
+                order.setTextContent(runorder);
                 configuration.appendChild(order);
             }
             plugin.appendChild(configuration);
@@ -583,8 +583,14 @@ public class PomFile {
 
     public static void main(String[] args) {
         if (args.length != 0) {
-          pluginType = Plugin.valueOf(args[0]);
-          System.out.println(pluginType);
+            String pType = args[0];
+            if (pType.contains("=")) {
+                String[] split = pType.split("=");
+                pluginArgs = split[1];
+                pType = split[0];
+            }
+            pluginType = Plugin.valueOf(pType);
+            System.out.println(pluginType);
         } else {
           pluginType = Plugin.testrunner;
         }
