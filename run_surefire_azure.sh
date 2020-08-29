@@ -64,6 +64,7 @@ cd ~/$slug
 echo "================Modifying pom for runOrder"
 bash $dir/pom-modify/modify-project.sh . modifyOrder
 ordering="-Dsurefire.runOrder=$mavenorder"
+echo "Ordering to run: $ordering"
 
 #echo "================Running maven test"
 bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering"
