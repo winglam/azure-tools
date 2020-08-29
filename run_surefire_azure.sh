@@ -61,8 +61,8 @@ fi
 bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir"
 cd ~/$slug
 
-echo "================Modifying pom for runOrder"
-bash $dir/pom-modify/modify-project.sh . modifyOrder
+# echo "================Modifying pom for runOrder"
+# bash $dir/pom-modify/modify-project.sh . modifyOrder
 ordering="-Dsurefire.runOrder=$mavenorder"
 echo "Ordering to run: $ordering"
 
