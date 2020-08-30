@@ -28,6 +28,10 @@ module=$(echo ${line} | cut -d',' -f4)
 
 MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip"
 
+modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
+short_sha=${sha:0:7}
+modifiedslug_with_sha="${modifiedslug}-${short_sha}"
+
 # echo "================Cloning the project"
 bash $dir/clone-project.sh "$slug" "$sha"
 cd ~/$slug
@@ -78,6 +82,15 @@ else
     echo "Module passed in from csv."
 fi
 echo "Location of module: $module"
+
+if [[ "$modifiedslug_with_sha" == "openpojo.openpojo-9badbcc" ]]; then
+    echo "Setting variables for $modifiedslug_with_sha"
+    wget -nv https://files-cdn.liferay.com/mirrors/download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u80-linux-x64.tar.gz
+    tar -zxf jdk-7u80-linux-x64.tar.gz
+    dirop=$(pwd)
+    export JAVA_HOME=$dirop/jdk1.7.0_80/
+    MVNOPTIONS="${MVNOPTIONS} -Dhttps.protocols=TLSv1.2"
+fi
 
 # echo "================Checking surefire version"
 # pip install BeautifulSoup4
