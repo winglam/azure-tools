@@ -141,10 +141,9 @@ for d in $(find $(pwd) -name ".nondex"); do
 	uid=$(echo $f | rev | cut -d'/' -f2 | rev)
 	root=$(echo $f | rev | cut -d'/' -f2- | rev)
 	seed=$(grep "nondexSeed=" $root/config | cut -d'=' -f2)
-	if [[ "$seed" == "" ]]; then
-	    seed="UNKNOWN_SEED"
+	if [[ "$seed" != "" ]]; then
+	    python $dir/python-scripts/parse_surefire_report.py $f $uid,$seed $fullTestName >> rounds-test-results.csv
 	fi
-	python $dir/python-scripts/parse_surefire_report.py $f $uid,$seed $fullTestName >> rounds-test-results.csv
     done
     cat rounds-test-results.csv | sort -u | awk NF > $mdir/rounds-test-results.csv
 done
