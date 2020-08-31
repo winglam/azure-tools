@@ -38,7 +38,7 @@ cd ~/$slug
 
 echo "================Setting up test name"
 testarg=""
-if [[ $fullTestName == "-" ]]; then
+if [[ $fullTestName == "-" ]] || [[ "$fullTestName" != "" ]]; then
     echo "No test name given for isolation. Exiting immediately"
     date
     exit 1
