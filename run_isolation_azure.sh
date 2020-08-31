@@ -106,7 +106,7 @@ bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir"
 cd ~/$slug
 
 # echo "================Running maven test"
-bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering"
+bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering" "$sha" "$dir" "$fullTestName"
 ret=${PIPESTATUS[0]}
 cp mvn-test.log ${RESULTSDIR}
 testxml=$(find . -name TEST-*.xml | grep -E "target/surefire-reports/TEST-.*\.$class\.xml")
