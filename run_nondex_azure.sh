@@ -103,7 +103,12 @@ if [[ $ret != 0 ]]; then
 fi
 
 # echo "================Setting up maven-surefire"
-bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modifiedslug_with_sha"
+if [[ "apache.hbase-801fc05" == "$modifiedslug_with_sha" ]] && [[ $module == "./hbase-procedure" || $module == "./hbase-server" ]]; then
+    # These project/modules run no tests when both Nondex and our custom surefire is used. If only Nondex or our custom surefire is used then it runs fine.
+    echo "Skipping setting up custom maven for $modifiedslug_with_sha in $module"
+else
+    bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modifiedslug_with_sha"
+fi
 cd ~/$slug
 
 echo "================Modifying pom for nondex"
