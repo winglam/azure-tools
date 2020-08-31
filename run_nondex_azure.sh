@@ -124,7 +124,7 @@ fi
 cp mvn-test.log ${RESULTSDIR}
 
 echo "================Saving results NonDex"
-awk "/Test results can be found/{t=0} {if(t)print} /Across all seeds/{t=1}" new_detect_log > ${RESULTSDIR}/nod-tests.txt
+awk "/Test results can be found/{t=0} {if(t)print} /Across all seeds/{t=1}" mvn-test.log > ${RESULTSDIR}/nod-tests.txt
 
 echo "================Setup to parse test list"
 pip install BeautifulSoup4
