@@ -40,6 +40,7 @@ slug=$(echo ${line} | cut -d',' -f1 | rev | cut -d'/' -f1-2 | rev)
 sha=$(echo ${line} | cut -d',' -f2)
 fullTestName=$(echo ${line} | cut -d',' -f3)
 module=$(echo ${line} | cut -d',' -f4)
+seed=$(echo ${line} | cut -d',' -f5)
 
 MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip"
 
@@ -113,13 +114,18 @@ fi
 bash $dir/nondex-files/modify-project.sh .
 
 echo "================Running NonDex"
+if [[ "$seed" != "" ]]; then
+    echo "Seed is provided: $seed"
+    seedarg="-DnondexSeed=$seed -DnondexRerun"
+fi
+
 if [[ "$slug" == "dropwizard/dropwizard" ]]; then
     # dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
-    mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module -am ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test.log
+    mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module -am ${testarg} ${MVNOPTIONS} $ordering ${seedarg} |& tee mvn-test.log
 elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
-    mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module ${testarg} ${MVNOPTIONS} $ordering -DskipITs |& tee mvn-test.log
+    mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module ${testarg} ${MVNOPTIONS} $ordering -DskipITs ${seedarg} |& tee mvn-test.log
 else
-    mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test.log
+    mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module ${testarg} ${MVNOPTIONS} $ordering ${seedarg} |& tee mvn-test.log
 fi
 cp mvn-test.log ${RESULTSDIR}
 awk "/Test results can be found/{t=0} {if(t)print} /Across all seeds/{t=1}" mvn-test.log > ${RESULTSDIR}/nod-tests.txt
