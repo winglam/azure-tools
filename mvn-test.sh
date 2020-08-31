@@ -11,6 +11,8 @@ modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 
+# When updating this script, be sure that run_nondex_azure.sh (which doesn't call mvn-test.sh) is properly updated as needed
+
 echo "================Running maven test"
 if [[ "$slug" == "dropwizard/dropwizard" ]]; then
     # dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
