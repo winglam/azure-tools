@@ -29,6 +29,8 @@ elif [[ "$modifiedslug_with_sha" == "apache.hadoop-cc2babc" ]]; then
     sudo make install;
     sudo ldconfig;
     cd ..
+    # Specifically for flaky tests in ./hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-jobclient because their forked VM can timeout otherwise
+    sed -i '166s/.*/<\/additionalClasspathElements><forkedProcessTimeoutInSeconds>0<\/forkedProcessTimeoutInSeconds>/' ./hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-jobclient/pom.xml
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$modifiedslug_with_sha" == "nationalsecurityagency.timely-3a8cbd3" ]]; then
     sed -i '466s/\${sureFireArgLine}//' pom.xml
