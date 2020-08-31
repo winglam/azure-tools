@@ -33,7 +33,7 @@ elif [[ "$modifiedslug_with_sha" == "apache.hadoop-cc2babc" ]]; then
     sed -i '166s/.*/<\/additionalClasspathElements><forkedProcessTimeoutInSeconds>0<\/forkedProcessTimeoutInSeconds>/' ./hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-jobclient/pom.xml
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$modifiedslug_with_sha" == "openpojo.openpojo-9badbcc" ]]; then
-    sed -i '70s/.*/return null;/' /mnt/batch/tasks/workitems/SRA_rt_r2_8M27d23h3m2s/job-1/Task0/wd/openpojo/src/main/java/com/openpojo/random/generator/security/CredentialsRandomGenerator.java
+    sed -i '70s/.*/return null;/' src/main/java/com/openpojo/random/generator/security/CredentialsRandomGenerator.java
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$modifiedslug_with_sha" == "nationalsecurityagency.timely-3a8cbd3" ]]; then
     sed -i '466s/\${sureFireArgLine}//' pom.xml
