@@ -62,7 +62,7 @@ if [[ $ret != 0 ]]; then
 fi
 
 # echo "================Setting up maven-surefire"
-bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir"
+bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modifiedslug_with_sha"
 cd ~/$slug
 
 echo "================Modifying pom for runOrder"

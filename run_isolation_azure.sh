@@ -102,9 +102,7 @@ if [[ $ret != 0 ]]; then
 fi
 
 # echo "================Setting up maven-surefire"
-if [[ "$fullTestName" != "org.springframework.boot.test.autoconfigure.properties.AnnotationsPropertySourceTests.propertiesFromMultipleMetaAnnotationsAreMappedUsingTheirOwnPropertyMapping" ]] && [[ "$fullTestName" != "org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListenerTests.test002" ]]; then
-    bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir"
-fi
+bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modifiedslug_with_sha"
 cd ~/$slug
 
 # echo "================Running maven test"
