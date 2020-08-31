@@ -15,6 +15,21 @@ echo "starttime: $starttime"
 RESULTSDIR=~/output/
 mkdir -p ${RESULTSDIR}
 
+modulekey() {
+    projroot=$1
+    moduledir=$2
+
+    # In case it is not a subdirectory, handle it so does not use the .
+    relpath=$(realpath $(dirname ${moduledir}) --relative-to ${projroot})
+    if [[ ${relpath} == '.' ]]; then
+        basename ${projroot}
+        return
+    fi
+
+    # Otherwise convert into expected format
+    echo $(basename ${projroot})-$(realpath $(dirname ${moduledir}) --relative-to ${projroot} | sed 's;/;-;g')
+}
+
 cd ~/
 projfile=$1
 rounds=$2
@@ -111,24 +126,27 @@ cp mvn-test.log ${RESULTSDIR}
 echo "================Saving results NonDex"
 awk "/Test results can be found/{t=0} {if(t)print} /Across all seeds/{t=1}" new_detect_log > ${RESULTSDIR}/nod-tests.txt
 
-modulekey() {
-    projroot=$1
-    moduledir=$2
+echo "================Setup to parse test list"
+pip install BeautifulSoup4
+pip install lxml
 
-    # In case it is not a subdirectory, handle it so does not use the .
-    relpath=$(realpath $(dirname ${moduledir}) --relative-to ${projroot})
-    if [[ ${relpath} == '.' ]]; then
-        basename ${projroot}
-        return
-    fi
-
-    # Otherwise convert into expected format
-    echo $(basename ${projroot})-$(realpath $(dirname ${moduledir}) --relative-to ${projroot} | sed 's;/;-;g')
-}
-
+echo "================Parsing test list"
 mkdir -p ${RESULTSDIR}/nondex
 for d in $(find $(pwd) -name ".nondex"); do
-    cp -r ${d} ${RESULTSDIR}/nondex/$(modulekey $(pwd) ${d})
+    mdir="${RESULTSDIR}/nondex/$(modulekey $(pwd) ${d})"
+    cp -r ${d} $midir
+
+    echo "" > rounds-test-results.csv
+    for f in $(find $mdir -name "TEST*.xml"); do
+	uid=$(echo $f | rev | cut -d'/' -f2 | rev)
+	root=$(echo $f | rev | cut -d'/' -f2- | rev)
+	seed=$(grep "nondexSeed=" $root/config | cut -d'=' -f2)
+	if [[ "$seed" == "" ]]; then
+	    seed="UNKNOWN_SEED"
+	fi
+	python $dir/python-scripts/parse_surefire_report.py $f $uid,$seed $fullTestName >> rounds-test-results.csv
+    done
+    cat rounds-test-results.csv | sort -u | awk NF > $mdir/rounds-test-results.csv
 done
 
 endtime=$(date)
