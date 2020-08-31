@@ -134,7 +134,7 @@ echo "================Parsing test list"
 mkdir -p ${RESULTSDIR}/nondex
 for d in $(find $(pwd) -name ".nondex"); do
     mdir="${RESULTSDIR}/nondex/$(modulekey $(pwd) ${d})"
-    cp -r ${d} $midir
+    cp -r ${d} $mdir
 
     echo "" > rounds-test-results.csv
     for f in $(find $mdir -name "TEST*.xml"); do
