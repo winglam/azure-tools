@@ -88,6 +88,7 @@ if [[ "$modifiedslug_with_sha" == "openpojo.openpojo-9badbcc" ]]; then
     wget -nv https://files-cdn.liferay.com/mirrors/download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u80-linux-x64.tar.gz
     tar -zxf jdk-7u80-linux-x64.tar.gz
     dirop=$(pwd)
+    old_java=$JAVA_HOME
     export JAVA_HOME=$dirop/jdk1.7.0_80/
     MVNOPTIONS="${MVNOPTIONS} -Dhttps.protocols=TLSv1.2"
 fi
@@ -113,6 +114,11 @@ fi
 # echo "================Setting up maven-surefire"
 bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir"
 cd ~/$slug
+
+if [[ "$modifiedslug_with_sha" == "openpojo.openpojo-9badbcc" ]]; then
+    echo "Resetting JAVA_HOME to $old_java"
+    export JAVA_HOME=$old_java
+fi
 
 # echo "================Running maven test"
 bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering"
