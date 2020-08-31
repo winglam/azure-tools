@@ -122,8 +122,6 @@ else
     mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test.log
 fi
 cp mvn-test.log ${RESULTSDIR}
-
-echo "================Saving results NonDex"
 awk "/Test results can be found/{t=0} {if(t)print} /Across all seeds/{t=1}" mvn-test.log > ${RESULTSDIR}/nod-tests.txt
 
 echo "================Setup to parse test list"
