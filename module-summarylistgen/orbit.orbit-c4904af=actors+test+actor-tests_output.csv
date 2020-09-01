@@ -2,10 +2,6 @@ cloud.orbit.actors.test.ActivationFailureTest.test
 cloud.orbit.actors.test.ActorCountDeactivationTest.testActorCountDeactivation
 cloud.orbit.actors.test.AsymmetricalStagesTest.asymmetricalNodeTest
 cloud.orbit.actors.test.AsymmetricalStagesTest.waitForNodeTest
-cloud.orbit.actors.test.CacheResponseCloneTest.testCloneCyclicReference[0]
-cloud.orbit.actors.test.CacheResponseCloneTest.testCloneCyclicReference[1]
-cloud.orbit.actors.test.CacheResponseCloneTest.testCloneIntegrity[0]
-cloud.orbit.actors.test.CacheResponseCloneTest.testCloneIntegrity[1]
 cloud.orbit.actors.test.CacheResponseTest.testCacheDuration
 cloud.orbit.actors.test.CacheResponseTest.testCacheFlush
 cloud.orbit.actors.test.CacheResponseTest.testCacheFlushWithMultipleActors
