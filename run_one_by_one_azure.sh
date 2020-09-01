@@ -107,6 +107,7 @@ if [[ "$polluter" != "" ]]; then
     testarg="-Dtest=$fc#$ft,$fullClass#$testName -DflakyTestOrder=$ft($fc),$testName($fullClass)";
     bash $dir/rounds.sh "$rounds" "$slug" "$testarg" "$JMVNOPTIONS" "$RESULTSDIR" "$module" "$dir" "$fullTestName" "$ordering" "1"
 else
+    modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
     tl="$dir/module-summarylistgen/${modifiedslug_with_sha}=${modified_module}_output.csv"
     total=$(cat $tl | wc -l)
     i=1
