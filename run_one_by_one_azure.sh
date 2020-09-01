@@ -97,6 +97,11 @@ pip install BeautifulSoup4
 pip install lxml
 
 echo "================Starting OBO"
+if [[ "$modifiedslug_with_sha" == "hexagonframework.spring-data-ebean-dd11b97" ]]; then
+    rm -rf pom.xml
+    cp $dir/poms/${modifiedslug_with_sha}=pom.xml pom.xml
+fi
+
 JMVNOPTIONS="${MVNOPTIONS} -Dsurefire.methodRunOrder=flakyfinding -Djava.awt.headless=true -Dmaven.main.skip -DtrimStackTrace=false -Dmaven.test.failure.ignore=true"
 fullClass="$(echo $fullTestName | rev | cut -d. -f2- | rev)"
 testName="$(echo $fullTestName | rev | cut -d. -f1 | rev )"
@@ -122,8 +127,15 @@ else
 	    find . -name TEST-*.xml -delete
 	    fc="$(echo $f | rev | cut -d. -f2- | rev)"
 	    ft="$(echo $f | rev | cut -d. -f1 | rev)"
-	    order="-Dtest=$fc#$ft,$fullClass#$testName -DflakyTestOrder=$ft($fc),$testName($fullClass)";
-	    mvn test -pl $module ${order} ${JMVNOPTIONS} |& tee mvn-test-$i-$f-$fullTestName.log
+	    testarg="-Dtest=$fc#$ft,$fullClass#$testName -DflakyTestOrder=$ft($fc),$testName($fullClass)";
+	    if [[ "$slug" == "dropwizard/dropwizard" ]]; then
+		# dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
+		mvn test -pl $module -am ${testarg} ${JMVNOPTIONS} |& mvn-test-$i-$f-$fullTestName.log
+	    elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
+		mvn test -pl $module ${testarg} ${JMVNOPTIONS} -DskipITs |& tee mvn-test-$i-$f-$fullTestName.log
+	    else
+		mvn test -pl $module ${testarg} ${JMVNOPTIONS} |& mvn-test-$i-$f-$fullTestName.log
+	    fi
 
 	    echo "" > $i-$f-$fullTestName.csv
 	    for j in $(find -name "TEST*.xml"); do
