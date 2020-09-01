@@ -1,0 +1,8 @@
+org.apache.dubbo.remoting.transport.netty4.ClientReconnectTest.testReconnect
+org.apache.dubbo.remoting.transport.netty4.ClientsTest.testGetTransport3
+org.apache.dubbo.remoting.transport.netty4.ClientsTest.testGetTransportEmpty
+org.apache.dubbo.remoting.transport.netty4.ClientsTest.testGetTransportNull
+org.apache.dubbo.remoting.transport.netty4.ClientsTest.testGetTransportWrong
+org.apache.dubbo.remoting.transport.netty4.NettyClientToServerTest.testFuture
+org.apache.dubbo.remoting.transport.netty4.NettyTransporterTest.shouldAbleToBindNetty4
+org.apache.dubbo.remoting.transport.netty4.NettyTransporterTest.shouldConnectToNetty4Server

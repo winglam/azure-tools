@@ -1,0 +1,14 @@
+net.redpipe.templating.freemarker.ApiTest.checkMail
+net.redpipe.templating.freemarker.ApiTest.checkMail2
+net.redpipe.templating.freemarker.ApiTest.checkTemplate
+net.redpipe.templating.freemarker.ApiTest.checkTemplateDefaultName
+net.redpipe.templating.freemarker.ApiTest.checkTemplateNegociationDefault
+net.redpipe.templating.freemarker.ApiTest.checkTemplateNegociationHtml
+net.redpipe.templating.freemarker.ApiTest.checkTemplateNegociationHtml2
+net.redpipe.templating.freemarker.ApiTest.checkTemplateNegociationNotAcceptable
+net.redpipe.templating.freemarker.ApiTest.checkTemplateNegociationSingleHtml
+net.redpipe.templating.freemarker.ApiTest.checkTemplateNegociationText
+net.redpipe.templating.freemarker.ApiTest.checkTemplateNegociationText2
+net.redpipe.templating.freemarker.ApiTest.checkTemplateWithHtmlAndTemplateExtension
+net.redpipe.templating.freemarker.ApiTest.checkTemplateWithHtmlExtension
+net.redpipe.templating.freemarker.ApiTest.checkTemplateWithTemplateExtension

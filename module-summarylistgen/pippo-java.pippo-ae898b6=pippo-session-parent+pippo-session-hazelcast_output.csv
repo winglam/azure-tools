@@ -1,0 +1,5 @@
+ro.pippo.session.hazelcast.HazelcastSessionDataStorageTest.testCreate
+ro.pippo.session.hazelcast.HazelcastSessionDataStorageTest.testDelete
+ro.pippo.session.hazelcast.HazelcastSessionDataStorageTest.testGet
+ro.pippo.session.hazelcast.HazelcastSessionDataStorageTest.testGetExpired
+ro.pippo.session.hazelcast.HazelcastSessionDataStorageTest.testSave

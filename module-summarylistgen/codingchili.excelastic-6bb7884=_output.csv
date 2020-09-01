@@ -1,0 +1,12 @@
+com.codingchili.TestConfiguration.shouldLoadConfiguration
+com.codingchili.TestParser.failParseInvalid
+com.codingchili.TestParser.generateMonsterCSV
+com.codingchili.TestParser.testParse2007
+com.codingchili.TestParser.testParseBig
+com.codingchili.TestParser.testParseCSV
+com.codingchili.TestParser.testParseMissingExt
+com.codingchili.TestParser.testParseMissingParser
+com.codingchili.TestParser.testParseOOXML
+com.codingchili.TestWebsite.shouldFailUpload
+com.codingchili.TestWebsite.shouldGetStartPage
+com.codingchili.TestWriter.shouldWriteToElasticPort

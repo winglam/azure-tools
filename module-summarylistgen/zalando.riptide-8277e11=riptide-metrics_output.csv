@@ -1,0 +1,7 @@
+org.zalando.riptide.metrics.DefaultTagGeneratorTest.shouldGenerateRequestTags
+org.zalando.riptide.metrics.DefaultTagGeneratorTest.shouldGenerateResponseTags
+org.zalando.riptide.metrics.DefaultTagGeneratorTest.shouldGenerateResponseTagsOnIOException
+org.zalando.riptide.metrics.DefaultTagGeneratorTest.shouldGenerateResponseTagsOnTimeout
+org.zalando.riptide.metrics.MetricsPluginTest.shouldNotRecordFailureMetric
+org.zalando.riptide.metrics.MetricsPluginTest.shouldRecordErrorResponseMetric
+org.zalando.riptide.metrics.MetricsPluginTest.shouldRecordSuccessResponseMetric

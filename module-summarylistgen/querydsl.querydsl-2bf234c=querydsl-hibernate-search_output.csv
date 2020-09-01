@@ -1,0 +1,13 @@
+com.querydsl.hibernate.search.SearchQueryTest.count
+com.querydsl.hibernate.search.SearchQueryTest.exists
+com.querydsl.hibernate.search.SearchQueryTest.limit_max_value
+com.querydsl.hibernate.search.SearchQueryTest.list
+com.querydsl.hibernate.search.SearchQueryTest.listResults
+com.querydsl.hibernate.search.SearchQueryTest.notExists
+com.querydsl.hibernate.search.SearchQueryTest.no_where
+com.querydsl.hibernate.search.SearchQueryTest.ordering
+com.querydsl.hibernate.search.SearchQueryTest.paging
+com.querydsl.hibernate.search.SearchQueryTest.singleResult
+com.querydsl.hibernate.search.SearchQueryTest.uniqueResult
+com.querydsl.hibernate.search.SearchQueryTest.unique_result_throws_exception_on_multiple_results
+com.querydsl.hibernate.search.SearchSerializerTest.toField

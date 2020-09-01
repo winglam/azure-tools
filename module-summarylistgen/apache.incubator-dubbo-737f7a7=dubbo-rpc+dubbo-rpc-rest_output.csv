@@ -1,0 +1,14 @@
+org.apache.dubbo.rpc.protocol.rest.integration.swagger.DubboSwaggerApiListingResourceTest.test
+org.apache.dubbo.rpc.protocol.rest.RestProtocolTest.testDefaultPort
+org.apache.dubbo.rpc.protocol.rest.RestProtocolTest.testErrorHandler
+org.apache.dubbo.rpc.protocol.rest.RestProtocolTest.testExport
+org.apache.dubbo.rpc.protocol.rest.RestProtocolTest.testFilter
+org.apache.dubbo.rpc.protocol.rest.RestProtocolTest.testInvoke
+org.apache.dubbo.rpc.protocol.rest.RestProtocolTest.testNettyServer
+org.apache.dubbo.rpc.protocol.rest.RestProtocolTest.testRegFail
+org.apache.dubbo.rpc.protocol.rest.RestProtocolTest.testRpcContextFilter
+org.apache.dubbo.rpc.protocol.rest.RestProtocolTest.testServletWithoutWebConfig
+org.apache.dubbo.rpc.protocol.rest.RpcExceptionMapperTest.testConstraintViolationException
+org.apache.dubbo.rpc.protocol.rest.RpcExceptionMapperTest.testNormalException
+org.apache.dubbo.rpc.protol.rest.RestProtocolTest.testRestProtocol
+org.apache.dubbo.rpc.protol.rest.RestProtocolTest.testRestProtocolWithContextPath

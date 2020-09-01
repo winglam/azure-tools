@@ -1,0 +1,9 @@
+org.apache.dubbo.rpc.protocol.hessian.HessianProtocolTest.testCustomException
+org.apache.dubbo.rpc.protocol.hessian.HessianProtocolTest.testGenericInvoke
+org.apache.dubbo.rpc.protocol.hessian.HessianProtocolTest.testGenericInvokeWithBean
+org.apache.dubbo.rpc.protocol.hessian.HessianProtocolTest.testGenericInvokeWithNativeJava
+org.apache.dubbo.rpc.protocol.hessian.HessianProtocolTest.testGenericInvokeWithRpcContext
+org.apache.dubbo.rpc.protocol.hessian.HessianProtocolTest.testHessianProtocol
+org.apache.dubbo.rpc.protocol.hessian.HessianProtocolTest.testHttpClient
+org.apache.dubbo.rpc.protocol.hessian.HessianProtocolTest.testOverload
+org.apache.dubbo.rpc.protocol.hessian.HessianProtocolTest.testTimeOut

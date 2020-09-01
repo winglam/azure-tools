@@ -1,0 +1,8 @@
+org.apache.dubbo.monitor.dubbo.DubboMonitorFactoryTest.testCreateMonitor
+org.apache.dubbo.monitor.dubbo.DubboMonitorTest.testAvailable
+org.apache.dubbo.monitor.dubbo.DubboMonitorTest.testCount
+org.apache.dubbo.monitor.dubbo.DubboMonitorTest.testLookUp
+org.apache.dubbo.monitor.dubbo.DubboMonitorTest.testMonitorFactory
+org.apache.dubbo.monitor.dubbo.DubboMonitorTest.testSum
+org.apache.dubbo.monitor.dubbo.StatisticsTest.testEquals
+org.apache.dubbo.monitor.dubbo.StatisticsTest.testToString

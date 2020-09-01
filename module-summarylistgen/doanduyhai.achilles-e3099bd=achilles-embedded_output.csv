@@ -1,0 +1,2 @@
+info.archinnov.achilles.embedded.CassandraEmbeddedServerBuilderTest.should_start_embedded_server_with_listen_and_rpc_address
+info.archinnov.achilles.embedded.PortFinderTest.try_to_find_first_port
