@@ -2,11 +2,12 @@ RESULTSDIR=$1
 dir=$2
 fullTestName=$3
 modifiedslug_with_sha=$4
+module=$5
 
 echo "================Setting up maven-surefire"
 
-if [[ "$modifiedslug_with_sha" == "spring-projects.spring-boot-daa3d45" ]] && [[ "$fullTestName" == "org.springframework.boot.test.autoconfigure.properties.AnnotationsPropertySourceTests.propertiesFromMultipleMetaAnnotationsAreMappedUsingTheirOwnPropertyMapping" || "$fullTestName" == "org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListenerTests.test002" ]]; then
-    echo "Skipping setup of maven-surefire for $modifiedslug_with_sha $fullTestName"
+if [[ "$modifiedslug_with_sha" == "spring-projects.spring-boot-daa3d45" ]] && [[ "$module" == "./spring-boot-project/spring-boot-test" || "$module" == "./spring-boot-project/spring-boot-test-autoconfigure" ]]; then
+    echo "Skipping setup of maven-surefire for $modifiedslug_with_sha $module"
     exit 0
 fi
 
