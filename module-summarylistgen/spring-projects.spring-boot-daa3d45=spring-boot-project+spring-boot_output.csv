@@ -1,5 +1,3 @@
-environment
-function
 org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrarTests.environmentIsExposed
 org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrarTests.eventsFromOtherContextsAreIgnored
 org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrarTests.shutdownApp

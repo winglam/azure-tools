@@ -12,4 +12,8 @@ for f in $(grep  \\.$ *.csv ); do
     fi=$(echo $f | cut -d':' -f1);
     l=$(echo $f | cut -d':' -f2- | sed 's/\./\\./g');
     sed -i "/^${l}$/d" $fi;
-done 
+done
+
+for f in $(grep "\\]"  *.csv ); do fi=$(echo $f | cut -d':' -f1); l=$(echo $f | cut -d':' -f2- | sed 's/\./\\./g' | sed 's/\[/\\[/g'  | sed 's/\]/\\]/g'); sed -i "/^${l}$/d" $fi; done
+
+for f in $(grep -v \\. *.csv ); do fi=$(echo $f | cut -d':' -f1); l=$(echo $f | cut -d':' -f2- | sed 's/\./\\./g' | sed 's/\[/\\[/g'  | sed 's/\]/\\]/g'); sed -i "/^${l}$/d" $fi; done
