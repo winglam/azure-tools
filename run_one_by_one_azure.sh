@@ -109,7 +109,7 @@ mkdir -p ${RESULTSDIR}/pair-results
 if [[ "$polluter" != "" ]]; then
     echo "Single polluter passed in: $polltuer"
     for ((i=1;i<=rounds;i++)); do
-	bash rounds-obo.sh "$i" "$rounds" "$polluter" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR"
+	bash $dir/rounds-obo.sh "$i" "$rounds" "$polluter" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR"
     done
 else
     modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
@@ -118,7 +118,7 @@ else
     total=$(cat $tl | wc -l)
     i=1
     for f in $(cat $tl ); do
-	bash rounds-obo.sh "$i" "$total" "$f" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR"
+	bash $dir/rounds-obo.sh "$i" "$total" "$f" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR"
 	i=$((i+1))
     done    
 fi
