@@ -1,4 +1,3 @@
-MVC]
 org.springframework.boot.actuate.ActuatorConfigurationClassTests.allBeanMethodsArePublic
 org.springframework.boot.actuate.amqp.RabbitHealthIndicatorTests.createWhenRabbitTemplateIsNullShouldThrowException
 org.springframework.boot.actuate.amqp.RabbitHealthIndicatorTests.healthWhenConnectionFailsShouldReturnDown

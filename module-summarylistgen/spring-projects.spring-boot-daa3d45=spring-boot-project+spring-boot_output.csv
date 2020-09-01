@@ -1,7 +1,5 @@
 environment
 function
-java.sql.Driver]
-javax.sql.XADataSource]
 org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrarTests.environmentIsExposed
 org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrarTests.eventsFromOtherContextsAreIgnored
 org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrarTests.shutdownApp
@@ -2110,4 +2108,3 @@ org.springframework.boot.web.servlet.WebServletHandlerTests.servletWithCustomNam
 org.springframework.boot.web.servlet.WebServletHandlerTests.urlMappings
 org.springframework.boot.web.servlet.WebServletHandlerTests.urlMappingsFromValue
 org.springframework.boot.web.servlet.WebServletHandlerTests.urlPatternsDeclaredTwice
-service]

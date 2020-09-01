@@ -1,8 +1,3 @@
-bucket]
-EventLoop=epoll]
-EventLoop=nio]
-EventLoop=perClientNio]
-lru]
 org.apache.hadoop.hbase.backup.example.TestZooKeeperTableArchiveClient.testArchivingEnableDisable
 org.apache.hadoop.hbase.backup.example.TestZooKeeperTableArchiveClient.testArchivingOnSingleTable
 org.apache.hadoop.hbase.backup.example.TestZooKeeperTableArchiveClient.testMultipleTables
@@ -530,8 +525,6 @@ org.apache.hadoop.hbase.io.TestImmutableBytesWritable.testComparison
 org.apache.hadoop.hbase.io.TestImmutableBytesWritable.testHash
 org.apache.hadoop.hbase.io.TestImmutableBytesWritable.testSpecificCompare
 org.apache.hadoop.hbase.io.TestMetricsIO.testMetrics
-org.apache.hadoop.hbase.ipc.NettyRpcServer]
-org.apache.hadoop.hbase.ipc.SimpleRpcServer]
 org.apache.hadoop.hbase.ipc.TestBlockingIPC.testAsyncEcho
 org.apache.hadoop.hbase.ipc.TestBlockingIPC.testAsyncRemoteError
 org.apache.hadoop.hbase.ipc.TestBlockingIPC.testAsyncTimeout
@@ -1883,18 +1876,3 @@ org.apache.hadoop.hbase.wal.TestWALMethods.testRegionEntryBuffer
 org.apache.hadoop.hbase.wal.TestWALMethods.testServerNameFromTestWAL
 org.apache.hadoop.hbase.wal.TestWALMethods.testServerNameFromWAL
 org.apache.hadoop.hbase.wal.TestWALRootDir.testWALRootDir
-provider=asyncfs]
-provider=defaultProvider]
-provider=filesystem]
-rpcServerImpl=org.apache.hadoop.hbase.ipc.NettyRpcServer]
-rpcServerImpl=org.apache.hadoop.hbase.ipc.SimpleRpcServer]
-type=batch]
-type=batchSmallResultSize]
-type=normal]
-type=smallResultSize]
-usePrivateReaders=false]
-usePrivateReaders=true]
-wal=asyncfs]
-WAL=asyncfs]
-wal=filesystem]
-WAL=filesystem]

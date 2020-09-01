@@ -1,5 +1,3 @@
-any]
-both]
 ch.qos.logback.core.recovery.ResilentSocketOutputStreamTest.testCreatesCleanOutputStream
 ch.qos.logback.core.recovery.ResilentSocketOutputStreamTest.testGetDescription
 ch.qos.logback.core.recovery.ResilentSocketOutputStreamTest.testThrowsExceptionIfCantCreateOutputStream
@@ -24,10 +22,6 @@ com.example.validation.DefaultValidatorTest.shouldNotInjectValidator
 com.example.validation.DefaultValidatorTest.shouldValidateNormally
 com.example.validation.InjectValidatorBundleTest.shouldInjectValidator
 com.example.validation.InjectValidatorBundleTest.shouldValidateNormally
-exc]
-excWithSuffix]
-inc]
-incWithSuffix]
 io.dropwizard.ApplicationTest.canDetermineConfiguration
 io.dropwizard.ApplicationTest.canDetermineWrappedConfiguration
 io.dropwizard.ApplicationTest.exitWithFatalErrorWhenCommandFails
@@ -969,10 +963,6 @@ io.dropwizard.util.DurationTest.serializesCorrectlyWithJackson
 io.dropwizard.util.DurationTest.unableParseWrongDurationCount
 io.dropwizard.util.DurationTest.unableParseWrongDurationFormat
 io.dropwizard.util.DurationTest.unableParseWrongDurationTimeUnit
-io.dropwizard.util.GenericsTest$IntegerList]
-io.dropwizard.util.GenericsTest$IntegerValueMap]
-io.dropwizard.util.GenericsTest$ListOfStringSets]
-io.dropwizard.util.GenericsTest$NumberList]
 io.dropwizard.util.JarLocationTest.hasAVersion
 io.dropwizard.util.JarLocationTest.isHumanReadable
 io.dropwizard.util.OptionalsTest.testFromGuavaOptional
@@ -1099,6 +1089,3 @@ io.dropwizard.views.ViewMessageBodyWriterTest.writeToShouldHandleViewRenderingEx
 io.dropwizard.views.ViewMessageBodyWriterTest.writeToShouldThrowWhenNoValidRendererFound
 io.dropwizard.views.ViewMessageBodyWriterTest.writeToShouldUseValidRenderer
 io.dropwizard.views.ViewTest.hasATemplate
-java.lang.Object]
-null]
-prefiXincSuffix]

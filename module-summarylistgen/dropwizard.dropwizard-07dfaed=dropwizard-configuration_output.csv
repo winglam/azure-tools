@@ -147,10 +147,6 @@ io.dropwizard.util.DurationTest.serializesCorrectlyWithJackson
 io.dropwizard.util.DurationTest.unableParseWrongDurationCount
 io.dropwizard.util.DurationTest.unableParseWrongDurationFormat
 io.dropwizard.util.DurationTest.unableParseWrongDurationTimeUnit
-io.dropwizard.util.GenericsTest$IntegerList]
-io.dropwizard.util.GenericsTest$IntegerValueMap]
-io.dropwizard.util.GenericsTest$ListOfStringSets]
-io.dropwizard.util.GenericsTest$NumberList]
 io.dropwizard.util.JarLocationTest.hasAVersion
 io.dropwizard.util.JarLocationTest.isHumanReadable
 io.dropwizard.util.OptionalsTest.testFromGuavaOptional
@@ -255,5 +251,3 @@ io.dropwizard.validation.valuehandling.OptionalValidatedValueUnwrapperTest.fails
 io.dropwizard.validation.valuehandling.OptionalValidatedValueUnwrapperTest.notNullFailsWhenAbsent
 io.dropwizard.validation.valuehandling.OptionalValidatedValueUnwrapperTest.succeedsWhenAbsent
 io.dropwizard.validation.valuehandling.OptionalValidatedValueUnwrapperTest.succeedsWhenConstraintsMet
-java.lang.Object]
-null]
