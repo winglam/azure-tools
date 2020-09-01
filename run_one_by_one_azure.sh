@@ -109,36 +109,41 @@ if [[ "$polluter" != "" ]]; then
 else
     modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
     tl="$dir/module-summarylistgen/${modifiedslug_with_sha}=${modified_module}_output.csv"
+    cp $tl ${RESULTSDIR}/
     total=$(cat $tl | wc -l)
     i=1
     mkdir -p ${RESULTSDIR}/pair-results
     for f in $(cat $tl ); do
 	echo "Iteration $i / $total"
-	echo "Pairing $f and $fullTestName"
-	find . -name TEST-*.xml -delete
-	fc="$(echo $f | rev | cut -d. -f2- | rev)"
-	ft="$(echo $f | rev | cut -d. -f1 | rev)"
-	order="-Dtest=$fc#$ft,$fullClass#$testName -DflakyTestOrder=$ft($fc),$testName($fullClass)";
-	mvn test -pl $module ${order} ${JMVNOPTIONS} |& tee mvn-test-$i-$f-$fullTestName.log
-
-	echo "" > $i-$f-$fullTestName.csv
-	for j in $(find -name "TEST*.xml"); do
-	    python $dir/python-scripts/parse_surefire_report.py $j $i "" >> $i-$f-$fullTestName.csv
-	done
-	cp $i-$f-$fullTestName.csv ${RESULTSDIR}/pair-results
-
-	python $dir/python-scripts/parse_obo_results.py $i-$f-$fullTestName.csv $fullTestName $f  >> ${RESULTSDIR}/rounds-test-results.csv
-
-	didfail=$(grep -v ,pass, $i-$f-$fullTestName.csv)
-	if [[ ! -z $didfail ]]; then
-	    echo "RESULT at least one test failed for: $f and $fullTestName"
-	    mkdir -p ${RESULTSDIR}/pairs/$i
-	    mv mvn-test-$i-$f-$fullTestName.log ${RESULTSDIR}/pairs/$i
-	    for g in $(find -name "TEST*.xml"); do
-		mv $g ${RESULTSDIR}/pairs/$i
-	    done
+	if [[ "$f" == "$fullTestName" ]]; then
+	    echo "Skipping this iteration to prevent running the same test twice."
 	else
-	    echo "RESULT Both tests passed: $f and $fullTestName"
+	    echo "Pairing $f and $fullTestName"
+	    find . -name TEST-*.xml -delete
+	    fc="$(echo $f | rev | cut -d. -f2- | rev)"
+	    ft="$(echo $f | rev | cut -d. -f1 | rev)"
+	    order="-Dtest=$fc#$ft,$fullClass#$testName -DflakyTestOrder=$ft($fc),$testName($fullClass)";
+	    mvn test -pl $module ${order} ${JMVNOPTIONS} |& tee mvn-test-$i-$f-$fullTestName.log
+
+	    echo "" > $i-$f-$fullTestName.csv
+	    for j in $(find -name "TEST*.xml"); do
+		python $dir/python-scripts/parse_surefire_report.py $j $i "" >> $i-$f-$fullTestName.csv
+	    done
+	    cp $i-$f-$fullTestName.csv ${RESULTSDIR}/pair-results
+
+	    python $dir/python-scripts/parse_obo_results.py $i-$f-$fullTestName.csv $fullTestName $f  >> ${RESULTSDIR}/rounds-test-results.csv
+
+	    didfail=$(grep -v ,pass, $i-$f-$fullTestName.csv)
+	    if [[ ! -z $didfail ]]; then
+		echo "RESULT at least one test failed for: $f and $fullTestName"
+		mkdir -p ${RESULTSDIR}/pairs/$i
+		mv mvn-test-$i-$f-$fullTestName.log ${RESULTSDIR}/pairs/$i
+		for g in $(find -name "TEST*.xml"); do
+		    mv $g ${RESULTSDIR}/pairs/$i
+		done
+	    else
+		echo "RESULT Both tests passed: $f and $fullTestName"
+	    fi
 	fi
 	i=$((i+1))
     done    
