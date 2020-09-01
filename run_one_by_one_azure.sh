@@ -100,7 +100,7 @@ echo "================Starting OBO"
 JMVNOPTIONS="${MVNOPTIONS} -Dsurefire.methodRunOrder=flakyfinding -Djava.awt.headless=true -Dmaven.main.skip -DtrimStackTrace=false -Dmaven.test.failure.ignore=true"
 fullClass="$(echo $fullTestName | rev | cut -d. -f2- | rev)"
 testName="$(echo $fullTestName | rev | cut -d. -f1 | rev )"
-if [[ "$polluter" == "" ]]; then
+if [[ "$polluter" != "" ]]; then
     echo "Single polluter passed in: $polltuer"
     fc="$(echo $polluter | rev | cut -d. -f2- | rev)"
     ft="$(echo $polluter | rev | cut -d. -f1 | rev)"
@@ -110,7 +110,6 @@ else
     tl="$dir/module-summarylistgen/${modifiedslug_with_sha}=${modified_module}_output.csv"
     total=$(cat $tl | wc -l)
     i=1
-    rm -rf ${RESULTSDIR}/rounds-test-results.csv
     mkdir -p ${RESULTSDIR}/pair-results
     for f in $(cat $tl ); do
 	echo "Iteration $i / $total"
