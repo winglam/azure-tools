@@ -105,58 +105,20 @@ fi
 JMVNOPTIONS="${MVNOPTIONS} -Dsurefire.methodRunOrder=flakyfinding -Djava.awt.headless=true -Dmaven.main.skip -DtrimStackTrace=false -Dmaven.test.failure.ignore=true"
 fullClass="$(echo $fullTestName | rev | cut -d. -f2- | rev)"
 testName="$(echo $fullTestName | rev | cut -d. -f1 | rev )"
+mkdir -p ${RESULTSDIR}/pair-results
 if [[ "$polluter" != "" ]]; then
     echo "Single polluter passed in: $polltuer"
-    fc="$(echo $polluter | rev | cut -d. -f2- | rev)"
-    ft="$(echo $polluter | rev | cut -d. -f1 | rev)"
-    testarg="-Dtest=$fc#$ft,$fullClass#$testName -DflakyTestOrder=$ft($fc),$testName($fullClass)";
-    bash $dir/rounds.sh "$rounds" "$slug" "$testarg" "$JMVNOPTIONS" "$RESULTSDIR" "$module" "$dir" "$fullTestName" "$ordering" "1"
+    for ((i=1;i<=rounds;i++)); do
+	bash rounds-obo.sh "$i" "$rounds" "$polluter" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR"
+    done
 else
     modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
     tl="$dir/module-summarylistgen/${modifiedslug_with_sha}=${modified_module}_output.csv"
     cp $tl ${RESULTSDIR}/
     total=$(cat $tl | wc -l)
     i=1
-    mkdir -p ${RESULTSDIR}/pair-results
     for f in $(cat $tl ); do
-	echo "Iteration $i / $total"
-	if [[ "$f" == "$fullTestName" ]]; then
-	    echo "Skipping this iteration to prevent running the same test twice."
-	else
-	    echo "Pairing $f and $fullTestName"
-	    find . -name TEST-*.xml -delete
-	    fc="$(echo $f | rev | cut -d. -f2- | rev)"
-	    ft="$(echo $f | rev | cut -d. -f1 | rev)"
-	    testarg="-Dtest=$fc#$ft,$fullClass#$testName -DflakyTestOrder=$ft($fc),$testName($fullClass)";
-	    if [[ "$slug" == "dropwizard/dropwizard" ]]; then
-		# dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
-		mvn test -pl $module -am ${testarg} ${JMVNOPTIONS} |& tee mvn-test-$i-$f-$fullTestName.log
-	    elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
-		mvn test -pl $module ${testarg} ${JMVNOPTIONS} -DskipITs |& tee mvn-test-$i-$f-$fullTestName.log
-	    else
-		mvn test -pl $module ${testarg} ${JMVNOPTIONS} |& tee mvn-test-$i-$f-$fullTestName.log
-	    fi
-
-	    echo "" > $i-$f-$fullTestName.csv
-	    for j in $(find -name "TEST*.xml"); do
-		python $dir/python-scripts/parse_surefire_report.py $j $i "" >> $i-$f-$fullTestName.csv
-	    done
-	    cp $i-$f-$fullTestName.csv ${RESULTSDIR}/pair-results
-
-	    python $dir/python-scripts/parse_obo_results.py $i-$f-$fullTestName.csv $fullTestName $f  >> ${RESULTSDIR}/rounds-test-results.csv
-
-	    didfail=$(grep -v ,pass, $i-$f-$fullTestName.csv)
-	    if [[ ! -z $didfail ]]; then
-		echo "RESULT at least one test failed for: $f and $fullTestName"
-		mkdir -p ${RESULTSDIR}/pairs/$i
-		mv mvn-test-$i-$f-$fullTestName.log ${RESULTSDIR}/pairs/$i
-		for g in $(find -name "TEST*.xml"); do
-		    mv $g ${RESULTSDIR}/pairs/$i
-		done
-	    else
-		echo "RESULT Both tests passed: $f and $fullTestName"
-	    fi
-	fi
+	bash rounds-obo.sh "$i" "$total" "$f" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR"
 	i=$((i+1))
     done    
 fi
