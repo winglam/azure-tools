@@ -7,10 +7,11 @@ module=$6
 dir=$7
 fullTestName=$8
 ordering=$9
+start=$10
 
 echo "================Running rounds"
 set -x
-for ((i=2;i<=rounds;i++)); do
+for ((i=start;i<=rounds;i++)); do
     echo "Iteration: $i / $rounds"
     find -name "TEST-*.xml" -delete
 

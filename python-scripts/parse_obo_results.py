@@ -66,14 +66,15 @@ def summarize_test_results(roundpath):
     v_name = roundpath[2]
     p_name = roundpath[3]
 
+    dlen = len(all_dict.keys())
     if v_name not in all_dict.keys() and p_name not in all_dict.keys():
-        print str.format("{},{},{},{},{},{},{},{},{},{},{}", v_name, "MVP", "", "", "", "", p_name, "", "", "", "")
+        print str.format("{},{},{},{},{},{},{},{},{},{},{},{}", v_name, "MVP", "", "", "", "", p_name, "", "", "", "", dlen)
     elif p_name not in all_dict.keys():
         vresult, vtime, vrun_num, vfile = all_dict[v_name]
-        print str.format("{},{},{},{},{},{},{},{},{},{},{}", v_name, "MP", vresult, vtime, vrun_num, vfile, p_name, "", "", "", "")
+        print str.format("{},{},{},{},{},{},{},{},{},{},{},{}", v_name, "MP", vresult, vtime, vrun_num, vfile, p_name, "", "", "", "", dlen)
     elif v_name not in all_dict.keys():
         presult, ptime, prun_num, pfile = all_dict[p_name]
-        print str.format("{},{},{},{},{},{},{},{},{},{},{}", v_name, "MV", "", "", "", "", p_name, presult, ptime, prun_num, pfile)
+        print str.format("{},{},{},{},{},{},{},{},{},{},{},{}", v_name, "MV", "", "", "", "", p_name, presult, ptime, prun_num, pfile, dlen)
     else:
         presult, ptime, prun_num, pfile = all_dict[p_name][0]
         vresult, vtime, vrun_num, vfile = all_dict[v_name][0]
@@ -86,7 +87,7 @@ def summarize_test_results(roundpath):
             key = "PP_VF"
         else:
             key = "PF_VF"
-        print str.format("{},{},{},{},{},{},{},{},{},{},{}", v_name, key, vresult, vtime, vrun_num, vfile, p_name, presult, ptime, prun_num, pfile)
+        print str.format("{},{},{},{},{},{},{},{},{},{},{},{}", v_name, key, vresult, vtime, vrun_num, vfile, p_name, presult, ptime, prun_num, pfile, dlen)
 
 if __name__ == '__main__':
     summarize_test_results(sys.argv)
