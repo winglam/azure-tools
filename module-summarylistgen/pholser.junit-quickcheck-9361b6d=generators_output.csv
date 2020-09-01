@@ -351,7 +351,6 @@ com.pholser.junit.quickcheck.OffsetTimePropertyParameterTypesTest.missingMax
 com.pholser.junit.quickcheck.OffsetTimePropertyParameterTypesTest.missingMin
 com.pholser.junit.quickcheck.OffsetTimePropertyParameterTypesTest.offsetTime
 com.pholser.junit.quickcheck.OffsetTimePropertyParameterTypesTest.rangedOffsetTime
-com.pholser.junit.quickcheck.OnlyAlsoTest.
 com.pholser.junit.quickcheck.PeriodPropertyParameterTypesTest.backwardsRange
 com.pholser.junit.quickcheck.PeriodPropertyParameterTypesTest.malformedMax
 com.pholser.junit.quickcheck.PeriodPropertyParameterTypesTest.malformedMin

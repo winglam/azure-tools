@@ -1,4 +1,3 @@
 com.spinn3r.noxy.reverse.ReverseProxyServiceTest.testBasicRequests
 com.spinn3r.noxy.reverse.ReverseProxyServiceTest.testRequestMetaForSuccessfulRequest
 com.spinn3r.noxy.reverse.ReverseProxyServiceTest.testVerifyBadGatewayWithNoBackendServers
-com.spinn3r.noxy.reverse.TestBasicReverseProxies.

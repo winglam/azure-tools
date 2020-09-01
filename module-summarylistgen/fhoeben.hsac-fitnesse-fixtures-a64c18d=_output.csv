@@ -329,10 +329,6 @@ nl.hsac.fitnesse.junit.selenium.LocalSeleniumDriverFactoryFactoryTest.testWithSp
 nl.hsac.fitnesse.junit.selenium.SeleniumGridDriverFactoryFactoryTest.testCapabilitiesParseBasic
 nl.hsac.fitnesse.junit.selenium.SeleniumGridDriverFactoryFactoryTest.testCapabilitiesParseWithColonInValue
 nl.hsac.fitnesse.junit.selenium.SeleniumGridDriverFactoryFactoryTest.testCapabilitiesParseWithQuotes
-nl.hsac.fitnesse.reportgen.GenerateFitSampleReportTest.
-nl.hsac.fitnesse.reportgen.GenerateHttpSampleReportTest.
-nl.hsac.fitnesse.reportgen.GenerateMockXmlServerSampleReportTest.
-nl.hsac.fitnesse.reportgen.GenerateUtilSampleReportTest.
 nl.hsac.fitnesse.slim.converter.NumberedListConverterTest.testFromStringEmpty
 nl.hsac.fitnesse.slim.converter.NumberedListConverterTest.testFromStringFilled
 nl.hsac.fitnesse.slim.converter.NumberedListConverterTest.testFromStringStandardList

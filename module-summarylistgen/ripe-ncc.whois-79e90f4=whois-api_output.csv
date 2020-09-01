@@ -15,7 +15,6 @@ net.ripe.db.whois.api.httpserver.RemoteAddressFilterTest.forward_headers_ripe_ra
 net.ripe.db.whois.api.httpserver.RemoteAddressFilterTest.init
 net.ripe.db.whois.api.httpserver.RemoteAddressFilterTest.no_forward_header
 net.ripe.db.whois.api.httpserver.RemoteAddressFilterTest.no_servletRequest
-net.ripe.db.whois.api.mail.dao.MailMessageDaoJdbcTest.
 net.ripe.db.whois.api.mail.dequeue.MailMessageBuilderTest.help
 net.ripe.db.whois.api.mail.dequeue.MailMessageBuilderTest.messageInfo
 net.ripe.db.whois.api.mail.dequeue.MailMessageBuilderTest.multiple_content_separate_parts

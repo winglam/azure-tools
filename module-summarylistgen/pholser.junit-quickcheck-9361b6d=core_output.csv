@@ -72,7 +72,6 @@ com.pholser.junit.quickcheck.ExhaustingAGivenSetTest.wrapperLongs
 com.pholser.junit.quickcheck.ExhaustingAGivenSetTest.wrapperShorts
 com.pholser.junit.quickcheck.FilterTest.filter
 com.pholser.junit.quickcheck.FilterTest.filterOptional
-com.pholser.junit.quickcheck.FooEqualsHashCodeTest.
 com.pholser.junit.quickcheck.generator.ArrayOfBoxOfHuhPropertyParameterTest.producesExpectedRandomValues
 com.pholser.junit.quickcheck.generator.ArrayOfBoxOfHuhPropertyParameterTest.verifyInteractionWithRandomness
 com.pholser.junit.quickcheck.generator.BoxOfSuperLongPropertyParameterTest.producesExpectedRandomValues

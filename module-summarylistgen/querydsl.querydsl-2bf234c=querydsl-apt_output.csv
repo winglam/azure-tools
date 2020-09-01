@@ -1,6 +1,5 @@
 com.querydsl.apt.BooleanExtensionsTest.process
 com.querydsl.apt.BooleanExtensionsTest.process2
-com.querydsl.apt.DateExtensionsTest.
 com.querydsl.apt.domain.AbstractClasses2Test.grant_id_type_and_class
 com.querydsl.apt.domain.AbstractClasses2Test.party_id_type_and_class
 com.querydsl.apt.domain.AbstractClassesTest.grant_id_type
@@ -11,7 +10,6 @@ com.querydsl.apt.domain.AbstractProperties2Test.abstractEntity_super_is_availabl
 com.querydsl.apt.domain.AbstractProperties2Test.genericEntity_id_is_available
 com.querydsl.apt.domain.AbstractProperties2Test.user_is_available
 com.querydsl.apt.domain.AbstractProperties2Test.user_super_is_available
-com.querydsl.apt.domain.AbstractProperties3Test.
 com.querydsl.apt.domain.AnimalTest.properties_are_copied_from_super
 com.querydsl.apt.domain.AnnotatedGettersTest.annotated_getter_is_supported
 com.querydsl.apt.domain.AnyPathTest.anyPath
@@ -102,7 +100,6 @@ com.querydsl.apt.domain.MonitoredCompanyTest.test
 com.querydsl.apt.domain.OneToOneTest.test
 com.querydsl.apt.domain.OrderTest.test
 com.querydsl.apt.domain.p6.TypeTest.test
-com.querydsl.apt.domain.PathMetadataTest.
 com.querydsl.apt.domain.PathTest.test
 com.querydsl.apt.domain.PersonTest.test
 com.querydsl.apt.domain.Properties2Test.test
@@ -110,7 +107,6 @@ com.querydsl.apt.domain.Properties3Test.propertyType
 com.querydsl.apt.domain.Properties4Test.test
 com.querydsl.apt.domain.PropertiesTest.customer
 com.querydsl.apt.domain.PropertiesTest.pizza
-com.querydsl.apt.domain.PropertyTypeTest.
 com.querydsl.apt.domain.QueryByExampleTest.name_not_set
 com.querydsl.apt.domain.QueryByExampleTest.name_set
 com.querydsl.apt.domain.QuerydslConfig2Test.create_default_variable
@@ -192,7 +188,6 @@ com.querydsl.apt.domain.TemporalTest.test
 com.querydsl.apt.domain.TransientTest.test
 com.querydsl.apt.EclipseCompilationTest.test
 com.querydsl.apt.EmbeddableTest.process
-com.querydsl.apt.EntityExtensionsTest.
 com.querydsl.apt.ExcludedClassesTest.process
 com.querydsl.apt.ExcludedPackagesTest.process
 com.querydsl.apt.GenericExporterTest.execute
@@ -203,7 +198,6 @@ com.querydsl.apt.GenericTest.test
 com.querydsl.apt.GenericTest.test2
 com.querydsl.apt.IncludedClassesTest.process
 com.querydsl.apt.IncludedPackagesTest.process
-com.querydsl.apt.IncrementalCompilationTest.
 com.querydsl.apt.inheritance.Inheritance11Test.test
 com.querydsl.apt.inheritance.Inheritance3Test.genericSupertype
 com.querydsl.apt.inheritance.Inheritance3Test.genericSupertypeC

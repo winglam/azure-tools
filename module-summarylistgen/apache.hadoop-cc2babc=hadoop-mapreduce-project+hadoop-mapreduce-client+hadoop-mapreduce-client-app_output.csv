@@ -1,4 +1,3 @@
-org.apache.hadoop.mapred.TestLocalContainerLauncher.
 org.apache.hadoop.mapred.TestLocalContainerLauncher.testKillJob
 org.apache.hadoop.mapred.TestLocalContainerLauncher.testRenameMapOutputForReduce
 org.apache.hadoop.mapred.TestTaskAttemptFinishingMonitor.testFinshingAttemptTimeout
@@ -17,7 +16,6 @@ org.apache.hadoop.mapreduce.jobhistory.TestEvents.testJobPriorityChange
 org.apache.hadoop.mapreduce.jobhistory.TestEvents.testJobQueueChange
 org.apache.hadoop.mapreduce.jobhistory.TestEvents.testTaskAttemptFinishedEvent
 org.apache.hadoop.mapreduce.jobhistory.TestEvents.testTaskUpdated
-org.apache.hadoop.mapreduce.jobhistory.TestJobHistoryEventHandler.
 org.apache.hadoop.mapreduce.jobhistory.TestJobHistoryEventHandler.testAMStartedEvent
 org.apache.hadoop.mapreduce.jobhistory.TestJobHistoryEventHandler.testBatchedFlushJobEndMultiplier
 org.apache.hadoop.mapreduce.jobhistory.TestJobHistoryEventHandler.testCountersToJSON

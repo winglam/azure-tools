@@ -8,7 +8,6 @@ cern.c2mon.server.elasticsearch.IndicesTests.monthlyIndex
 cern.c2mon.server.elasticsearch.IndicesTests.weeklyIndex
 cern.c2mon.server.elasticsearch.supervision.SupervisionEventDocumentIndexerTests.logSupervisionEvent
 cern.c2mon.server.elasticsearch.supervision.SupervisionEventDocumentTests.toAndFromJson
-cern.c2mon.server.elasticsearch.tag.BaseTagDocumentConverterTest.
 cern.c2mon.server.elasticsearch.tag.config.TagConfigDocumentConverterTests.toAndFromJson
 cern.c2mon.server.elasticsearch.tag.config.TagConfigDocumentIndexerTests.addDataTag
 cern.c2mon.server.elasticsearch.tag.config.TagConfigDocumentIndexerTests.reindexTagConfigDocuments

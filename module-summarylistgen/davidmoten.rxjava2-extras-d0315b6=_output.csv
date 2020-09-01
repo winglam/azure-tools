@@ -335,7 +335,6 @@ com.github.davidmoten.rx2.SchedulerHelperTest.testDispose
 com.github.davidmoten.rx2.SchedulerHelperTest.testIsUtilityClass
 com.github.davidmoten.rx2.SchedulerHelperTest.testWithCallSite
 com.github.davidmoten.rx2.SchedulerHelperTest.testWithId
-com.github.davidmoten.rx2.SpecializedMspcLinkedQueueTest.
 com.github.davidmoten.rx2.StateMachineTest.testBuilder
 com.github.davidmoten.rx2.StateMachineTest.testIsUtilityClass
 com.github.davidmoten.rx2.StateMachineTest.testIsUtilityClassCompletionAlwaysTrueHolder

@@ -368,7 +368,6 @@ io.undertow.server.protocol.proxy.ProxyProtocolTestCase.testProxyProtocolTcp6Neg
 io.undertow.server.protocol.proxy.ProxyProtocolTestCase.testProxyProtocolUnknownEmpty
 io.undertow.server.protocol.proxy.ProxyProtocolTestCase.testProxyProtocolUnknownJunk
 io.undertow.server.protocol.proxy.ProxyProtocolTestCase.testProxyProtocolUnknownSpace
-io.undertow.server.ReadTimeoutTestCase.
 io.undertow.server.security.BasicAuthenticationTestCase.testBadPassword
 io.undertow.server.security.BasicAuthenticationTestCase.testBadUserName
 io.undertow.server.security.BasicAuthenticationTestCase.testBasicSuccess
@@ -428,7 +427,6 @@ io.undertow.server.ssl.SimpleSSLTestCase.simpleSSLTestCase
 io.undertow.server.ssl.SimpleSSLTestCase.testNonPersistentConnections
 io.undertow.server.StopTestCase.testStopUndertowAfterExceptionDuringStart
 io.undertow.server.StopTestCase.testStopUndertowNotStarted
-io.undertow.server.WriteTimeoutTestCase.
 io.undertow.util.CanonicalPathUtilsTestCase.testCanonicalization
 io.undertow.util.CanonicalPathUtilsTestCase.testCanonicalizationBackslash
 io.undertow.util.ContentTypeParsingTestCase.testCharsetParsing

@@ -113,7 +113,6 @@ cern.c2mon.daq.common.tools.DataTagValueValidatorTest.isInRangeFloat
 cern.c2mon.daq.common.tools.DataTagValueValidatorTest.isInRangeInteger
 cern.c2mon.daq.common.tools.DataTagValueValidatorTest.isInRangeLong
 cern.c2mon.daq.filter.dynamic.CounterMovingAverageTest.testAverage
-cern.c2mon.daq.filter.dynamic.CounterTimeDeadbandActivatorTest.
 cern.c2mon.daq.filter.dynamic.DiffMovingAverageTest.testAverage
 cern.c2mon.daq.filter.dynamic.DiffMovingAverageTest.testAverageAfterFirstAdd
 cern.c2mon.daq.filter.dynamic.DiffTimeDeadbandActivatorTest.testDataTagAddRemove

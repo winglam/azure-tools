@@ -6,7 +6,6 @@ org.apache.dubbo.config.spring.beans.factory.annotation.ReferenceAnnotationBeanP
 org.apache.dubbo.config.spring.beans.factory.annotation.ReferenceAnnotationBeanPostProcessorTest.testGetReferenceBeans
 org.apache.dubbo.config.spring.beans.factory.annotation.ReferenceAnnotationBeanPostProcessorTest.testModuleInfo
 org.apache.dubbo.config.spring.beans.factory.annotation.ServiceAnnotationBeanPostProcessorTest.test
-org.apache.dubbo.config.spring.ConfigTest.
 org.apache.dubbo.config.spring.context.annotation.DubboComponentScanRegistrarTest.test
 org.apache.dubbo.config.spring.context.annotation.DubboConfigBindingRegistrarTest.testRegisterBeanDefinitionsForMultiple
 org.apache.dubbo.config.spring.context.annotation.DubboConfigBindingRegistrarTest.testRegisterBeanDefinitionsForSingle

@@ -1615,7 +1615,6 @@ org.activiti.examples.mgmt.TablePageQueryTest.testGetTablePage
 org.activiti.examples.processdefinitions.ProcessDefinitionsTest.testDeployIdenticalProcessDefinitions
 org.activiti.examples.processdefinitions.ProcessDefinitionsTest.testGetProcessDefinitions
 org.activiti.examples.processdefinitions.ProcessDefinitionsTest.testProcessDefinitionDescription
-org.activiti.examples.runtime.StandardAgendaFailingTest.
 org.activiti.examples.runtime.WatchDogAgendaTest.testWatchDogWithEndLessLoop
 org.activiti.examples.runtime.WatchDogAgendaTest.testWatchDogWithOneTaskProcess
 org.activiti.examples.task.StandaloneTaskTest.testCreateToComplete
