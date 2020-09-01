@@ -7,8 +7,8 @@ testName=$6
 slug=$7
 module=$8
 JMVNOPTIONS=$9
-dir=$10
-RESULTSDIR=$11
+dir=${10}
+RESULTSDIR=${11}
 
 
 echo "Iteration $i / $total"

@@ -7,7 +7,7 @@ module=$6
 dir=$7
 fullTestName=$8
 ordering=$9
-start=$10
+start=${10}
 
 echo "================Running rounds"
 set -x
