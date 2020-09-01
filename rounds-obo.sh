@@ -30,8 +30,16 @@ else
     fi
 
     echo "" > $i-$f-$fullTestName.csv
-    for j in $(find -name "TEST*.xml"); do
-	python $dir/python-scripts/parse_surefire_report.py $j $i "" >> $i-$f-$fullTestName.csv
+    pf=$(find -name "TEST-${fc}.xml" | head -n 1)
+    vf=$(find -name "TEST-${fullClass}.xml" | head -n 1)
+    python $dir/python-scripts/parse_surefire_report.py $pf $i $f >> $i-$f-$fullTestName.csv
+    python $dir/python-scripts/parse_surefire_report.py $vf $i $fullTestName >> $i-$f-$fullTestName.csv
+    sort -u $i-$f-$fullTestName.csv -o $i-$f-$fullTestName.csv
+
+    for j in $(find -name "TEST-*.xml"); do
+	if [[ "$j" != "$vf" && "$j" != "$pf" ]]; then
+	    python $dir/python-scripts/parse_surefire_report.py $j $i "" >> $i-$f-$fullTestName.csv
+	fi
     done
     cp $i-$f-$fullTestName.csv ${RESULTSDIR}/pair-results
 
