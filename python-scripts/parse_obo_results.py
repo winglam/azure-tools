@@ -70,10 +70,10 @@ def summarize_test_results(roundpath):
     if v_name not in all_dict.keys() and p_name not in all_dict.keys():
         print str.format("{},{},{},{},{},{},{},{},{},{},{},{}", v_name, "MVP", "", "", "", "", p_name, "", "", "", "", dlen)
     elif p_name not in all_dict.keys():
-        vresult, vtime, vrun_num, vfile = all_dict[v_name]
+        vresult, vtime, vrun_num, vfile = all_dict[v_name][0]
         print str.format("{},{},{},{},{},{},{},{},{},{},{},{}", v_name, "MP", vresult, vtime, vrun_num, vfile, p_name, "", "", "", "", dlen)
     elif v_name not in all_dict.keys():
-        presult, ptime, prun_num, pfile = all_dict[p_name]
+        presult, ptime, prun_num, pfile = all_dict[p_name][0]
         print str.format("{},{},{},{},{},{},{},{},{},{},{},{}", v_name, "MV", "", "", "", "", p_name, presult, ptime, prun_num, pfile, dlen)
     else:
         presult, ptime, prun_num, pfile = all_dict[p_name][0]
