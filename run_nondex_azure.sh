@@ -42,7 +42,7 @@ fullTestName=$(echo ${line} | cut -d',' -f3)
 module=$(echo ${line} | cut -d',' -f4)
 seed=$(echo ${line} | cut -d',' -f5)
 
-MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip"
+MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
 
 modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
@@ -93,7 +93,7 @@ fi
 echo "Location of module: $module"
 
 # echo "================Installing the project"
-bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir"
+bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir" "$fullTestName"
 ret=${PIPESTATUS[0]}
 mv mvn-install.log ${RESULTSDIR}
 if [[ $ret != 0 ]]; then
@@ -112,30 +112,22 @@ fi
 cd ~/$slug
 
 echo "================Modifying pom for nondex"
-if [[ "$modifiedslug_with_sha" == "hexagonframework.spring-data-ebean-dd11b97" ]]; then
-    rm -rf pom.xml
-    cp $dir/poms/${modifiedslug_with_sha}=pom.xml pom.xml
-fi
 bash $dir/nondex-files/modify-project.sh .
 
 echo "================Running NonDex"
+if [[ "$slug" == "dropwizard/dropwizard" ]]; then
+    # dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
+    MVNOPTIONS="${MVNOPTIONS} -am"
+elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
+    MVNOPTIONS="${MVNOPTIONS} -DskipITs"
+fi
+
 if [[ "$seed" != "" ]]; then
     echo "Seed is provided: $seed"
     seedarg="-DnondexSeed=$seed -DnondexRerun"
 fi
 
-if [[ "$slug" == "dropwizard/dropwizard" ]]; then
-    # dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
-    mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module -am ${testarg} ${MVNOPTIONS} $ordering ${seedarg} |& tee mvn-test.log
-elif [[ "$modifiedslug_with_sha" == "apache.struts-13d9053" || "$modifiedslug_with_sha" == "apache.struts-0c543ae" ]] && [[ $fullTestName == "com.opensymphony.xwork2.validator.AnnotationActionValidatorManagerTest.testSkipUserMarkerActionLevelShortCircuit" || $fullTestName == "com.opensymphony.xwork2.validator.AnnotationActionValidatorManagerTest.testGetValidatorsForInterface" ]]; then
-    rm ./core/src/test/java/com/opensymphony/xwork2/validator/AnnotationActionValidatorManagerTest.java
-    cp $dir/files/${modifiedslug_with_sha}=${fullTestName}.java ./core/src/test/java/com/opensymphony/xwork2/validator/AnnotationActionValidatorManagerTest.java
-    mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module ${testarg} ${MVNOPTIONS} $ordering ${seedarg} |& tee mvn-test.log
-elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
-    mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module ${testarg} ${MVNOPTIONS} $ordering -DskipITs ${seedarg} |& tee mvn-test.log
-else
-    mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module ${testarg} ${MVNOPTIONS} $ordering ${seedarg} |& tee mvn-test.log
-fi
+mvn nondex:nondex -DnondexMode=ONE -DnondexRuns=$rounds -pl $module ${testarg} ${MVNOPTIONS} $ordering ${seedarg} |& tee mvn-test.log
 cp mvn-test.log ${RESULTSDIR}
 awk "/Test results can be found/{t=0} {if(t)print} /Across all seeds/{t=1}" mvn-test.log > ${RESULTSDIR}/nod-tests.txt
 

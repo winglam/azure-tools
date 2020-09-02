@@ -20,14 +20,7 @@ else
     fc="$(echo $f | rev | cut -d. -f2- | rev)"
     ft="$(echo $f | rev | cut -d. -f1 | rev)"
     testarg="-Dtest=$fc#$ft,$fullClass#$testName -DflakyTestOrder=$ft($fc),$testName($fullClass)";
-    if [[ "$slug" == "dropwizard/dropwizard" ]]; then
-	# dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
-	mvn test -pl $module -am ${testarg} ${JMVNOPTIONS} |& tee mvn-test-$i-$f-$fullTestName.log
-    elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
-	mvn test -pl $module ${testarg} ${JMVNOPTIONS} -DskipITs |& tee mvn-test-$i-$f-$fullTestName.log
-    else
-	mvn test -pl $module ${testarg} ${JMVNOPTIONS} |& tee mvn-test-$i-$f-$fullTestName.log
-    fi
+    mvn test -pl $module ${testarg} ${JMVNOPTIONS} |& tee mvn-test-$i-$f-$fullTestName.log
 
     echo "" > $i-$f-$fullTestName.csv
     pf=$(find -name "TEST-${fc}.xml" | head -n 1)

@@ -15,14 +15,7 @@ for ((i=start;i<=rounds;i++)); do
     echo "Iteration: $i / $rounds"
     find -name "TEST-*.xml" -delete
 
-    if [[ "$slug" == "dropwizard/dropwizard" ]]; then
-	# dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
-	mvn test -pl $module -am ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test-$i.log
-    elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
-	mvn test -pl $module ${testarg} ${MVNOPTIONS} $ordering -DskipITs |& tee mvn-test-$i.log
-    else
-	mvn test -pl $module ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test-$i.log
-    fi
+    mvn test -pl $module ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test-$i.log
 
     for f in $(find -name "TEST-*.xml" -not -path "*target/surefire-reports/junitreports/*"); do python $dir/python-scripts/parse_surefire_report.py $f $i $fullTestName; done >> rounds-test-results.csv
 

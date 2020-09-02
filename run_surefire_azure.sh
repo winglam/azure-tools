@@ -26,7 +26,7 @@ slug=$(echo ${line} | cut -d',' -f1 | rev | cut -d'/' -f1-2 | rev)
 sha=$(echo ${line} | cut -d',' -f2)
 module=$(echo ${line} | cut -d',' -f3)
 
-MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip"
+MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
 
 modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
@@ -52,7 +52,7 @@ fi
 echo "Location of module: $module"
 
 # echo "================Installing the project"
-bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir"
+bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir" "$fullTestName"
 ret=${PIPESTATUS[0]}
 mv mvn-install.log ${RESULTSDIR}
 if [[ $ret != 0 ]]; then
@@ -71,6 +71,13 @@ bash $dir/pom-modify/modify-project.sh . modifyOrder=$mavenorder
 #echo "Ordering to run: $ordering"
 
 #echo "================Running maven test"
+if [[ "$slug" == "dropwizard/dropwizard" ]]; then
+    # dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
+    MVNOPTIONS="${MVNOPTIONS} -am"
+elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
+    MVNOPTIONS="${MVNOPTIONS} -DskipITs"
+fi
+
 bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering" "$sha" "$dir" "$fullTestName"
 ret=${PIPESTATUS[0]}
 cp mvn-test.log ${RESULTSDIR}

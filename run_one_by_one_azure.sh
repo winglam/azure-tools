@@ -28,7 +28,7 @@ module=$(echo ${line} | cut -d',' -f4)
 polluter=$(echo ${line} | cut -d',' -f5)
 
 
-MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip"
+MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
 
 modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
@@ -79,7 +79,7 @@ fi
 echo "Location of module: $module"
 
 # echo "================Installing the project"
-bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir"
+bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir" "$fullTestName"
 ret=${PIPESTATUS[0]}
 mv mvn-install.log ${RESULTSDIR}
 if [[ $ret != 0 ]]; then
@@ -97,9 +97,11 @@ pip install BeautifulSoup4
 pip install lxml
 
 echo "================Starting OBO"
-if [[ "$modifiedslug_with_sha" == "hexagonframework.spring-data-ebean-dd11b97" ]]; then
-    rm -rf pom.xml
-    cp $dir/poms/${modifiedslug_with_sha}=pom.xml pom.xml
+if [[ "$slug" == "dropwizard/dropwizard" ]]; then
+    # dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
+    MVNOPTIONS="${MVNOPTIONS} -am"
+elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
+    MVNOPTIONS="${MVNOPTIONS} -DskipITs"
 fi
 
 JMVNOPTIONS="${MVNOPTIONS} -Dsurefire.methodRunOrder=flakyfinding -Djava.awt.headless=true -Dmaven.main.skip -DtrimStackTrace=false -Dmaven.test.failure.ignore=true"
