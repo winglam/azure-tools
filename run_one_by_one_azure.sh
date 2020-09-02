@@ -107,7 +107,7 @@ fullClass="$(echo $fullTestName | rev | cut -d. -f2- | rev)"
 testName="$(echo $fullTestName | rev | cut -d. -f1 | rev )"
 mkdir -p ${RESULTSDIR}/pair-results
 if [[ "$polluter" != "" ]]; then
-    echo "Single polluter passed in: $polltuer"
+    echo "Single polluter passed in: $polluter"
     for ((i=1;i<=rounds;i++)); do
 	bash $dir/rounds-obo.sh "$i" "$rounds" "$polluter" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR"
     done
