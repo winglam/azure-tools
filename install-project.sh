@@ -60,6 +60,10 @@ elif [[ "$modifiedslug_with_sha" == "hexagonframework.spring-data-ebean-dd11b97"
     rm -rf pom.xml
     cp $dir/poms/${modifiedslug_with_sha}=pom.xml pom.xml
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$modifiedslug_with_sha" == "dropwizard.dropwizard-6e5c9c5" ]] && [[ $fullTestName == "io.dropwizard.logging.json.layout.JsonFormatterTest.testPrettyPrintNoLineSeparator" || $fullTestName == "io.dropwizard.logging.json.layout.JsonFormatterTest.testPrettyPrintWithLineSeparator" ]]; then
+    rm ./dropwizard-json-logging/src/test/java/io/dropwizard/logging/json/layout/JsonFormatterTest.java
+    cp $dir/files/${modifiedslug_with_sha}=${fullTestName}.java ./dropwizard-json-logging/src/test/java/io/dropwizard/logging/json/layout/JsonFormatterTest.java
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$modifiedslug_with_sha" == "apache.struts-13d9053" || "$modifiedslug_with_sha" == "apache.struts-0c543ae" ]] && [[ $fullTestName == "com.opensymphony.xwork2.validator.AnnotationActionValidatorManagerTest.testSkipUserMarkerActionLevelShortCircuit" || $fullTestName == "com.opensymphony.xwork2.validator.AnnotationActionValidatorManagerTest.testGetValidatorsForInterface" ]]; then
     rm ./core/src/test/java/com/opensymphony/xwork2/validator/AnnotationActionValidatorManagerTest.java
     cp $dir/files/${modifiedslug_with_sha}=${fullTestName}.java ./core/src/test/java/com/opensymphony/xwork2/validator/AnnotationActionValidatorManagerTest.java
