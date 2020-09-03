@@ -56,6 +56,32 @@ elif [[ "$modifiedslug_with_sha" == "pholser.junit-quickcheck-4480798" ]]; then
 elif [[ "$modifiedslug_with_sha" == "tools4j.unix4j-1c9524d" ]]; then
     sed -i "s?@Ignore?//@Ignore?" $(find -name FindFileTimeDependentTest.java)
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-01b2479" ]]; then
+    sed -i 's?http://repo2.maven.org/maven2?https://repo.maven.apache.org/maven2?' pom.xml
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-197ba6c" ]]; then
+    sed -i 's?net.sf.json.JSONException?com.alibaba.fastjson.JSONException?' src/main/java/com/alibaba/fastjson/parser/deserializer/OptionalCodec.java
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-29e0091" ]]; then
+    sed -i "6,10d" pom.xml
+    sed -i "5d" src/test/java/com/alibaba/json/bvt/serializer/DoubleFormatTest.java
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-2ce3c5e" ]]; then
+    rm src/test/java/com/alibaba/json/bvt/serializer/NoneStringKeyTest_2.java src/test/java/com/alibaba/json/test/benchmark/jdk10/StringBenchmark.java src/test/java/com/alibaba/json/test/benchmark/jdk10/StringBenchmark_jackson.java
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-420d611" ]]; then
+    sed -i "5d" src/test/java/com/alibaba/json/bvt/serializer/DoubleFormatTest.java
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-64d6ecb" ]]; then
+    sed -i 's?net.sf.json.JSONException?com.alibaba.fastjson.JSONException?' src/main/java/com/alibaba/fastjson/parser/deserializer/OptionalCodec.java
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-da578f6" ]]; then
+    sed -i '33d' src/main/java/com/alibaba/fastjson/parser/deserializer/ArrayListStringDeserializer.java
+    sed -i '7d' src/main/java/com/alibaba/fastjson/parser/deserializer/ArrayListStringDeserializer.java
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-e8b094a" ]]; then
+    sed -i "5d" src/test/java/com/alibaba/json/bvt/serializer/DoubleFormatTest.java
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$modifiedslug_with_sha" == "hexagonframework.spring-data-ebean-dd11b97" ]]; then
     rm -rf pom.xml
     cp $dir/poms/${modifiedslug_with_sha}=pom.xml pom.xml
