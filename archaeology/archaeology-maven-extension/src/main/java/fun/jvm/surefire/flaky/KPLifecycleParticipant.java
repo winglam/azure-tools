@@ -48,6 +48,7 @@ public class KPLifecycleParticipant extends AbstractMavenLifecycleParticipant {
 		disabledPlugins.add("jacoco-maven-plugin");
 		disabledPlugins.add("maven-dependency-versions-check-plugin");
 		disabledPlugins.add("duplicate-finder-maven-plugin");
+		disabledPlugins.add("findbugs-maven-plugin");
 	}
 
 	LinkedList<Configurator> configurators = new LinkedList<>();
@@ -255,6 +256,7 @@ public class KPLifecycleParticipant extends AbstractMavenLifecycleParticipant {
 			config.addChild(argLine);
 		}
 		argLine.setValue(argLine.getValue().replace("${surefireArgLine}", ""));
+		argLine.setValue(argLine.getValue().replace("${sureFireArgLine}", ""));
 		argLine.setValue(argLine.getValue().replace("'${jacocoArgLine}'", ""));
 		argLine.setValue(argLine.getValue().replace("${jacocoArgLine}", ""));
 		if (argLine != null && argLine.getValue().equals("${argLine}"))

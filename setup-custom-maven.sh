@@ -6,10 +6,10 @@ module=$5
 
 echo "================Setting up maven-surefire"
 
-# if [[ "$modifiedslug_with_sha" == "spring-projects.spring-boot-daa3d45" ]] && [[ "$module" == "./spring-boot-project/spring-boot-test" || "$module" == "./spring-boot-project/spring-boot-test-autoconfigure" ]]; then
-#     echo "Skipping setup of maven-surefire for $modifiedslug_with_sha $module"
-#     exit 0
-# fi
+if [[ "$modifiedslug_with_sha" == "alibaba.fastjson-01b2479" || "$modifiedslug_with_sha" == "apache.hbase-9f1bfbe" ]]; then
+    echo "Skipping setup of maven-surefire for $modifiedslug_with_sha $module"
+    exit 0
+fi
 
 cd ~/
 git clone https://github.com/gmu-swe/maven-surefire.git
