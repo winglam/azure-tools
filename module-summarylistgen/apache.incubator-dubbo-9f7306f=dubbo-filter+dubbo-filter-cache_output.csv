@@ -1,9 +1,3 @@
-com.alibaba.dubbo.cache.filter.CacheFilterTest.testMethodWithArgs[0]
-com.alibaba.dubbo.cache.filter.CacheFilterTest.testMethodWithArgs[1]
-com.alibaba.dubbo.cache.filter.CacheFilterTest.testMethodWithArgs[2]
-com.alibaba.dubbo.cache.filter.CacheFilterTest.testNonArgsMethod[0]
-com.alibaba.dubbo.cache.filter.CacheFilterTest.testNonArgsMethod[1]
-com.alibaba.dubbo.cache.filter.CacheFilterTest.testNonArgsMethod[2]
 com.alibaba.dubbo.cache.support.jcache.JCacheFactoryTest.testJCacheFactory
 com.alibaba.dubbo.cache.support.jcache.JCacheFactoryTest.testJCacheGetExpired
 com.alibaba.dubbo.cache.support.lru.LruCacheFactoryTest.testLruCacheFactory

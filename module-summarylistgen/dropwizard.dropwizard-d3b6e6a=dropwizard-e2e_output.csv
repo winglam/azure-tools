@@ -1,7 +1,3 @@
-any=false]
-any=true]
-both=false]
-both=true]
 com.example.app1.App1Test.custom204OnEmptyOptional
 com.example.app1.App1Test.custom404OnViewRenderMissingMustacheTemplate
 com.example.app1.App1Test.customBodyWriterTest
@@ -13,13 +9,6 @@ com.example.request_log.CustomRequestLogPatternIntegrationTest.testCustomPattern
 com.example.request_log.RequestLogPatternIntegrationTest.testDefaultPattern
 com.example.sslreload.SslReloadAppTest.badReloadDoesNotChangeTheServerCertificate
 com.example.sslreload.SslReloadAppTest.reloadCertificateChangesTheServerCertificate
-exc=false]
-exc=true]
-excWithSuffix=false]
-excWithSuffix=true]
-inc=true]
-incWithSuffix=false]
-incWithSuffix=true]
 io.dropwizard.ApplicationTest.canDetermineConfiguration
 io.dropwizard.ApplicationTest.canDetermineWrappedConfiguration
 io.dropwizard.ApplicationTest.exitWithFatalErrorWhenCommandFails

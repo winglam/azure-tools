@@ -5,7 +5,6 @@ com.alibaba.dubbo.config.spring.beans.factory.annotation.ReferenceAnnotationBean
 com.alibaba.dubbo.config.spring.beans.factory.annotation.ReferenceAnnotationBeanPostProcessorTest.testGetInjectedMethodReferenceBeanMap
 com.alibaba.dubbo.config.spring.beans.factory.annotation.ReferenceAnnotationBeanPostProcessorTest.testGetReferenceBeans
 com.alibaba.dubbo.config.spring.beans.factory.annotation.ServiceAnnotationBeanPostProcessorTest.test
-com.alibaba.dubbo.config.spring.ConfigTest.
 com.alibaba.dubbo.config.spring.context.annotation.DubboComponentScanRegistrarTest.test
 com.alibaba.dubbo.config.spring.context.annotation.DubboConfigBindingRegistrarTest.testRegisterBeanDefinitionsForMultiple
 com.alibaba.dubbo.config.spring.context.annotation.DubboConfigBindingRegistrarTest.testRegisterBeanDefinitionsForSingle

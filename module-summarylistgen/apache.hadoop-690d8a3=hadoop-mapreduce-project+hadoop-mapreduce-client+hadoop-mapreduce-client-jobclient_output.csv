@@ -33,7 +33,6 @@ org.apache.hadoop.mapred.TestKeyValueTextInputFormat.testUTF8
 org.apache.hadoop.mapred.TestLazyOutput.testLazyOutput
 org.apache.hadoop.mapred.TestMiniMRWithDFSWithDistinctUsers.testDistinctUsers
 org.apache.hadoop.mapred.TestMiniMRWithDFSWithDistinctUsers.testMultipleSpills
-org.apache.hadoop.mapred.TestMRCJCJobConf.
 org.apache.hadoop.mapred.TestNetworkedJob.testBlackListInfo
 org.apache.hadoop.mapred.TestNetworkedJob.testGetJobStatus
 org.apache.hadoop.mapred.TestNetworkedJob.testGetNullCounters

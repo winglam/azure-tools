@@ -249,7 +249,6 @@ ro.isdc.wro.extensions.processor.TestRhinoLessCssProcessor.shouldWorkProperlyWit
 ro.isdc.wro.extensions.processor.TestRhinoLessCssProcessor.testFromFolder
 ro.isdc.wro.extensions.processor.TestRhinoLiterateCoffeeScriptProcessor.shouldSupportCorrectResourceTypes
 ro.isdc.wro.extensions.processor.TestRhinoLiterateCoffeeScriptProcessor.testLiterate
-ro.isdc.wro.extensions.processor.TestRhinoTypeScriptProcessor.
 ro.isdc.wro.extensions.processor.TestRubySassCssProcessor.executeMultipleTimesDoesntThrowOutOfMemoryException
 ro.isdc.wro.extensions.processor.TestRubySassCssProcessor.shouldBeThreadSafe
 ro.isdc.wro.extensions.processor.TestRubySassCssProcessor.shouldBeThreadSafeWhenInitializingProcessor
