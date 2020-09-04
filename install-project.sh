@@ -56,6 +56,27 @@ elif [[ "$modifiedslug_with_sha" == "pholser.junit-quickcheck-4480798" ]]; then
 elif [[ "$modifiedslug_with_sha" == "tools4j.unix4j-1c9524d" ]]; then
     sed -i "s?@Ignore?//@Ignore?" $(find -name FindFileTimeDependentTest.java)
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$modifiedslug_with_sha" == "elasticjob.elastic-job-lite-3e5f30f" ]]; then
+    # Removing tests that hang or is just invoking other test classes (the polluter is the same class as the victim)
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/AllTests.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/AllJobTests.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/api/AllApiTests.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/exception/AllExceptionTests.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/AllIntegrateTests.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/sequence/OneOffSequenceDataFlowElasticJobTest.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/sequence/StreamingSequenceDataFlowElasticJobTest.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/OneOffThroughputDataFlowElasticJobTest.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForExecuteFailureTest.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForExecuteThrowsExceptionTest.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForMultipleThreadsTest.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForNotMonitorTest.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobTest.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/simple/DisabledJobTest.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/simple/SimpleElasticJobTest.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/internal/AllInternalTests.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/plugin/sharding/strategy/AllPluginTests.java
+    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/reg/AllRegTests.java
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$modifiedslug_with_sha" == "hexagonframework.spring-data-ebean-dd11b97" ]]; then
     rm -rf pom.xml
     cp $dir/poms/${modifiedslug_with_sha}=pom.xml pom.xml
