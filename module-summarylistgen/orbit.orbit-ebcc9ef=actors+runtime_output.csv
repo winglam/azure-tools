@@ -1,0 +1,15 @@
+cloud.orbit.actors.cloner.CloneHelperTest.testImmutableClasses
+cloud.orbit.actors.cloner.CloneHelperTest.testMessageWithObjectArrayPayload
+cloud.orbit.actors.cloner.CloneHelperTest.testMutableClasses
+cloud.orbit.actors.ExecutionSerializerTest.test
+cloud.orbit.actors.ExecutionSerializerTest.testException
+cloud.orbit.actors.ExecutionSerializerTest.testMulti
+cloud.orbit.actors.ExecutionSerializerTest.testMultiException
+cloud.orbit.actors.extensions.test.ConstructionTest.testConstruction
+cloud.orbit.actors.extensions.test.ConstructionTest.testDefaultConstruction
+cloud.orbit.actors.extensions.test.LengthFieldHandlerTest.randomMessages
+cloud.orbit.actors.extensions.test.LengthFieldHandlerTest.simpleTest
+cloud.orbit.actors.extensions.test.LengthFieldHandlerTest.testCuttingTheLength
+cloud.orbit.actors.extensions.test.LengthFieldHandlerTest.testPartialMessage
+cloud.orbit.actors.extensions.test.LengthFieldHandlerTest.testTwoMessages
+cloud.orbit.actors.runtime.ChannelTest.testChannel

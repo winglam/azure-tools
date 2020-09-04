@@ -1,0 +1,9 @@
+com.vmware.admiral.adapter.registry.service.RegistryAdapterServiceTest.testDockerHubListImageTags
+com.vmware.admiral.adapter.registry.service.RegistryAdapterServiceTest.testFailPing
+com.vmware.admiral.adapter.registry.service.RegistryAdapterServiceTest.testUnsupportedRegistrySearch
+com.vmware.admiral.adapter.registry.service.RegistryAdapterServiceTest.testV1ListImageTags
+com.vmware.admiral.adapter.registry.service.RegistryAdapterServiceTest.testV1Ping
+com.vmware.admiral.adapter.registry.service.RegistryAdapterServiceTest.testV1Search
+com.vmware.admiral.adapter.registry.service.RegistryAdapterServiceTest.testV2ListImageTags
+com.vmware.admiral.adapter.registry.service.RegistryAdapterServiceTest.testV2Ping
+com.vmware.admiral.adapter.registry.service.RegistryAdapterServiceTest.testV2Search

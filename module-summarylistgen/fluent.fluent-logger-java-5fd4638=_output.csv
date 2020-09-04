@@ -1,0 +1,10 @@
+org.fluentd.logger.sender.TestNullSender.testNormal
+org.fluentd.logger.sender.TestRawSocketSender.testNormal01
+org.fluentd.logger.sender.TestRawSocketSender.testNormal02
+org.fluentd.logger.sender.TestRawSocketSender.testNormal03
+org.fluentd.logger.sender.TestSenderFluentdDownOperation.testFluentdDownOperation01
+org.fluentd.logger.sender.TestSenderFluentdDownOperation.testFluentdDownOperation02
+org.fluentd.logger.TestFluentLogger.testClose
+org.fluentd.logger.TestFluentLogger.testNormal01
+org.fluentd.logger.TestFluentLogger.testNormal02
+org.fluentd.logger.TestFluentLogger.testReconnection

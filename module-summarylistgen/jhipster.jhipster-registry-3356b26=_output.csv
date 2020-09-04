@@ -1,0 +1,15 @@
+io.github.jhipster.registry.web.rest.AccountResourceTest.testAuthenticatedUser
+io.github.jhipster.registry.web.rest.AccountResourceTest.testGetExistingAccount
+io.github.jhipster.registry.web.rest.AccountResourceTest.testGetUnknownAccount
+io.github.jhipster.registry.web.rest.AccountResourceTest.testNonAuthenticatedUser
+io.github.jhipster.registry.web.rest.errors.CustomParameterizedExceptionTest.getErrorVMTest
+io.github.jhipster.registry.web.rest.errors.ErrorVMTest.addTest
+io.github.jhipster.registry.web.rest.errors.ErrorVMTest.getDescriptionTest
+io.github.jhipster.registry.web.rest.errors.ErrorVMTest.getFieldErrorsTest
+io.github.jhipster.registry.web.rest.errors.ErrorVMTest.getMessageTest
+io.github.jhipster.registry.web.rest.JWTTokenTest.getIdTokenTest
+io.github.jhipster.registry.web.rest.JWTTokenTest.setIdTokenTest
+io.github.jhipster.registry.web.rest.LogsResourceTest.changeLevelTest
+io.github.jhipster.registry.web.rest.LogsResourceTest.getListTest
+io.github.jhipster.registry.web.rest.ProfileInfoResourceTest.getActiveProfilesTest
+io.github.jhipster.registry.web.rest.SshResourceTest.eurekaTest

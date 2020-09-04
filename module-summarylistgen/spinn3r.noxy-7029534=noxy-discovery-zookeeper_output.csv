@@ -1,0 +1,3 @@
+com.spinn3r.noxy.discovery.zookeeper.ZKTest.testBulkClusterJoining
+com.spinn3r.noxy.discovery.zookeeper.ZKTest.testDiscoveryListener
+com.spinn3r.noxy.discovery.zookeeper.ZKTest.testMembershipJoinAndLeave
