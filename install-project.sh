@@ -76,6 +76,7 @@ elif [[ "$modifiedslug_with_sha" == "elasticjob.elastic-job-lite-3e5f30f" ]]; th
     rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/internal/AllInternalTests.java
     rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/plugin/sharding/strategy/AllPluginTests.java
     rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/reg/AllRegTests.java
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-01b2479" ]]; then
     sed -i 's?http://repo2.maven.org/maven2?https://repo.maven.apache.org/maven2?' pom.xml
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
