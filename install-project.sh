@@ -38,6 +38,9 @@ elif [[ "$slug" == "apache/hadoop" ]]; then
 	sed -i '166s/.*/<\/additionalClasspathElements><forkedProcessTimeoutInSeconds>7200<\/forkedProcessTimeoutInSeconds>/' ./hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-jobclient/pom.xml
     fi
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-01b2479" ]]; then
+    sed -i '165s/4\.5/4\.12/' pom.xml
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$slug" == "openpojo/openpojo" ]]; then
     sed -i '70s/.*/return null;/' src/main/java/com/openpojo/random/generator/security/CredentialsRandomGenerator.java
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
