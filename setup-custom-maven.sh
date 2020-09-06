@@ -6,7 +6,7 @@ module=$5
 
 echo "================Setting up maven-surefire"
 
-if [[ "$modifiedslug_with_sha" == "alibaba.fastjson-01b2479" || "$modifiedslug_with_sha" == "apache.hbase-9f1bfbe" ]]; then
+if [[ "$modifiedslug_with_sha" == "alibaba.fastjson-01b2479" || "$modifiedslug_with_sha" == "apache.hbase-9f1bfbe" || "$modifiedslug_with_sha" == "spring-projects.spring-boot-daa3d45" ]]; then
     echo "Skipping setup of maven-surefire for $modifiedslug_with_sha $module"
     exit 0
 fi
