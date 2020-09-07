@@ -16,7 +16,7 @@ modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 echo "================Running maven test"
 
 if [[ "$module" == "." ]]; then 
-    mvn test ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test.log
+    mvn test -fn ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test.log
 else
     mvn test -X -pl $module ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test.log
 fi
