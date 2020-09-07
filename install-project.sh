@@ -106,7 +106,8 @@ elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-e8b094a" ]]; then
     sed -i "5d" src/test/java/com/alibaba/json/bvt/serializer/DoubleFormatTest.java
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$modifiedslug_with_sha" == "hexagonframework.spring-data-ebean-dd11b97" ]]; then
-    bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modifiedslug_with_sha" "$module"
+    # passing in dummy value as modifiedslug_with_sha to force setup-custom-maven.sh to run
+    bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir" "$fullTestName" "." "$module"
     rm -rf pom.xml
     cp $dir/poms/${modifiedslug_with_sha}=pom.xml pom.xml
     echo "================Installing hexagon"
