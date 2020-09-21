@@ -108,7 +108,7 @@ JMVNOPTIONS="${MVNOPTIONS} -Dsurefire.methodRunOrder=flakyfinding -Djava.awt.hea
 fullClass="$(echo $fullTestName | rev | cut -d. -f2- | rev)"
 testName="$(echo $fullTestName | rev | cut -d. -f1 | rev )"
 hashfile="${RESULTSDIR}/p-v-hash.csv"
-echo "polluter,victim,hash" > $hashfile
+echo "polluter,victim,hash,round_num" > $hashfile
 mkdir -p ${RESULTSDIR}/pair-results
 if [[ "$polluter" != "" ]]; then
     echo "Single polluter passed in: $polluter"
