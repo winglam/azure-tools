@@ -19,8 +19,8 @@ if [[ "$f" == "$fullTestName" ]]; then
 else
     echo "Pairing $f and $fullTestName"
     mhash=$(echo -n "$f-$fullTestName" | md5sum | cut -d' ' -f1);
-    echo "Pair info: $f,$fullTestName,$mhash"
-    echo "$f,$fullTestName,$mhash" >> $hashfile
+    echo "Pair info: $f,$fullTestName,$mhash,$i"
+    echo "$f,$fullTestName,$mhash,$i" >> $hashfile
     find . -name TEST-*.xml -delete
     fc="$(echo $f | rev | cut -d. -f2- | rev)"
     ft="$(echo $f | rev | cut -d. -f1 | rev)"
