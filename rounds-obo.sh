@@ -18,7 +18,7 @@ if [[ "$f" == "$fullTestName" ]]; then
     echo "Skipping this iteration to prevent running the same test twice."
 else
     echo "Pairing $f and $fullTestName"
-    mhash=$(echo -n "$f-$fullTestName" | md5sum);
+    mhash=$(echo -n "$f-$fullTestName" | md5sum | cut -d' ' -f1);
     echo "Pair info: $f,$fullTestName,$mhash"
     echo "$f,$fullTestName,$mhash" >> $hashfile
     find . -name TEST-*.xml -delete
