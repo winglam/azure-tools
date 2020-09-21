@@ -107,11 +107,13 @@ fi
 JMVNOPTIONS="${MVNOPTIONS} -Dsurefire.methodRunOrder=flakyfinding -Djava.awt.headless=true -Dmaven.main.skip -DtrimStackTrace=false -Dmaven.test.failure.ignore=true"
 fullClass="$(echo $fullTestName | rev | cut -d. -f2- | rev)"
 testName="$(echo $fullTestName | rev | cut -d. -f1 | rev )"
+hashfile="${RESULTSDIR}/p-v-hash.csv"
+echo "polluter,victim,hash" > $hashfile
 mkdir -p ${RESULTSDIR}/pair-results
 if [[ "$polluter" != "" ]]; then
     echo "Single polluter passed in: $polluter"
     for ((i=1;i<=rounds;i++)); do
-	bash $dir/rounds-obo.sh "$i" "$rounds" "$polluter" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR"
+	bash $dir/rounds-obo.sh "$i" "$rounds" "$polluter" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile"
     done
 else
     modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
@@ -120,7 +122,7 @@ else
     total=$(cat $tl | wc -l)
     i=1
     for f in $(cat $tl ); do
-	bash $dir/rounds-obo.sh "$i" "$total" "$f" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR"
+	bash $dir/rounds-obo.sh "$i" "$total" "$f" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile"
 	i=$((i+1))
     done    
 fi
