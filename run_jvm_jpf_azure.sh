@@ -68,9 +68,10 @@ cp mvn-test.log ${RESULTSDIR}
 # echo "================Parsing test list"
 bash $dir/parse-test-list.sh "$dir" "$fullTestName" "$RESULTSDIR"
 
-# echo "================Clone and run JVM/JPF"
+echo "================Clone and run JVM/JPF"
+cd $dir
 git clone https://github.com/y553546436/JPF_Homework.git
-bash JPF_Homework/run_projects/runproject.sh "$dir/JPF_Homework" "~/$slug" "$module" "${RESULTSDIR}"
+bash JPF_Homework/run_projects/runproject.sh "$dir/JPF_Homework" "$slug" "$module" "${RESULTSDIR}"
 
 endtime=$(date)
 echo "endtime: $endtime"
