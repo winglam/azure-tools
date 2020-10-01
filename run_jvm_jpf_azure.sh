@@ -64,13 +64,6 @@ fi
 bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering" "$sha" "$dir" "$fullTestName"
 ret=${PIPESTATUS[0]}
 cp mvn-test.log ${RESULTSDIR}
-testxml=$(find . -name TEST-*.xml | grep -E "target/surefire-reports/TEST-.*\.$class\.xml")
-if [[ -z $testxml ]]; then
-    # did not find
-    # mvn install compiles but test is not run from mvn test - return 0
-    echo "Passed compilation but cannot find an xml for the test class: $class"
-    exit 1
-fi
 
 # echo "================Parsing test list"
 bash $dir/parse-test-list.sh "$dir" "$fullTestName" "$RESULTSDIR"
