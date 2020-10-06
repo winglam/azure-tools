@@ -90,13 +90,13 @@ for f in $(cat ${RESULTSDIR}/testOrder.out); do
     i=$((i+1));
 done
 
+IDF_OPTIONS="-Ddt.detector.original_order.all_must_pass=false -Ddt.randomize.rounds=${rounds} -Ddt.detector.original_order.retry_count=1"
 for f in $(find $permDir -name "*.txt"); do
     fn=$(echo $f | rev | cut -d'/' -f1 | rev);
     rm -rf $module/.dtfixingtools/
     mkdir -p $module/.dtfixingtools
     cp -r $f $module/.dtfixingtools/original-order
 
-    IDF_OPTIONS="-Ddt.detector.original_order.all_must_pass=false -Ddt.randomize.rounds=1 -Ddt.detector.original_order.retry_count=1"
     timeout 2h mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -pl $module -Ddetector.detector_type=original |& tee original.log
 
     mkdir -p ${RESULTSDIR}/perm/$fn
