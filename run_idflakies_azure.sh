@@ -93,6 +93,7 @@ done
 
 IDF_OPTIONS="-Ddt.detector.original_order.all_must_pass=false -Ddt.randomize.rounds=${rounds} -Ddt.detector.original_order.retry_count=1"
 for f in $(find $permDir -name "*.txt"); do
+    echo "Running permutation: $f"
     fn=$(echo $f | rev | cut -d'/' -f1 | rev);
     rm -rf $module/.dtfixingtools/
     mkdir -p $module/.dtfixingtools
