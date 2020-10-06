@@ -81,6 +81,7 @@ permInputFile="$dir/module-summarylistgen/${modified_slug_module}_output.csv"
 
 # permInputFile should be used to create the contents of permDir
 permDir="$dir/${modified_slug_module}_input"
+mkdir -p $permDir
 
 java -cp $jpfdir testOrder $permInputFile 1 1 > ${RESULTSDIR}/testOrder.out
 
