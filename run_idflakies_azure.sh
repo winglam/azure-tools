@@ -73,16 +73,17 @@ permInputFile="$dir/module-summarylistgen/${modified_slug_module}_output.csv"
 permDir="$dir/${modified_slug_module}_input"
 
 for f in $(find $permDir -name "*.txt"); do
-     rm -rf $module/.dtfixingtools/
-     mkdir -p $module/.dtfixingtools
-     cp -r $permDir/$f $module/.dtfixingtools/original-order
+    fn=$(echo $f | rev | cut -d'/' -f1 | rev);
+    rm -rf $module/.dtfixingtools/
+    mkdir -p $module/.dtfixingtools
+    cp -r $f $module/.dtfixingtools/original-order
 
-     IDF_OPTIONS="-Ddt.detector.original_order.all_must_pass=false -Ddt.randomize.rounds=0 -Ddt.detector.original_order.retry_count=1"
-     timeout 2h mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -pl $module -Ddetector.detector_type=original |& tee original.log
+    IDF_OPTIONS="-Ddt.detector.original_order.all_must_pass=false -Ddt.randomize.rounds=0 -Ddt.detector.original_order.retry_count=1"
+    timeout 2h mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -pl $module -Ddetector.detector_type=original |& tee original.log
 
-     mkdir -p ${RESULTSDIR}/perm/$f
-     mv original.log ${RESULTSDIR}/perm/$f/
-     mv $module/.dtfixingtools ${RESULTSDIR}/perm/$f/dtfixingtools
+    mkdir -p ${RESULTSDIR}/perm/$fn
+    mv original.log ${RESULTSDIR}/perm/$fn/
+    mv $module/.dtfixingtools ${RESULTSDIR}/perm/$fn/dtfixingtools
 done
 
 cp $permInputFile ${RESULTSDIR}/
