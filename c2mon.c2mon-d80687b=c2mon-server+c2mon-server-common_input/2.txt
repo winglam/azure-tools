@@ -1,3 +1,0 @@
-cern.c2mon.server.common.republisher.RepublisherImplTest.testFailToPublish
-cern.c2mon.server.common.alarm.ValueAlarmConditionTest.testEnumHandling
-cern.c2mon.server.common.republisher.RepublisherImplTest.testMultipleExceptions

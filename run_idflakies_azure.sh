@@ -61,6 +61,16 @@ elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
     MVNOPTIONS="${MVNOPTIONS} -DskipITs"
 fi
 
+echo "================Clone and run JVM/JPF"
+cd $dir
+git clone https://github.com/y553546436/JPF_Homework.git
+cd $dir/JPF_Homework/algo
+jpfdir=$(pwd)
+sha=$(git rev-parse HEAD)
+echo "JPF_Homework sha: $sha"
+
+javac testOrder.java
+
 echo "================Setup and run iDFlakies"
 cd ~/$slug
 bash $dir/idflakies-pom-modify/modify-project.sh .
@@ -71,6 +81,14 @@ permInputFile="$dir/module-summarylistgen/${modified_slug_module}_output.csv"
 
 # permInputFile should be used to create the contents of permDir
 permDir="$dir/${modified_slug_module}_input"
+
+java -cp $jpfdir testOrder $permInputFile 1 1 > ${RESULTSDIR}/testOrder.out
+
+i=1;
+for f in $(cat ${RESULTSDIR}/testOrder.out); do
+    echo $f | sed 's/,/\n/g' > $permDir/$i.txt;
+    i=$((i+1));
+done
 
 for f in $(find $permDir -name "*.txt"); do
     fn=$(echo $f | rev | cut -d'/' -f1 | rev);
