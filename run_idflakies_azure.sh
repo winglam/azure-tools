@@ -70,7 +70,7 @@ modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
 permInputFile="$dir/module-summarylistgen/${modified_slug_module}_output.csv"
 
 # permInputFile should be used to create the contents of permDir
-permDir="$dir/${modified_slug_module}"
+permDir="$dir/${modified_slug_module}_input"
 
 for f in $(find $permDir -name "*.txt"); do
      rm -rf $module/.dtfixingtools/
