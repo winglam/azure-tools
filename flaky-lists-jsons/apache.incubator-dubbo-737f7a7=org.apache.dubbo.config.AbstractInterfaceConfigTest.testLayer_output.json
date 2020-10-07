@@ -1,0 +1,1 @@
+{"dts": [{"revealed": {"testRunId": "1601967376155-1b129673-4da7-4c43-b4ec-18be57700fa7", "order": [], "result": "ERROR"}, "name": "org.apache.dubbo.config.AbstractInterfaceConfigTest.testLayer", "intended": {"testRunId": "1601967314073-3b182118-4b8e-4d91-aa16-ff7ca417f139", "order": ["org.apache.dubbo.config.AbstractInterfaceConfigTest.testListener"], "result": "PASS"}}]}
