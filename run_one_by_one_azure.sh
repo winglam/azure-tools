@@ -120,7 +120,7 @@ if [[ "$polluter" != "" ]]; then
     pfullClass="$(echo $polluter | rev | cut -d. -f2- | rev)"
     ptestName="$(echo $polluter | rev | cut -d. -f1 | rev )"
     for ((i=1;i<=rounds;i++)); do
-	bash $dir/rounds-obo.sh "$i" "$rounds" "$fullTestName" "$polluter" "$pfullClass" "$ptestName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile"
+	bash $dir/rounds-obo.sh "p$i" "$rounds" "$fullTestName" "$polluter" "$pfullClass" "$ptestName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile"
     done
 else
     modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
