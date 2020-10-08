@@ -83,7 +83,7 @@ json_file="$dir/flaky-lists-jsons/${modifiedslug_with_sha}=${test}_output.json"
 
 echo "ifixflakies command: mvn testrunner:testplugin ${MVNOPTIONS} -pl $module -Ddt.minimizer.use.original.order=true -Ddt.minimizer.flaky.list=${json_file} -Ddt.minimizer.original.order=${permInputFile} -Ddt.minimizer.dependent.test=${test} -Ddiagnosis.run_detection=false -Dtestplugin.className=edu.illinois.cs.dt.tools.minimizer.MinimizerPlugin -Ddt.minimizer.polluters.one_by_one=true -Dtestplugin.runner.use_timeout=false |& tee minimizer.log"
 
-mvn testrunner:testplugin ${MVNOPTIONS} -pl $module -Ddt.minimizer.use.original.order=true -Ddt.minimizer.flaky.list=${json_file} -Ddt.minimizer.original.order=${permInputFile} -Ddt.minimizer.dependent.test=${test} -Ddiagnosis.run_detection=false -Dtestplugin.className=edu.illinois.cs.dt.tools.minimizer.MinimizerPlugin -Ddt.minimizer.polluters.one_by_one=true -Dtestplugin.runner.use_timeout=false |& tee minimizer.log
+mvn testrunner:testplugin ${MVNOPTIONS} -pl $module -Ddt.minimizer.use.original.order=true -Ddt.minimizer.flaky.list=${json_file} -Ddt.minimizer.original.order=${permInputFile} -Ddt.minimizer.dependent.test=${test} -Dtestplugin.runner.smart.timeout.multiplier=8.0 -Ddiagnosis.run_detection=false -Dtestplugin.className=edu.illinois.cs.dt.tools.minimizer.MinimizerPlugin -Ddt.minimizer.polluters.one_by_one=true -Dtestplugin.runner.use_timeout=false |& tee minimizer.log
 
 mkdir -p ${RESULTSDIR}/minimizer/
 mv minimizer.log ${RESULTSDIR}/minimizer/
