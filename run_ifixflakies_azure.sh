@@ -18,6 +18,7 @@ mkdir -p ${RESULTSDIR}
 cd ~/
 projfile=$1
 rounds=$2
+RUN_MINIMIZER=$3
 line=$(head -n 1 $projfile)
 
 echo "================Starting experiment for input: $line"
@@ -81,9 +82,18 @@ modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
 permInputFile="$dir/module-summarylistgen/${modified_slug_module}_output.csv"
 json_file="$dir/flaky-lists-jsons/${modifiedslug_with_sha}=${test}_output.json"
 
-echo "ifixflakies command: mvn testrunner:testplugin ${MVNOPTIONS} -pl $module -Ddt.minimizer.use.original.order=true -Ddt.minimizer.flaky.list=${json_file} -Ddt.minimizer.original.order=${permInputFile} -Ddt.minimizer.dependent.test=${test} -Ddiagnosis.run_detection=false -Dtestplugin.className=edu.illinois.cs.dt.tools.minimizer.MinimizerPlugin -Ddt.minimizer.polluters.one_by_one=true -Dtestplugin.runner.use_timeout=false |& tee minimizer.log"
+IFFOPTIONS="-Ddt.minimizer.use.original.order=true -Ddt.minimizer.flaky.list=${json_file} -Ddt.minimizer.original.order=${permInputFile} -Ddt.minimizer.dependent.test=${test} -Dtestplugin.runner.smart.timeout.multiplier=8.0 -Ddiagnosis.run_detection=false"
 
-mvn testrunner:testplugin ${MVNOPTIONS} -pl $module -Ddt.minimizer.use.original.order=true -Ddt.minimizer.flaky.list=${json_file} -Ddt.minimizer.original.order=${permInputFile} -Ddt.minimizer.dependent.test=${test} -Dtestplugin.runner.smart.timeout.multiplier=8.0 -Ddiagnosis.run_detection=false -Dtestplugin.className=edu.illinois.cs.dt.tools.minimizer.MinimizerPlugin -Ddt.minimizer.polluters.one_by_one=true -Dtestplugin.runner.use_timeout=false |& tee minimizer.log
+if [[ "$RUN_MINIMIZER" == "minimizer" ]]; then
+    echo "Running iFixFlakies to find all polluters/cleaners"
+    IFFOPTIONS="${IFFOPTIONS} -Dtestplugin.className=edu.illinois.cs.dt.tools.minimizer.MinimizerPlugin -Ddt.minimizer.polluters.one_by_one=true"
+else
+    echo "Running iFixFlakies to generate patch"
+    IFFOPTIONS="${IFFOPTIONS} -Ddt.find_all=false"
+fi
+
+echo "ifixflakies command: mvn testrunner:testplugin ${MVNOPTIONS} -pl $module ${IFFOPTIONS} |& tee minimizer.log"
+mvn testrunner:testplugin ${MVNOPTIONS} -pl $module ${IFFOPTIONS} |& tee minimizer.log
 
 mkdir -p ${RESULTSDIR}/minimizer/
 mv minimizer.log ${RESULTSDIR}/minimizer/
