@@ -40,8 +40,8 @@ echo "================Setup to parse test list"
 pip install BeautifulSoup4
 pip install lxml
 
-sudo apt-get update
-sudo apt-get install emacs
+sudo apt-get update -y --allow-unauthenticated
+sudo apt-get install emacs -y --allow-unauthenticated
 
 cd ~/apache-maven
 
