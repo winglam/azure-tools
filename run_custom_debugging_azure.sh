@@ -42,7 +42,7 @@ M2_HOME=$(pwd)
 M2=$M2_HOME/bin
 
 sudo echo "PATH=$PATH:$M2" >> /etc/profile
-sudo echo "export $PATH" >> /etc/profile
+sudo echo "export PATH" >> /etc/profile
 
 # echo "================Setting up maven-surefire"
 bash $dir/setup-custom-maven-tri.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modifiedslug_with_sha" "$module"
