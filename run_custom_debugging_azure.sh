@@ -33,23 +33,23 @@ modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 
+echo "================Setup to emacs and maven path"
+sudo apt-get update -y --allow-unauthenticated
+sudo apt-get install emacs -y --allow-unauthenticated
+
+cd ~/apache-maven
+M2_HOME=$(pwd)
+M2=$M2_HOME/bin
+
+sudo echo "PATH=$PATH:$M2" >> /etc/profile
+sudo echo "export $PATH" >> /etc/profile
+
 # echo "================Setting up maven-surefire"
 bash $dir/setup-custom-maven-tri.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modifiedslug_with_sha" "$module"
 
 echo "================Setup to parse test list"
 pip install BeautifulSoup4
 pip install lxml
-
-sudo apt-get update -y --allow-unauthenticated
-sudo apt-get install emacs -y --allow-unauthenticated
-
-cd ~/apache-maven
-
-M2_HOME=$(pwd)
-M2=$M2_HOME/bin
-
-sudo echo "PATH=$PATH:$M2" >> /etc/profile
-sudo echo "export PATH" >> /etc/profile
 
 endtime=$(date)
 echo "endtime: $endtime"

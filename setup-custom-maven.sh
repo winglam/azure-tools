@@ -14,6 +14,7 @@ fi
 cd ~/
 git clone https://github.com/gmu-swe/maven-surefire.git
 cd maven-surefire/
+echo "maven-surefire version: $(git rev-parse HEAD)"
 git checkout test-method-sorting
 mvn install -DskipTests -Drat.skip |& tee surefire-install.log
 mv surefire-install.log ${RESULTSDIR}
