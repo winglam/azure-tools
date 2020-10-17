@@ -85,7 +85,7 @@ for f in $(cat $permInputFile); do
 
     rm -rf $module/.dtfixingtools/
     mkdir -p $module/.dtfixingtools
-    cat $f > $module/.dtfixingtools/original-order
+    echo $f > $module/.dtfixingtools/original-order
 
     timeout 2h mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -pl $module -Ddetector.detector_type=original |& tee original.log
 
