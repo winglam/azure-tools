@@ -37,6 +37,7 @@ public class PomFile {
     private static String ARTIFACT_ID = "ifixflakies";
     private static String CONFIGURATION_CLASS = "edu.illinois.cs.dt.tools.fixer.CleanerFixerPlugin";
     private static String ARTIFACT_VERSION = "1.0.0-SNAPSHOT";
+    private static String TESTRUNNER_ARTIFACT_VERSION = "1.0";
 
     public PomFile(String pom) {
         this.pom = pom;
@@ -205,7 +206,7 @@ public class PomFile {
             }
             {
                 Node version = doc.createElement("version");
-                version.setTextContent("1.0");
+                version.setTextContent(TESTRUNNER_ARTIFACT_VERSION);
                 plugin.appendChild(version);
             }
             {
@@ -254,6 +255,7 @@ public class PomFile {
         ARTIFACT_ID = args[0];
         ARTIFACT_VERSION = args[1];
         CONFIGURATION_CLASS  = args[2];
+        TESTRUNNER_ARTIFACT_VERSION  = args[3];
 
         InputStreamReader isReader = new InputStreamReader(System.in);
         BufferedReader bufReader = new BufferedReader(isReader);
