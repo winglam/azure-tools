@@ -248,7 +248,7 @@ public class PomFile {
     }
 
     public static void main(String[] args) {
-        if (args.length != 3) {
+        if (args.length != 4) {
             System.out.println("Usage: java PomFile <artifact_id> <artifact_version> <configuration_class_name>");
         }
 
