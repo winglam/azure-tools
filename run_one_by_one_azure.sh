@@ -24,9 +24,15 @@ line=$(head -n 1 $projfile)
 echo "================Starting experiment for input: $line"
 slug=$(echo ${line} | cut -d',' -f1 | rev | cut -d'/' -f1-2 | rev)
 sha=$(echo ${line} | cut -d',' -f2)
-fullTestName=$(echo ${line} | cut -d',' -f3)
-module=$(echo ${line} | cut -d',' -f4)
-polluter=$(echo ${line} | cut -d',' -f5)
+
+if [[ "$mode" == "idempotent" ]]; then
+    fullTestName="running.idempotent"
+    module=$(echo ${line} | cut -d',' -f3)
+else
+    fullTestName=$(echo ${line} | cut -d',' -f3)
+    module=$(echo ${line} | cut -d',' -f4)
+    polluter=$(echo ${line} | cut -d',' -f5)
+fi
 
 MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
 
