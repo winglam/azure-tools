@@ -25,7 +25,7 @@ if [[ "$mode" == "idempotent" ]]; then
     className=$(echo $fullClass | rev | cut -d'.' -f1 | rev)
     classpath=$(find -name $className.java)
     git checkout -- $classpath
-    sed -i "s/\(public.*void.*${origTestName}[\s]*(\)/public void ${testName}() { try { ${origTestName}(); } catch (Exception e ) {} } @Test \1/" $classpath
+    sed -i "s/\(public.*void.*${origTestName}[\s]*(\)/public void ${testName}() { try { ${origTestName}(); } catch (Exception e ) {} }\n@Test \1/" $classpath
     echo "Creating copy method: $testName"
     git diff $classpath
 fi
