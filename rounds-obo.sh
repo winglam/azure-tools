@@ -12,6 +12,21 @@ JMVNOPTIONS=$9
 dir=${10}
 RESULTSDIR=${11}
 hashfile=${12}
+mode=${13}
+
+if [[ "$mode" == "idempotent" ]]; then
+    origTestName=$(echo $f | rev | cut -d'.' -f1 | rev)
+    origFullTestName="$f"
+    testName="copy123456"
+    fullClass=$(echo $f | rev | cut -d'.' -f2- | rev)
+    fullTestName="$fullClass.$testName"
+    className=$(echo $fullClass | rev | cut -d'.' -f1 | rev)
+    classpath=$(find -name $className.java)
+    git checkout -- $classpath
+    sed -i "s/\(public.*void.*${origTestName}\)/public void ${testName}() { ${origTestName}(); }@Test \1/" $classpath
+    echo "Creating copy method: $testName"
+    git diff $classpath
+fi
 
 echo "Iteration $i / $total"
 if [[ "$f" == "$fullTestName" ]]; then
@@ -24,7 +39,11 @@ else
     find . -name TEST-*.xml -delete
     fc="$(echo $f | rev | cut -d. -f2- | rev)"
     ft="$(echo $f | rev | cut -d. -f1 | rev)"
-    testarg="-Dtest=$fc#$ft,$fullClass#$testName -DflakyTestOrder=$ft($fc),$testName($fullClass)";
+    if [[ "$mode" == "idempotent" ]]; then
+	testarg="-Dtest=$fc#$ft,$fullClass#$testName";
+    else
+	testarg="-Dtest=$fc#$ft,$fullClass#$testName -DflakyTestOrder=$ft($fc),$testName($fullClass)";
+    fi
     mvn test -pl $module ${testarg} ${JMVNOPTIONS} |& tee mvn-test-$i-$mhash.log
 
     echo "" > $i-$mhash.csv
@@ -54,4 +73,8 @@ else
     else
 	echo "RESULT Both tests passed: $f and $fullTestName"
     fi
+fi
+
+if [[ "$mode" == "idempotent" ]]; then
+    git checkout -- $classpath
 fi

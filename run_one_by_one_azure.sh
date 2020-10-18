@@ -18,6 +18,7 @@ mkdir -p ${RESULTSDIR}
 cd ~/
 projfile=$1
 rounds=$2
+mode="$3"
 line=$(head -n 1 $projfile)
 
 echo "================Starting experiment for input: $line"
@@ -26,7 +27,6 @@ sha=$(echo ${line} | cut -d',' -f2)
 fullTestName=$(echo ${line} | cut -d',' -f3)
 module=$(echo ${line} | cut -d',' -f4)
 polluter=$(echo ${line} | cut -d',' -f5)
-
 
 MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
 
@@ -89,7 +89,7 @@ if [[ $ret != 0 ]]; then
 fi
 
 # echo "================Setting up maven-surefire"
-bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modifiedslug_with_sha" "$module"
+bash $dir/setup-custom-maven-tri.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modifiedslug_with_sha" "$module"
 cd ~/$slug
 
 echo "================Setup to parse test list"
@@ -104,7 +104,8 @@ elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
     MVNOPTIONS="${MVNOPTIONS} -DskipITs"
 fi
 
-JMVNOPTIONS="${MVNOPTIONS} -Dsurefire.methodRunOrder=flakyfinding -Djava.awt.headless=true -Dmaven.main.skip -DtrimStackTrace=false -Dmaven.test.failure.ignore=true"
+JMVNOPTIONS="${MVNOPTIONS} -Dsurefire.methodRunOrder=fixed -Djava.awt.headless=true -Dmaven.main.skip -DtrimStackTrace=false -Dmaven.test.failure.ignore=true"
+# JMVNOPTIONS="${MVNOPTIONS} -Dsurefire.methodRunOrder=flakyfinding -Djava.awt.headless=true -Dmaven.main.skip -DtrimStackTrace=false -Dmaven.test.failure.ignore=true"
 fullClass="$(echo $fullTestName | rev | cut -d. -f2- | rev)"
 testName="$(echo $fullTestName | rev | cut -d. -f1 | rev )"
 hashfile="${RESULTSDIR}/p-v-hash.csv"
@@ -113,23 +114,27 @@ mkdir -p ${RESULTSDIR}/pair-results
 if [[ "$polluter" != "" ]]; then
     echo "Single polluter passed in: $polluter"
     for ((i=1;i<=rounds;i++)); do
-	bash $dir/rounds-obo.sh "$i" "$rounds" "$polluter" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile"
+	bash $dir/rounds-obo.sh "$i" "$rounds" "$polluter" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile" "$mode"
     done
 
     echo "Running victim after polluter"
     pfullClass="$(echo $polluter | rev | cut -d. -f2- | rev)"
     ptestName="$(echo $polluter | rev | cut -d. -f1 | rev )"
     for ((i=1;i<=rounds;i++)); do
-	bash $dir/rounds-obo.sh "p$i" "$rounds" "$fullTestName" "$polluter" "$pfullClass" "$ptestName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile"
+	bash $dir/rounds-obo.sh "p$i" "$rounds" "$fullTestName" "$polluter" "$pfullClass" "$ptestName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile" "$mode"
     done
 else
     modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
-    tl="$dir/module-summarylistgen/${modifiedslug_with_sha}=${modified_module}_output.csv"
+    if [[ "$mode" == "idempotent" ]]; then
+	tl="$dir/module-summarylistgen-idempotent/${modifiedslug_with_sha}=${modified_module}_output.csv"
+    else
+	tl="$dir/module-summarylistgen/${modifiedslug_with_sha}=${modified_module}_output.csv"
+    fi
     cp $tl ${RESULTSDIR}/
     total=$(cat $tl | wc -l)
     i=1
     for f in $(cat $tl ); do
-	bash $dir/rounds-obo.sh "$i" "$total" "$f" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile"
+	bash $dir/rounds-obo.sh "$i" "$total" "$f" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile" "$mode"
 	i=$((i+1))
     done    
 fi
