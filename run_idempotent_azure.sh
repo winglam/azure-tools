@@ -18,6 +18,7 @@ mkdir -p ${RESULTSDIR}
 cd ~/
 projfile=$1
 rounds=$2
+runclasses="$3"
 line=$(head -n 1 $projfile)
 
 echo "================Starting experiment for input: $line"
@@ -79,13 +80,26 @@ modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
 permInputFile="$dir/module-summarylistgen/${modified_slug_module}_output.csv"
 
-IDF_OPTIONS="-Ddt.detector.original_order.all_must_pass=false -Ddt.randomize.rounds=${rounds} -Ddt.detector.original_order.retry_count=1 -Dtestplugin.runner.idempotent.num.runs=3"
-for f in $(cat $permInputFile); do
+if [[ "$runclasses" != "" ]]; then
+    # generate a file of just test classes if we are just running classes
+    permClassFile="$(echo $permInputFile | rev | cut -d'/' -f2- | rev)/${modified_slug_module}_classes_output.csv"
+    rev $permInputFile | cut -d'.' -f2- | rev | sort -u > $permClassFile
+else
+    permClassFile="$permInputFile"
+fi
+
+IDF_OPTIONS="-Ddt.detector.original_order.all_must_pass=false -Ddt.randomize.rounds=0 -Ddt.detector.original_order.retry_count=1 -Dtestplugin.runner.idempotent.num.runs=${rounds}"
+for f in $(cat $permClassFile); do
     echo "Running idempotent for test: $f"
 
-    rm -rf $module/.dtfixingtools/
+    rm -rf $module/.dtfixingtools
     mkdir -p $module/.dtfixingtools
-    echo $f > $module/.dtfixingtools/original-order
+
+    if [[ "$runclasses" != "" ]]; then
+	grep ^${f}. > $module/.dtfixingtools/original-order
+    else
+	echo $f > $module/.dtfixingtools/original-order
+    fi
 
     timeout 2h mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -pl $module -Ddetector.detector_type=original |& tee original.log
 
@@ -95,6 +109,7 @@ for f in $(cat $permInputFile); do
 done
 
 cp $permInputFile ${RESULTSDIR}/
+cp $permClassFile ${RESULTSDIR}/
 
 endtime=$(date)
 echo "endtime: $endtime"
