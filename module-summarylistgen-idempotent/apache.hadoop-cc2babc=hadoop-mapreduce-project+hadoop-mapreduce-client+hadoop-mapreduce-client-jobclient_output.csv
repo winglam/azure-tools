@@ -1,0 +1,9 @@
+org.apache.hadoop.mapred.TestClientRedirect.testRedirect
+org.apache.hadoop.mapred.TestClusterMRNotification.testMR
+org.apache.hadoop.mapred.TestCollect.testCollect
+org.apache.hadoop.mapred.TestOldCombinerGrouping.testCombiner
+org.apache.hadoop.mapreduce.TestNewCombinerGrouping.testCombiner
+org.apache.hadoop.mapreduce.v2.TestMRAMWithNonNormalizedCapabilities.testJobWithNonNormalizedCapabilities
+org.apache.hadoop.mapreduce.v2.TestMRJobsWithHistoryService.testJobHistoryData
+org.apache.hadoop.mapreduce.v2.TestMRJobsWithProfiler.testDefaultProfiler
+org.apache.hadoop.mapreduce.v2.TestMRJobsWithProfiler.testDifferentProfilers

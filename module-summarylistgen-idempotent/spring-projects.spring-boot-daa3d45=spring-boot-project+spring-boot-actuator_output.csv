@@ -1,0 +1,13 @@
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilterAutoTimedTests.metricsCanBeAutoTimed
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilterTests.asyncCallableRequest
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilterTests.asyncCompletableFutureRequest
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilterTests.asyncRequestThatThrowsUncheckedException
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilterTests.badClientRequest
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilterTests.endpointThrowsError
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilterTests.regexBasedRequestMapping
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilterTests.subclassedTimedMethod
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilterTests.timedControllerClass
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilterTests.timedMethod
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilterTests.unhandledError
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsIntegrationTests.handledExceptionIsRecordedInMetricTag
+org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsIntegrationTests.rethrownExceptionIsRecordedInMetricTag

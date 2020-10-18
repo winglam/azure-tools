@@ -1,0 +1,4 @@
+dk.tbsalling.aismessages.nmea.NMEAMessageHandlerTest.canFlushEmpty
+dk.tbsalling.aismessages.nmea.NMEAMessageHandlerTest.canFlushUnhandled
+dk.tbsalling.aismessages.nmea.NMEAMessageHandlerTest.canHandleFragmentedMessageReceived
+dk.tbsalling.aismessages.nmea.NMEAMessageHandlerTest.canHandleUnfragmentedMessageReceived

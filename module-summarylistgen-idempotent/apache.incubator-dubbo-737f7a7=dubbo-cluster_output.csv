@@ -1,0 +1,3 @@
+org.apache.dubbo.rpc.cluster.StickyTest.testMethodStickyNoCheck
+org.apache.dubbo.rpc.cluster.StickyTest.testStickyNoCheck
+org.apache.dubbo.rpc.cluster.support.FailbackClusterInvokerTest.testNoInvoke

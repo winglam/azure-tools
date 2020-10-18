@@ -1,0 +1,2 @@
+org.springframework.boot.actuate.autoconfigure.metrics.test.MetricsIntegrationTests.requestMappingIsInstrumented
+org.springframework.boot.actuate.autoconfigure.metrics.test.MetricsIntegrationTests.restTemplateIsInstrumented

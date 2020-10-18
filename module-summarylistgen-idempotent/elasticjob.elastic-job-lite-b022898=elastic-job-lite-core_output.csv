@@ -1,0 +1,6 @@
+io.elasticjob.lite.event.JobEventBusTest.assertPost
+io.elasticjob.lite.event.rdb.JobEventRdbSearchTest.assertFindJobStatusTraceEventsWithTime
+io.elasticjob.lite.event.rdb.JobEventRdbStorageTest.assertAddJobStatusTraceEventWhenFailoverWithTaskFailedState
+io.elasticjob.lite.event.rdb.JobEventRdbStorageTest.assertAddJobStatusTraceEventWhenFailoverWithTaskStagingState
+io.elasticjob.lite.reg.zookeeper.ZookeeperRegistryCenterModifyTest.assertPersistSequential
+io.elasticjob.lite.util.json.GsonFactoryTest.assertRegisterTypeAdapter

@@ -1,0 +1,11 @@
+org.activiti.engine.test.api.v6.Activiti6Test.testLongServiceTaskLoop
+org.activiti.engine.test.bpmn.event.IntermediateNoneEventTest.testIntermediateNoneTimerEvent
+org.activiti.engine.test.cfg.RetryInterceptorTest.testRetryInterceptor
+org.activiti.engine.test.db.DatabaseTablePrefixTest.testPerformDatabaseSchemaOperationCreate
+org.activiti.examples.bpmn.tasklistener.TaskListenerTest.testTaskListenersOnDeleteByComplete
+org.activiti.standalone.event.EngineEventsTest.testEngineEventsTest
+org.activiti.standalone.jpa.JPAVariableTest.testIllegalEntities
+org.activiti.standalone.jpa.JPAVariableTest.testQueryJPAVariable
+org.activiti.standalone.jpa.JPAVariableTest.testReplaceExistingJPAEntityWithAnotherOfSameType
+org.activiti.standalone.jpa.JPAVariableTest.testUpdateJPAEntityValues
+org.activiti.standalone.validation.DisabledSchemaValidationTest.testDisableValidation

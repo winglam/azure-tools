@@ -1,0 +1,3 @@
+com.espertech.esper.regressionrun.suite.multithread.TestSuiteMultithread.testMultithreadContextCountSimple
+com.espertech.esper.regressionrun.suite.multithread.TestSuiteMultithreadWConfig.testMultithreadContextOverlapDistinct
+com.espertech.esper.regressionrun.suite.multithread.TestSuiteMultithreadWConfig.testMultithreadContextPartitionedWTerm

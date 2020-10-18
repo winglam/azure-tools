@@ -1,0 +1,2 @@
+org.apache.hadoop.tools.mapred.lib.TestDynamicInputFormat.testGetSplits
+org.apache.hadoop.tools.TestGlobbedCopyListing.testRun

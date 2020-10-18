@@ -1,0 +1,4 @@
+org.apache.hadoop.fs.http.server.TestHttpFSServer.testCreateSnapshot
+org.apache.hadoop.fs.http.server.TestHttpFSServer.testDisallowSnapshotException
+org.apache.hadoop.fs.http.server.TestHttpFSServer.testRenameSnapshot
+org.apache.hadoop.lib.servlet.TestServerWebApp.getHomeDir

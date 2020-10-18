@@ -1,0 +1,4 @@
+com.querydsl.hibernate.search.SearchQueryTest.list
+com.querydsl.hibernate.search.SearchQueryTest.no_where
+com.querydsl.hibernate.search.SearchQueryTest.ordering
+com.querydsl.hibernate.search.SearchQueryTest.singleResult

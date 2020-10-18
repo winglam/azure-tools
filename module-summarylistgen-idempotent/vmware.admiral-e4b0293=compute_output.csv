@@ -1,0 +1,2 @@
+com.vmware.admiral.compute.container.ContainerHostDataCollectionServiceTest.testPlacementUpdates
+com.vmware.admiral.compute.container.GroupResourcePlacementServiceTest.testMemoryPlacementReservationRequest

@@ -1,0 +1,3 @@
+org.apache.hadoop.mapreduce.jobhistory.TestJobHistoryEventHandler.testSigTermedFunctionality
+org.apache.hadoop.mapreduce.v2.app.TestMRAppMaster.testMRAppMasterShutDownJob
+org.apache.hadoop.mapreduce.v2.app.webapp.TestAppController.testAttempts

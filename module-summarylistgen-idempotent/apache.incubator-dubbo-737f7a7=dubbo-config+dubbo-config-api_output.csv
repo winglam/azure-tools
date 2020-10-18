@@ -1,0 +1,2 @@
+org.apache.dubbo.config.ReferenceConfigTest.testReferenceRetry
+org.apache.dubbo.config.ServiceConfigTest.testProxy

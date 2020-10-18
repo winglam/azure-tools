@@ -1,0 +1,10 @@
+org.apache.hadoop.hdfs.nfs.nfs3.TestViewfsWithNfs3.testFileStatus
+org.apache.hadoop.hdfs.nfs.nfs3.TestViewfsWithNfs3.testNfsAccessNN1
+org.apache.hadoop.hdfs.nfs.nfs3.TestViewfsWithNfs3.testNfsAccessNN2
+org.apache.hadoop.hdfs.nfs.nfs3.TestViewfsWithNfs3.testNfsRenameMultiNN
+org.apache.hadoop.hdfs.nfs.nfs3.TestViewfsWithNfs3.testNfsRenameSingleNN
+org.apache.hadoop.hdfs.nfs.nfs3.TestViewfsWithNfs3.testNfsWriteNN1
+org.apache.hadoop.hdfs.nfs.nfs3.TestViewfsWithNfs3.testNfsWriteNN2
+org.apache.hadoop.hdfs.nfs.nfs3.TestViewfsWithNfs3.testNumExports
+org.apache.hadoop.hdfs.nfs.nfs3.TestViewfsWithNfs3.testPaths
+org.apache.hadoop.hdfs.nfs.nfs3.TestViewfsWithNfs3.testWrongNfsAccess

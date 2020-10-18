@@ -1,0 +1,4 @@
+com.pholser.junit.quickcheck.CallablePropertyParameterTest.callable
+com.pholser.junit.quickcheck.PrimitivePropertyParameterTypesTest.primitiveBooleanWithValuesOf
+com.pholser.junit.quickcheck.PrimitivePropertyParameterTypesTest.voidParameter
+com.pholser.junit.quickcheck.PrimitivePropertyParameterTypesTest.wrapperBooleanWithValuesOf

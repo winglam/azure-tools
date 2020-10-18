@@ -1,0 +1,3 @@
+org.apache.hadoop.mapred.TestMapTask.testShufflePermissions
+org.apache.hadoop.mapred.TestTaskProgressReporter.testBytesWrittenRespectingLimit
+org.apache.hadoop.mapred.TestTaskProgressReporter.testTaskProgress

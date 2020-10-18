@@ -1,0 +1,7 @@
+org.activiti.spring.boot.tasks.TaskRuntimeClaimReleaseTest.aCreateStandaloneTaskForGroup
+org.activiti.spring.boot.tasks.TaskRuntimeCompleteTaskTest.bCreateStandaloneTask
+org.activiti.spring.boot.tasks.TaskRuntimeDeleteTaskTest.cCreateStandaloneGroupTaskClaimAndDeleteFail
+org.activiti.spring.boot.tasks.TaskRuntimeTaskAssigneeTest.aCreateStandaloneTaskForAnotherAssignee
+org.activiti.spring.boot.tasks.TaskRuntimeTaskAssigneeTest.cCreateStandaloneTaskForGroupAndClaim
+org.activiti.spring.boot.tasks.TaskRuntimeTaskForOtherTest.aCreateStandaloneTaskWithNoCandidates
+org.activiti.spring.boot.tasks.TaskRuntimeUnAuthorizedTest.aCreateStandaloneTaskForGroup

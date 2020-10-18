@@ -1,0 +1,2 @@
+org.apache.dubbo.rpc.protol.rest.RestProtocolTest.testRestProtocol
+org.apache.dubbo.rpc.protol.rest.RestProtocolTest.testRestProtocolWithContextPath
