@@ -100,7 +100,7 @@ for f in $(cat $permClassFile); do
     mkdir -p $module/.dtfixingtools
 
     if [[ "$runclasses" == "classes" ]]; then
-	grep ^${f}. > $module/.dtfixingtools/original-order
+	grep ^${f}. $permInputFile  > $module/.dtfixingtools/original-order
     else
 	echo $f > $module/.dtfixingtools/original-order
     fi
