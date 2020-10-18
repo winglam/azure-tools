@@ -71,6 +71,9 @@ else
 	for g in $(find -name "TEST*.xml"); do
 	    mv $g ${RESULTSDIR}/pairs/$i
 	done
+	if [[ "$mode" == "idempotent" ]]; then
+	    git diff $classpath > ${RESULTSDIR}/pairs/$i/patch.diff
+	fi
     else
 	echo "RESULT Both tests passed: $f and $fullTestName"
     fi
