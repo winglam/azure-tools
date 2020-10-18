@@ -14,6 +14,8 @@ RESULTSDIR=${11}
 hashfile=${12}
 mode=${13}
 
+echo "Iteration $i / $total"
+
 if [[ "$mode" == "idempotent" ]]; then
     origTestName=$(echo $f | rev | cut -d'.' -f1 | rev)
     origFullTestName="$f"
@@ -23,12 +25,11 @@ if [[ "$mode" == "idempotent" ]]; then
     className=$(echo $fullClass | rev | cut -d'.' -f1 | rev)
     classpath=$(find -name $className.java)
     git checkout -- $classpath
-    sed -i "s/\(public.*void.*${origTestName}\)/public void ${testName}() { ${origTestName}(); }@Test \1/" $classpath
+    sed -i "s/\(public.*void.*${origTestName}[\s]*(\)/public void ${testName}() { ${origTestName}(); }@Test \1/" $classpath
     echo "Creating copy method: $testName"
     git diff $classpath
 fi
 
-echo "Iteration $i / $total"
 if [[ "$f" == "$fullTestName" ]]; then
     echo "Skipping this iteration to prevent running the same test twice."
 else
