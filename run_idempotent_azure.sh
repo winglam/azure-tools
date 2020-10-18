@@ -78,9 +78,13 @@ bash $dir/idflakies-pom-modify/modify-project.sh . "1.0.2" "1.1-SNAPSHOT"
 
 modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
-permInputFile="$dir/module-summarylistgen/${modified_slug_module}_output.csv"
+if [[ "$runclasses" == "tests" ]]; then
+    permInputFile="$dir/module-summarylistgen-idempotent/${modified_slug_module}_output.csv"
+else
+    permInputFile="$dir/module-summarylistgen/${modified_slug_module}_output.csv"
+fi
 
-if [[ "$runclasses" != "" ]]; then
+if [[ "$runclasses" == "classes" ]]; then
     # generate a file of just test classes if we are just running classes
     permClassFile="$(echo $permInputFile | rev | cut -d'/' -f2- | rev)/${modified_slug_module}_classes_output.csv"
     rev $permInputFile | cut -d'.' -f2- | rev | sort -u > $permClassFile
@@ -95,7 +99,7 @@ for f in $(cat $permClassFile); do
     rm -rf $module/.dtfixingtools
     mkdir -p $module/.dtfixingtools
 
-    if [[ "$runclasses" != "" ]]; then
+    if [[ "$runclasses" == "classes" ]]; then
 	grep ^${f}. > $module/.dtfixingtools/original-order
     else
 	echo $f > $module/.dtfixingtools/original-order
