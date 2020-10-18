@@ -59,9 +59,11 @@ else
 fi
 
 classloc=$(find -name $class.java)
-if [[ -z $classloc ]]; then
-    echo "exit: 100 No test class at this commit."
-    exit 100
+if [[ "$mode" != "idempotent" ]]; then 
+    if [[ -z $classloc ]]; then
+	echo "exit: 100 No test class at this commit."
+	exit 100
+    fi
 fi
 classcount=$(find -name $class.java | wc -l)
 if [[ "$classcount" != "1" ]]; then
