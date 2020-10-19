@@ -19,14 +19,14 @@ echo "Iteration $i / $total"
 if [[ "$mode" == "idempotent" ]]; then
     origTestName=$(echo $f | rev | cut -d'.' -f1 | rev)
     origFullTestName="$f"
-    testName="copy123456"
+    testName="copy${origTestName}"
     fullClass=$(echo $f | rev | cut -d'.' -f2- | rev)
     fullTestName="$fullClass.$testName"
     className=$(echo $fullClass | rev | cut -d'.' -f1 | rev)
     classpath=$(find -name $className.java)
     git checkout -- $classpath
-    sed -i "/public.*class /a    @org.junit.Test public void copy() throws Exception {\
-        testParallelSlowLog();\
+    sed -i "/public.*class /a    @org.junit.Test public void ${testName}() throws Exception {\
+        ${origTestName}();\
     }" $classpath
     echo "Creating copy method: $testName"
     git diff $classpath
