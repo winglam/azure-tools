@@ -36,6 +36,8 @@ modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 echo "================Setup to emacs and maven path"
 sudo apt-get update -y --allow-unauthenticated
 sudo apt-get install emacs -y --allow-unauthenticated
+sudo apt-get install tmux -y --allow-unauthenticated
+sudo apt-get install xclip -y --allow-unauthenticated
 
 cd ~/apache-maven
 M2_HOME=$(pwd)
