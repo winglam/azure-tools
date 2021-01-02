@@ -33,7 +33,11 @@ short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 
 # echo "================Cloning the project"
-bash $dir/clone-project.sh "$slug" "$sha"
+if [[ ! -d "$slug" ]]; then
+    bash $dir/clone-project.sh "$slug" "$sha"
+else
+    echo "$slug already cloned"
+fi
 cd ~/$slug
 
 if [[ -z $module ]]; then
