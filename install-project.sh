@@ -26,7 +26,7 @@ elif [[ "$modifiedslug_with_sha" == "logzio.sawmill-84bb9f9" ]]; then
     sed -i '16,44d' sawmill-core/pom.xml
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$slug" == "apache/hadoop" ]]; then
-    sudo apt-get install autoconf automake libtool curl make g++ unzip;
+    sudo apt-get install autoconf automake libtool curl make g++ unzip -y --allow-unauthenticated;
     wget -nv https://github.com/protocolbuffers/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz;
     tar -zxvf protobuf-2.5.0.tar.gz;
     cd protobuf-2.5.0
