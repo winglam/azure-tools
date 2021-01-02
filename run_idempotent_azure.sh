@@ -62,19 +62,19 @@ elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
     MVNOPTIONS="${MVNOPTIONS} -DskipITs"
 fi
 
-echo "================Setup testrunner"
-cd $dir
-git clone https://github.com/TestingResearchIllinois/testrunner.git
-cd testrunner
-ifsha=$(git rev-parse HEAD)
-echo "testrunner sha: $ifsha"
-mvn install -DskipTests |& tee install-testrunner.log
+# echo "================Setup testrunner"
+# cd $dir
+# git clone https://github.com/TestingResearchIllinois/testrunner.git
+# cd testrunner
+# ifsha=$(git rev-parse HEAD)
+# echo "testrunner sha: $ifsha"
+# mvn install -DskipTests |& tee install-testrunner.log
 
-mv install-testrunner.log ${RESULTSDIR}
+# mv install-testrunner.log ${RESULTSDIR}
 
 echo "================Setup and run iDFlakies"
 cd ~/$slug
-bash $dir/idflakies-pom-modify/modify-project.sh . "1.0.2" "1.1-SNAPSHOT"
+bash $dir/idflakies-pom-modify/modify-project.sh . "1.0.2" "1.0"
 
 modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
