@@ -14,3 +14,8 @@ else
     echo "$slug already cloned"
     echo "SHA is $(git rev-parse HEAD)"
 fi
+if [[ "$(git rev-parse HEAD)" == "$sha" ]]; then
+    exit 0
+else
+    exit 1
+fi
