@@ -62,19 +62,18 @@ elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
     MVNOPTIONS="${MVNOPTIONS} -DskipITs"
 fi
 
-# echo "================Setup testrunner"
-# cd $dir
-# git clone https://github.com/TestingResearchIllinois/testrunner.git
-# cd testrunner
-# ifsha=$(git rev-parse HEAD)
-# echo "testrunner sha: $ifsha"
-# mvn install -DskipTests |& tee install-testrunner.log
-
-# mv install-testrunner.log ${RESULTSDIR}
+echo "================Setup testrunner"
+cd $dir
+git clone https://github.com/TestingResearchIllinois/testrunner.git
+cd testrunner
+ifsha=$(git rev-parse HEAD)
+echo "testrunner sha: $ifsha"
+mvn install -DskipTests |& tee install-testrunner.log
+mv install-testrunner.log ${RESULTSDIR}
 
 echo "================Setup and run iDFlakies"
 cd ~/$slug
-bash $dir/idflakies-pom-modify/modify-project.sh . "1.0.2" "1.0"
+bash $dir/idflakies-pom-modify/modify-project.sh . "1.1.0" "1.3-SNAPSHOT"
 
 modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
@@ -92,7 +91,7 @@ else
     permClassFile="$permInputFile"
 fi
 
-IDF_OPTIONS="-Ddt.detector.original_order.all_must_pass=false -Ddt.randomize.rounds=0 -Ddt.detector.original_order.retry_count=1 -Dtestplugin.runner.idempotent.num.runs=${rounds}"
+IDF_OPTIONS="-Ddt.detector.original_order.all_must_pass=false -Ddt.randomize.rounds=0 -Ddt.detector.original_order.retry_count=1 -Dtestplugin.runner.idempotent.num.runs=${rounds} -Dtestplugin.runner.consec.idempotent=true"
 for f in $(cat $permClassFile); do
     echo "Running idempotent for test: $f"
 
