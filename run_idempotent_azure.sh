@@ -78,6 +78,7 @@ bash $dir/idflakies-pom-modify/modify-project.sh . "1.1.0" "1.3-SNAPSHOT"
 modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
 if [[ "$runclasses" == "tests" ]]; then
+    # Verify some found NI tests
     permInputFile="$dir/module-summarylistgen-idempotent/${modified_slug_module}_output.csv"
 else
     permInputFile="$dir/module-summarylistgen/${modified_slug_module}_output.csv"
@@ -87,6 +88,10 @@ if [[ "$runclasses" == "classes" ]]; then
     # generate a file of just test classes if we are just running classes
     permClassFile="$(echo $permInputFile | rev | cut -d'/' -f2- | rev)/${modified_slug_module}_classes_output.csv"
     rev $permInputFile | cut -d'.' -f2- | rev | sort -u > $permClassFile
+elif [[ "$runclasses" == "suite" ]]; then
+    # create a dummy file with just one line to run the upcoming loop once
+    permClassFile="some_dummy_file"
+    echo "." > $permClassFile
 else
     permClassFile="$permInputFile"
 fi
@@ -100,6 +105,8 @@ for f in $(cat $permClassFile); do
 
     if [[ "$runclasses" == "classes" ]]; then
 	grep ^${f}. $permInputFile  > $module/.dtfixingtools/original-order
+    elif [[ "$runclasses" == "suite" ]]; then
+	cat $permInputFile  > $module/.dtfixingtools/original-order
     else
 	echo $f > $module/.dtfixingtools/original-order
     fi
