@@ -12,7 +12,7 @@ modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 
-echo "================Installing the project"
+echo "================Installing the project: $(date)"
 if [[ "$slug" == "apache/incubator-dubbo" ]]; then
     sudo chown -R $USER .
     mvn clean install -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
