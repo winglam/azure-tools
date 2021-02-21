@@ -145,9 +145,10 @@ for f in $(cat $tl ); do
     done
     cp $i-$mhash.csv ${RESULTSDIR}/pair-results
 
-    python $dir/python-scripts/parse_obo_results.py $i-$mhash.csv "${f}=DUPLICATE" $f  >> ${RESULTSDIR}/rounds-test-results.csv
+    python $dir/python-scripts/parse_obo_results.py $i-$mhash.csv "${f}=DUPLICATE" $f > /tmp/obo_results.xxxxxxxxxxxx
+    cat /tmp/obo_results.xxxxxxxxxxxx >> ${RESULTSDIR}/rounds-test-results.csv
 
-    didfail=$(egrep ",PP_VF,|,PF_VP,|,MP,|,MV,|,MVP," $i-$mhash.csv)
+    didfail=$(egrep ",PP_VF,|,PF_VP,|,MP,|,MV,|,MVP," /tmp/obo_results.xxxxxxxxxxxx)
     if [[ ! -z $didfail ]]; then
 	echo "RESULT at least one ,PP_VF,|,PF_VP,|,MP,|,MV,|,MVP, test: $f"
 	mkdir -p ${RESULTSDIR}/pairs/$i
