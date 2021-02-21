@@ -8,6 +8,7 @@ def output_xml_results(xml_file):
         # print str(y)
         tout = []
         failedconstructor = ""
+        tests = set()
         for f in y.testsuite.findAll("testcase"):
             s = "unknown"
             if f.find('failure'):
@@ -22,6 +23,9 @@ def output_xml_results(xml_file):
                 break
             else:
                 t = str.format("{}.{}", f["classname"], f["name"])
+                if t in tests:
+                    t = str.format("{}.{}=DUPLICATE", f["classname"], f["name"])
+                tests.add(t)
             tout.append(str.format("{},{},{},{},{}", t, s, f["time"], xml_file[2], xml_file[1]))
 
         if failedconstructor != "":

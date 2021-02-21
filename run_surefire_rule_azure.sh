@@ -18,21 +18,14 @@ mkdir -p ${RESULTSDIR}
 cd ~/
 projfile=$1
 rounds=$2
-mode="$3"
 line=$(head -n 1 $projfile)
 
 echo "================Starting experiment for input: $line"
 slug=$(echo ${line} | cut -d',' -f1 | rev | cut -d'/' -f1-2 | rev)
 sha=$(echo ${line} | cut -d',' -f2)
 
-if [[ "$mode" == "idempotent" ]]; then
-    fullTestName="running.idempotent"
-    module=$(echo ${line} | cut -d',' -f3)
-else
-    fullTestName=$(echo ${line} | cut -d',' -f3)
-    module=$(echo ${line} | cut -d',' -f4)
-    polluter=$(echo ${line} | cut -d',' -f5)
-fi
+fullTestName="running.idempotent"
+module=$(echo ${line} | cut -d',' -f3)
 
 MVNOPTIONS="-Ddependency-check.skip=true -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
 
@@ -56,20 +49,6 @@ else
     echo "Test name is given. Running isolation on the specific test: $formatTest"
     echo "class: $class"
     testarg="-Dtest=$formatTest"
-fi
-
-classloc=$(find -name $class.java)
-if [[ "$mode" != "idempotent" ]]; then 
-    if [[ -z $classloc ]]; then
-	echo "exit: 100 No test class at this commit."
-	exit 100
-    fi
-fi
-classcount=$(find -name $class.java | wc -l)
-if [[ "$classcount" != "1" ]]; then
-    classloc=$(find -name $class.java | head -n 1)
-    echo "Multiple test class found. Unsure which one to use. Choosing: $classloc. Other ones are:"
-    find -name $class.java
 fi
 
 if [[ -z $module ]]; then
@@ -116,16 +95,11 @@ echo "polluter,victim,hash,round_num" > $hashfile
 mkdir -p ${RESULTSDIR}/pair-results
 
 modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
-if [[ "$mode" == "idempotent" ]]; then
-    tl="$dir/module-summarylistgen-idempotent/${modifiedslug_with_sha}=${modified_module}_output.csv"
-else
-    tl="$dir/module-summarylistgen/${modifiedslug_with_sha}=${modified_module}_output.csv"
-fi
+tl="$dir/module-summarylistgen/${modifiedslug_with_sha}=${modified_module}_output.csv"
 cp $tl ${RESULTSDIR}/
 total=$(cat $tl | wc -l)
 i=1
 for f in $(cat $tl ); do
-    bash $dir/rounds-obo.sh "$i" "$total" "$f" "$fullTestName" "$fullClass" "$testName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile" "$mode"
     echo "==== Iteration $i / $total : $f : $(date)"
 
     origFullTestName="$f"
