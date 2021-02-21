@@ -147,9 +147,9 @@ for f in $(cat $tl ); do
 
     python $dir/python-scripts/parse_obo_results.py $i-$mhash.csv "${f}=DUPLICATE" $f  >> ${RESULTSDIR}/rounds-test-results.csv
 
-    didfail=$(grep ,PP_VF, $i-$mhash.csv)
+    didfail=$(egrep ",PP_VF,|,PF_VP,|,MP,|,MV,|,MVP," $i-$mhash.csv)
     if [[ ! -z $didfail ]]; then
-	echo "RESULT at least one NI test: $f"
+	echo "RESULT at least one ,PP_VF,|,PF_VP,|,MP,|,MV,|,MVP, test: $f"
 	mkdir -p ${RESULTSDIR}/pairs/$i
 	mv mvn-test-$i-$mhash.log ${RESULTSDIR}/pairs/$i
 	for g in $(find -name "TEST*.xml"); do
