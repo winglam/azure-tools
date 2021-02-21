@@ -135,12 +135,12 @@ for f in $(cat $tl ); do
 
     echo "" > $i-$mhash.csv
     pf=$(find -name "TEST-${fullClass}.xml" | head -n 1)
-    python $dir/python-scripts/parse_surefire_report.py $pf $i $f >> $i-$mhash.csv
+    python $dir/python-scripts/parse_surefire_report-NI-tests.py $pf $i $f >> $i-$mhash.csv
     sort -u $i-$mhash.csv -o $i-$mhash.csv
 
     for j in $(find -name "TEST-*.xml"); do
 	if [[ "$j" != "$pf" ]]; then
-	    python $dir/python-scripts/parse_surefire_report.py $j $i "" >> $i-$mhash.csv
+	    python $dir/python-scripts/parse_surefire_report-NI-tests.py $j $i "" >> $i-$mhash.csv
 	fi
     done
     cp $i-$mhash.csv ${RESULTSDIR}/pair-results
