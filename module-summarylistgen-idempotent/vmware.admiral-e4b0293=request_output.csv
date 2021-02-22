@@ -1,1 +1,2 @@
+com.vmware.admiral.request.ContainerControlLoopServiceTest.testRedeploymentOfAContainerInClusterAllContainersInError
 com.vmware.admiral.request.kubernetes.RequestBrokerKubernetesServiceTest.testRequestStateHasK8sInfo

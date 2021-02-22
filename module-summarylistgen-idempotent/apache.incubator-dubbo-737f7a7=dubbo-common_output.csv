@@ -1,5 +1,6 @@
 org.apache.dubbo.common.bytecode.ClassGeneratorTest.testMain
 org.apache.dubbo.common.bytecode.ClassGeneratorTest.testMain0
+org.apache.dubbo.common.concurrent.CompletableFutureTaskTest.testCustomExecutor
 org.apache.dubbo.common.extension.ExtensionLoaderTest.test_AddExtension
 org.apache.dubbo.common.extension.ExtensionLoaderTest.test_AddExtension_Adaptive
 org.apache.dubbo.common.extension.ExtensionLoaderTest.test_AddExtension_NoExtend
