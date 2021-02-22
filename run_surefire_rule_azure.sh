@@ -132,7 +132,7 @@ for f in $(cat $tl ); do
     python $dir/python-scripts/parse_surefire_report-NI-tests.py $pf $i $f >> $i-$mhash.csv
 
     TMPFILE=`mktemp /tmp/add_rule.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`
-    awk '/public.*class / && !x {print;print "@org.junit.Rule public org.junit.rules.TestRule runtwice = new org.junit.rules.TestRule() {@Override public org.junit.runners.model.Statement apply(final org.junit.runners.model.Statement base, org.junit.runner.Description description) {return new org.junit.runners.model.Statement() {@Override public void evaluate() throws Throwable {base.evaluate();base.evaluate();}};}};"; x=1; next;} 1' $filepath > ${TMPFILE}
+    awk '/public.*class / && !x {print;print "@org.junit.Rule public org.junit.rules.TestRule runtwice = new org.junit.rules.TestRule() {@Override public org.junit.runners.model.Statement apply(final org.junit.runners.model.Statement base, org.junit.runner.Description description) {return new org.junit.runners.model.Statement() {@Override public void evaluate() throws Throwable {base.evaluate();base.evaluate();}};}};"; x=1; next;} 1' $classpath > ${TMPFILE}
     # awk '/public.*class / && !x {print;print "@org.junit.ClassRule public static org.junit.rules.TestRule runtwice = new org.junit.rules.TestRule() {@Override public org.junit.runners.model.Statement apply(final org.junit.runners.model.Statement base, org.junit.runner.Description description) {return new org.junit.runners.model.Statement() {@Override public void evaluate() throws Throwable {base.evaluate();base.evaluate();}};}};"; x=1; next;} 1' $classpath > ${TMPFILE}
     cp ${TMPFILE} ${classpath}
     echo "==== Adding rule:"
