@@ -18,7 +18,7 @@ def output_xml_results(xml_file):
             else:
                 s = "pass"
 
-            if len(xml_file) == 4 and len(xml_file[3]) != 0 and (f["name"] == f["classname"] or f["name"] == ""):
+            if len(xml_file) == 4 and len(xml_file[3]) != 0 and ( (f["name"] == f["classname"] or f["name"] == "") or xml_file[3].endswith("=DUPLICATE") ):
                 t = xml_file[3]
             else:
                 t = str.format("{}.{}", f["classname"], f["name"])

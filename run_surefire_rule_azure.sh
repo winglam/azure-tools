@@ -120,22 +120,27 @@ for f in $(cat $tl ); do
     echo "==== classpath: $classpath"
     git checkout -- $classpath
 
-    TMPFILE=`mktemp /tmp/add_rule.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`
-    awk '/public.*class / && !x {print;print "@org.junit.ClassRule public static org.junit.rules.TestRule runtwice = new org.junit.rules.TestRule() {@Override public org.junit.runners.model.Statement apply(final org.junit.runners.model.Statement base, org.junit.runner.Description description) {return new org.junit.runners.model.Statement() {@Override public void evaluate() throws Throwable {base.evaluate();base.evaluate();}};}};"; x=1; next;} 1' $classpath > ${TMPFILE}
-    cp ${TMPFILE} ${classpath}
-    echo "==== Adding rule:"
-    git diff $classpath
-
     mhash=$(echo -n "$f" | md5sum | cut -d' ' -f1);
     echo "$f,$mhash,$i" >> $hashfile
     echo "==== Pair info: $f,$mhash,$i"
-    find . -name TEST-*.xml -delete
     testarg="-Dtest=$fullClass#$ft";
+    find . -name TEST-*.xml -delete
     mvn test -pl $module ${testarg} ${MVNOPTIONS} |& tee mvn-test-$i-$mhash.log
 
     echo "" > $i-$mhash.csv
     pf=$(find -name "TEST-${fullClass}.xml" | head -n 1)
     python $dir/python-scripts/parse_surefire_report-NI-tests.py $pf $i $f >> $i-$mhash.csv
+
+    TMPFILE=`mktemp /tmp/add_rule.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`
+    awk '/public.*class / && !x {print;print "@org.junit.Rule public org.junit.rules.TestRule runtwice = new org.junit.rules.TestRule() {@Override public org.junit.runners.model.Statement apply(final org.junit.runners.model.Statement base, org.junit.runner.Description description) {return new org.junit.runners.model.Statement() {@Override public void evaluate() throws Throwable {base.evaluate();base.evaluate();}};}};"; x=1; next;} 1' $filepath > ${TMPFILE}
+    # awk '/public.*class / && !x {print;print "@org.junit.ClassRule public static org.junit.rules.TestRule runtwice = new org.junit.rules.TestRule() {@Override public org.junit.runners.model.Statement apply(final org.junit.runners.model.Statement base, org.junit.runner.Description description) {return new org.junit.runners.model.Statement() {@Override public void evaluate() throws Throwable {base.evaluate();base.evaluate();}};}};"; x=1; next;} 1' $classpath > ${TMPFILE}
+    cp ${TMPFILE} ${classpath}
+    echo "==== Adding rule:"
+    git diff $classpath
+
+    find . -name TEST-*.xml -delete
+    mvn test -pl $module ${testarg} ${MVNOPTIONS} |& tee mvn-test-$i-$mhash-2nd.log
+    python $dir/python-scripts/parse_surefire_report-NI-tests.py $pf $i "${f}=DUPLICATE" >> $i-$mhash.csv
     sort -u $i-$mhash.csv -o $i-$mhash.csv
 
     for j in $(find -name "TEST-*.xml"); do
@@ -153,6 +158,7 @@ for f in $(cat $tl ); do
 	echo "RESULT at least one ,PP_VF,|,PF_VP,|,MP,|,MV,|,MVP, test: $f"
 	mkdir -p ${RESULTSDIR}/pairs/$i
 	mv mvn-test-$i-$mhash.log ${RESULTSDIR}/pairs/$i
+	mv mvn-test-$i-$mhash-2nd.log ${RESULTSDIR}/pairs/$i
 	for g in $(find -name "TEST*.xml"); do
 	    mv $g ${RESULTSDIR}/pairs/$i
 	done
