@@ -112,7 +112,7 @@ for f in $(cat $permClassFile); do
 	echo $f > $module/.dtfixingtools/original-order
     fi
 
-    timeout 2h mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -pl $module -Ddetector.detector_type=original |& tee original.log
+    timeout 48h mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -pl $module -Ddetector.detector_type=original |& tee original.log
 
     mkdir -p ${RESULTSDIR}/idem/$f
     mv original.log ${RESULTSDIR}/idem/$f/
