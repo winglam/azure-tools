@@ -71,9 +71,17 @@ echo "testrunner sha: $ifsha"
 mvn install -DskipTests |& tee install-testrunner.log
 mv install-testrunner.log ${RESULTSDIR}
 
+cd $dir
+git clone https://github.com/idflakies/iDFlakies.git
+cd iDFlakies
+idfsha=$(git rev-parse HEAD)
+echo "idflakies sha: $idfsha"
+mvn install -DskipTests |& tee install-idflakies.log
+mv install-idflakies.log ${RESULTSDIR}
+
 echo "================Setup and run iDFlakies: $(date)"
 cd ~/$slug
-bash $dir/idflakies-pom-modify/modify-project.sh . "1.1.0" "1.3-SNAPSHOT"
+bash $dir/idflakies-pom-modify/modify-project.sh . "1.2.0-SNAPSHOT" "1.3-SNAPSHOT"
 
 modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
@@ -97,22 +105,25 @@ else
 fi
 
 echo "================Running iDFlakies: $(date)" 
-IDF_OPTIONS="-Ddt.detector.original_order.all_must_pass=false -Ddt.randomize.rounds=0 -Ddt.detector.original_order.retry_count=1 -Dtestplugin.runner.idempotent.num.runs=${rounds} -Dtestplugin.runner.consec.idempotent=true"
+IDF_OPTIONS="-Ddt.detector.original_order.all_must_pass=false -Ddt.randomize.rounds=0 -Ddt.detector.original_order.retry_count=1 -Dtestplugin.runner.idempotent.num.runs=${rounds} -Dtestplugin.runner.consec.idempotent=true -Ddt.detector.forceJUnit4=true"
 for f in $(cat $permClassFile); do
     echo "Running idempotent for test: $f"
 
     rm -rf $module/.dtfixingtools
     mkdir -p $module/.dtfixingtools
 
+    timeout="2h"
     if [[ "$runclasses" == "classes" ]]; then
 	grep "^${f}\." $permInputFile  > $module/.dtfixingtools/original-order
+	timeout="24h"
     elif [[ "$runclasses" == "suite" ]]; then
 	cat $permInputFile  > $module/.dtfixingtools/original-order
+	timeout="48h"
     else
 	echo $f > $module/.dtfixingtools/original-order
     fi
 
-    timeout 48h mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -pl $module -Ddetector.detector_type=original |& tee original.log
+    timeout $timeout mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -pl $module -Ddetector.detector_type=original |& tee original.log
 
     mkdir -p ${RESULTSDIR}/idem/$f
     mv original.log ${RESULTSDIR}/idem/$f/
