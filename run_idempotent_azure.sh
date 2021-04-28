@@ -66,6 +66,13 @@ echo "================Setup testrunner: $(date)"
 cd $dir
 git clone https://github.com/TestingResearchIllinois/testrunner.git
 cd testrunner
+
+# to hide changes from double blind
+wget http://mir.cs.illinois.edu/winglam/personal/idflakies-testrunner-ni-changes.diff
+git apply idflakies-testrunner-ni-changes.diff
+echo "====testrunner changes:"
+git diff
+
 ifsha=$(git rev-parse HEAD)
 echo "testrunner sha: $ifsha"
 mvn install -DskipTests |& tee install-testrunner.log
