@@ -16,6 +16,25 @@ echo "================Installing the project: $(date)"
 if [[ "$slug" == "apache/incubator-dubbo" ]]; then
     sudo chown -R $USER .
     mvn clean install -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$slug" == "caelum/vraptor" ]] || [[ "$slug" == "mozilla-metrics/akela" ]]; then
+    echo "Cannot compile even in the latest master, some remote dependency is missing"
+    exit 1
+elif [[ "$slug" == "cucumber/cuke4duke" ]]; then
+    sed -i '26s/2.8.1/2.10.4/' pom.xml
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$slug" == "fernandezpablo85/scribe-java" ]]; then
+    sed -i '99s/</<!--/' pom.xml
+    sed -i '115s/>/-->/' pom.xml
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+elif [[ "$slug" == "spring-projects/spring-mvc-showcase" ]]; then
+    echo "Cannot compile because the old SHA uses java7, and something is not compatible with java8"
+    exit 1
+elif [[ "$slug" == "spring-projects/spring-test-mvc" ]]; then
+    echo "Repository not found in Github"
+    exit 1
+elif [[ "$slug" == "twitter/ambrose" ]]; then
+    sed -i '74s/2.9.2/2.10.4/' pom.xml
+    mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$slug" == "doanduyhai/Achilles" ]]; then
     sed -i "s?http://repo?https://repo?" pom.xml
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
