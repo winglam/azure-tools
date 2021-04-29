@@ -140,11 +140,12 @@ for f in $(cat $permClassFile); do
     fi
 
     mkdir -p ${RESULTSDIR}/idem/$f
-    mv original.log ${RESULTSDIR}/idem/$f/
     if [[ "$runclasses" == "psuite" ]]; then
-	mkdir -p ${RESULTSDIR}/idem/$f/dtfixingtools
-	for f in $(find -name .dtfixingtools); do cp --parents -r $f ${RESULTSDIR}/idem/$f/dtfixingtools/; done
+	mkdir -p ${RESULTSDIR}/idem/dtfixingtools
+	for f in $(find -name .dtfixingtools); do cp --parents -r $f ${RESULTSDIR}/idem/dtfixingtools/; done
+	mv original.log ${RESULTSDIR}/idem/
     else
+	mv original.log ${RESULTSDIR}/idem/$f/
 	mv $module/.dtfixingtools ${RESULTSDIR}/idem/$f/dtfixingtools
     fi
 done
