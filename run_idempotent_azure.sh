@@ -126,15 +126,18 @@ for f in $(cat $permClassFile); do
     elif [[ "$runclasses" == "suite" ]]; then
 	cat $permInputFile  > $module/.dtfixingtools/original-order
 	timeout="48h"
-    elif [[ "$runclasses" == "psuite" ]]; then
-	# rely on iDFlakies to generate test order
-	for f in $(find -name .dtfixingtools); do rm -rf $f; done
-	echo "running psuite; leaving original-order untouched"
     else
 	echo $f > $module/.dtfixingtools/original-order
     fi
 
-    timeout $timeout mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -pl $module -Ddetector.detector_type=original |& tee original.log
+    if [[ "$runclasses" == "psuite" ]]; then
+	# rely on iDFlakies to generate test order
+	for f in $(find -name .dtfixingtools); do rm -rf $f; done
+	echo "running psuite; leaving original-order untouched"
+	timeout $timeout mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -Ddetector.detector_type=original |& tee original.log
+    else
+	timeout $timeout mvn testrunner:testplugin ${MVNOPTIONS} ${IDF_OPTIONS} -pl $module -Ddetector.detector_type=original |& tee original.log
+    fi
 
     mkdir -p ${RESULTSDIR}/idem/$f
     mv original.log ${RESULTSDIR}/idem/$f/
