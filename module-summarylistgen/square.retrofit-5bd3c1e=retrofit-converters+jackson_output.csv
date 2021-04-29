@@ -1,0 +1,4 @@
+retrofit.converter.JacksonConverterTest.deserializeWrongClass
+retrofit.converter.JacksonConverterTest.deserializeWrongValue
+retrofit.converter.JacksonConverterTest.serialize
+retrofit.converter.JacksonConverterTest.deserialize

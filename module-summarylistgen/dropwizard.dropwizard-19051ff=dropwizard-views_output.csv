@@ -1,0 +1,3 @@
+io.dropwizard.views.ViewTest.hasATemplate
+io.dropwizard.views.ViewBundleTest.addsTheViewMessageBodyWriterToTheEnvironment
+io.dropwizard.views.ViewBundleTest.addsTheViewMessageBodyWriterWithSingleViewRendererToTheEnvironment

@@ -1,0 +1,3 @@
+com.twitter.ambrose.model.PigJobTest.testPigJobRoundTrip
+com.twitter.ambrose.model.PigJobTest.testDAGNodePigJobRoundTrip
+com.twitter.ambrose.model.PigJobTest.testFromJson

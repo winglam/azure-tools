@@ -1,0 +1,15 @@
+org.apache.http.entity.mime.TestMultipartFormHttpEntity.testImplictContractorParams
+org.apache.http.entity.mime.TestMultipartFormHttpEntity.testNonRepeatable
+org.apache.http.entity.mime.TestMultipartFormHttpEntity.testRepeatable
+org.apache.http.entity.mime.TestMultipartFormHttpEntity.testExplictContractorParams
+org.apache.http.entity.mime.TestMultipartContentBody.testInputStreamBody
+org.apache.http.entity.mime.TestMultipartContentBody.testStringBody
+org.apache.http.entity.mime.TestMultipartForm.testMultipartFormStrict
+org.apache.http.entity.mime.TestMultipartForm.testMultipartFormStringPartsMultiCharsets
+org.apache.http.entity.mime.TestMultipartForm.testMultipartFormBrowserCompatibleNonASCIIHeaders
+org.apache.http.entity.mime.TestMultipartForm.testMultipartFormRFC6532
+org.apache.http.entity.mime.TestMultipartForm.testMultipartFormBinaryParts
+org.apache.http.entity.mime.TestMultipartForm.testMultipartFormStringParts
+org.apache.http.entity.mime.TestMultipartEntityBuilder.testMultipartOptions
+org.apache.http.entity.mime.TestMultipartEntityBuilder.testBasics
+org.apache.http.entity.mime.TestMultipartEntityBuilder.testAddBodyParts

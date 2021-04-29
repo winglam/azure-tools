@@ -1,0 +1,3 @@
+io.dropwizard.views.mustache.MustacheViewRendererTest.returnsA500ForViewsWithBadTemplatePaths
+io.dropwizard.views.mustache.MustacheViewRendererTest.rendersViewsWithRelativeTemplatePaths
+io.dropwizard.views.mustache.MustacheViewRendererTest.rendersViewsWithAbsoluteTemplatePaths

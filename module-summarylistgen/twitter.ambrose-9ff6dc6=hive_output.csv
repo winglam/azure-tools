@@ -1,0 +1,3 @@
+com.twitter.ambrose.model.HiveJobTest.testFromJson
+com.twitter.ambrose.model.HiveJobTest.testHiveJobRoundTrip
+com.twitter.ambrose.model.HiveJobTest.testDAGNodeHiveJobRoundTrip

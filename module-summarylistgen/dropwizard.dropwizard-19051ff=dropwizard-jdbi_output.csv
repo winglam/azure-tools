@@ -1,0 +1,7 @@
+io.dropwizard.jdbi.JDBITest.sqlObjectsCanReturnImmutableLists
+io.dropwizard.jdbi.JDBITest.sqlObjectsCanReturnOptional
+io.dropwizard.jdbi.JDBITest.createsAValidDBI
+io.dropwizard.jdbi.JDBITest.managesTheDatabaseWithTheEnvironment
+io.dropwizard.jdbi.JDBITest.sqlObjectsCanReturnJodaDateTime
+io.dropwizard.jdbi.JDBITest.sqlObjectsCanReturnImmutableSets
+io.dropwizard.jdbi.JDBITest.sqlObjectsCanAcceptOptionalParams

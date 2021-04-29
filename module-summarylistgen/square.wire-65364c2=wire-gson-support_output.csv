@@ -1,0 +1,4 @@
+com.squareup.wire.GsonTest.testGsonWithUnknownFieldsAndExtensions
+com.squareup.wire.GsonTest.testGsonWithUnknownFields
+com.squareup.wire.GsonTest.testGsonWithExtensions
+com.squareup.wire.GsonTest.testGsonNoExtensions

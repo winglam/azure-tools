@@ -1,0 +1,5 @@
+io.dropwizard.metrics.CsvReporterFactoryTest.isDiscoverable
+io.dropwizard.metrics.ConsoleReporterFactoryTest.isDiscoverable
+io.dropwizard.metrics.Slf4jReporterFactoryTest.isDiscoverable
+io.dropwizard.metrics.MetricsFactoryTest.hasReporters
+io.dropwizard.metrics.MetricsFactoryTest.hasADefaultFrequency

@@ -1,0 +1,6 @@
+org.apache.http.osgi.impl.TestPropertiesUtils.toBoolean
+org.apache.http.osgi.impl.TestPropertiesUtils.toLong
+org.apache.http.osgi.impl.TestPropertiesUtils.toInt
+org.apache.http.osgi.impl.TestPropertiesUtils.toSingleString
+org.apache.http.osgi.impl.TestPropertiesUtils.toStringArray
+org.apache.http.osgi.impl.TestPropertiesUtils.toDouble

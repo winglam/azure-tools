@@ -1,0 +1,3 @@
+io.dropwizard.lifecycle.setup.LifecycleEnvironmentTest.managesLifeCycleObjects
+io.dropwizard.lifecycle.setup.LifecycleEnvironmentTest.managesManagedObjects
+io.dropwizard.lifecycle.JettyManagedTest.startsAndStops

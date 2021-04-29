@@ -1,0 +1,6 @@
+retrofit.converter.ProtoConverterTest.deserializeWrongClass
+retrofit.converter.ProtoConverterTest.deserializeWrongValue
+retrofit.converter.ProtoConverterTest.serialize
+retrofit.converter.ProtoConverterTest.deserializeWrongMime
+retrofit.converter.ProtoConverterTest.deserializeWrongType
+retrofit.converter.ProtoConverterTest.deserialize

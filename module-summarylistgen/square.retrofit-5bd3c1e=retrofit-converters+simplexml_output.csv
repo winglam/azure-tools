@@ -1,0 +1,4 @@
+retrofit.converter.SimpleXMLConverterTest.deserializeWrongClass
+retrofit.converter.SimpleXMLConverterTest.deserializeWrongValue
+retrofit.converter.SimpleXMLConverterTest.serialize
+retrofit.converter.SimpleXMLConverterTest.deserialize

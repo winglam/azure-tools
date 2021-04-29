@@ -1,0 +1,5 @@
+io.dropwizard.assets.AssetsBundleTest.canSupportDiffrentAssetsBundleName
+io.dropwizard.assets.AssetsBundleTest.canHaveDifferentUriAndResourcePaths
+io.dropwizard.assets.AssetsBundleTest.canHaveDifferentUriAndResourcePathsAndIndexFilename
+io.dropwizard.assets.AssetsBundleTest.canHaveCustomPaths
+io.dropwizard.assets.AssetsBundleTest.hasADefaultPath

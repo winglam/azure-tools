@@ -1,0 +1,4 @@
+io.dropwizard.spdy.ReferrerPushStrategyFactoryTest.isDiscoverable
+io.dropwizard.spdy.Spdy3ConnectorFactoryTest.isDiscoverable
+io.dropwizard.spdy.NonePushStrategyFactoryTest.returnsAPushStrategyWhichNeverPushesAnything
+io.dropwizard.spdy.NonePushStrategyFactoryTest.isDiscoverable

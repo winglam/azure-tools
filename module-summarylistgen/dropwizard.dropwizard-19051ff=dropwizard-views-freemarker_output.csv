@@ -1,0 +1,3 @@
+io.dropwizard.views.freemarker.FreemarkerViewRendererTest.returnsA500ForViewsWithBadTemplatePaths
+io.dropwizard.views.freemarker.FreemarkerViewRendererTest.rendersViewsWithRelativeTemplatePaths
+io.dropwizard.views.freemarker.FreemarkerViewRendererTest.rendersViewsWithAbsoluteTemplatePaths

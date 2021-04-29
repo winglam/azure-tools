@@ -1,0 +1,2 @@
+io.dropwizard.db.ManagedPooledDataSourceTest.hasNoParentLogger
+io.dropwizard.db.DataSourceFactoryTest.buildsAConnectionPoolToTheDatabase

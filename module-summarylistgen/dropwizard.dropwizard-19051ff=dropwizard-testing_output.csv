@@ -1,0 +1,7 @@
+io.dropwizard.testing.app.PersonResourceTest.testGetPerson
+io.dropwizard.testing.junit.DropwizardServiceRuleConfigOverrideTest.supportsConfigAttributeOverrides
+io.dropwizard.testing.junit.DropwizardAppRuleTest.returnsEnvironment
+io.dropwizard.testing.junit.DropwizardAppRuleTest.canGetExpectedResourceOverHttp
+io.dropwizard.testing.junit.DropwizardAppRuleTest.returnsApplication
+io.dropwizard.testing.junit.DropwizardAppRuleTest.returnsConfiguration
+io.dropwizard.testing.FixtureHelpersTest.readsTheFileAsAString

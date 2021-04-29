@@ -1,0 +1,6 @@
+retrofit.converter.WireConverterTest.deserializeWrongClass
+retrofit.converter.WireConverterTest.deserializeWrongValue
+retrofit.converter.WireConverterTest.serialize
+retrofit.converter.WireConverterTest.deserializeWrongMime
+retrofit.converter.WireConverterTest.deserializeWrongType
+retrofit.converter.WireConverterTest.deserialize
