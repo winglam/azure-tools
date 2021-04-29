@@ -103,7 +103,7 @@ if [[ "$runclasses" == "classes" ]]; then
     # generate a file of just test classes if we are just running classes
     permClassFile="$(echo $permInputFile | rev | cut -d'/' -f2- | rev)/${modified_slug_module}_classes_output.csv"
     rev $permInputFile | cut -d'.' -f2- | rev | sort -u > $permClassFile
-elif [[ "$runclasses" == "suite" ]]; then
+elif [[ "$runclasses" == "suite" ]] || [[ "$runclasses" == "psuite" ]]; then
     # create a dummy file with just one line to run the upcoming loop once
     permClassFile="some_dummy_file"
     echo "." > $permClassFile
@@ -126,6 +126,10 @@ for f in $(cat $permClassFile); do
     elif [[ "$runclasses" == "suite" ]]; then
 	cat $permInputFile  > $module/.dtfixingtools/original-order
 	timeout="48h"
+    elif [[ "$runclasses" == "psuite" ]]; then
+	# rely on iDFlakies to generate test order
+	for f in $(find -name .dtfixingtools); do rm -rf $f; done
+	echo "running psuite; leaving original-order untouched"
     else
 	echo $f > $module/.dtfixingtools/original-order
     fi
@@ -134,7 +138,12 @@ for f in $(cat $permClassFile); do
 
     mkdir -p ${RESULTSDIR}/idem/$f
     mv original.log ${RESULTSDIR}/idem/$f/
-    mv $module/.dtfixingtools ${RESULTSDIR}/idem/$f/dtfixingtools
+    if [[ "$runclasses" == "psuite" ]]; then
+	mkdir -p ${RESULTSDIR}/idem/$f/dtfixingtools
+	for f in $(find -name .dtfixingtools); do cp --parents -r $f ${RESULTSDIR}/idem/$f/dtfixingtools/; done
+    else
+	mv $module/.dtfixingtools ${RESULTSDIR}/idem/$f/dtfixingtools
+    fi
 done
 
 cp $permInputFile ${RESULTSDIR}/
