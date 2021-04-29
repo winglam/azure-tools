@@ -31,7 +31,9 @@ cd - > /dev/null
 cd ${working_dir}
 
 javac PomFile.java
-find ${project_path} -name pom.xml | grep -v "src/" | java PomFile ${ARTIFACT_ID} ${ARTIFACT_VERSION} ${CONFIGURATION_CLASS} ${TESTRUNNER_ARTIFACT_VERSION}
+for f in $(find ${project_path} -name pom.xml | grep -v "src/"); do
+    echo $f | java PomFile ${ARTIFACT_ID} ${ARTIFACT_VERSION} ${CONFIGURATION_CLASS} ${TESTRUNNER_ARTIFACT_VERSION};
+done
 rm -f PomFile.class
 
 cd ${crnt}
