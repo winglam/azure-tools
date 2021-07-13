@@ -1,16 +1,23 @@
-
 slug=$1
-MVNOPTIONS=$2
+MVNOPTIONS="$2 -Dmaven.repo.local=$AZ_BATCH_TASK_WORKING_DIR/input/dependencies"
 USER=$3
 module=$4
 sha=$5
 dir=$6
 fullTestName=$7
 RESULTSDIR=$8
+projectname=${slug%/*}
 
 modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
+modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
+
+if [[ ! -f "$AZ_BATCH_TASK_WORKING_DIR/input/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
+    PIPESTATUS[0]=0
+    ret=${PIPESTATUS[0]}
+    exit $ret
+fi
 
 echo "================Installing the project: $(date)"
 if [[ "$slug" == "apache/incubator-dubbo" ]]; then
@@ -142,6 +149,11 @@ elif [[ "$modifiedslug_with_sha" == "apache.struts-13d9053" || "$modifiedslug_wi
 else
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 fi
+
+cd ~/
+zip -r "${modifiedslug_with_sha}=${modified_module}".zip $projectname
+cp "${modifiedslug_with_sha}=${modified_module}".zip ~/input
+cd ~/$slug
 
 ret=${PIPESTATUS[0]}
 exit $ret
