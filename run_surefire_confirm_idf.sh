@@ -22,8 +22,8 @@ slug=$1 #$(echo ${line} | cut -d',' -f1 | rev | cut -d'/' -f1-2 | rev)
 sha=$2 #$(echo ${line} | cut -d',' -f2)
 input_container=$3
 module=$4 #$(echo ${line} | cut -d',' -f3)
+modified_module=$(echo ${module} | sed 's?\./??g' | sed 's/\//+/g')
 
-modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 echo "================Starting experiment for input: $slug $sha $module"
 
 MVNOPTIONS="-Ddependency-check.skip=true -Dmaven.repo.local=$AZ_BATCH_TASK_WORKING_DIR/$input_container/dependencies -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
@@ -78,7 +78,7 @@ pip install lxml
 
 echo "================Running intended and revealed orders for tests"
 
-modified_module=$(echo ${module} | sed 's?\./??g' | sed 's/\//+/g')
+
 modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
 
 permClassFile="Tests_${modified_slug_module}"

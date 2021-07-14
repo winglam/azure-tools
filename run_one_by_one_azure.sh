@@ -134,7 +134,6 @@ if [[ "$polluter" != "" ]]; then
 	bash $dir/rounds-obo.sh "p$i" "$rounds" "$fullTestName" "$polluter" "$pfullClass" "$ptestName" "$slug" "$module" "$JMVNOPTIONS" "$dir" "$RESULTSDIR" "$hashfile" "$mode"
     done
 else
-    modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
     if [[ "$mode" == "idempotent" ]]; then
 	tl="$dir/module-summarylistgen-idempotent/${modifiedslug_with_sha}=${modified_module}_output.csv"
     else
