@@ -62,18 +62,15 @@ elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
 fi
 
 echo "================Compiling: $(date)"
-mvn compile ${MVNOPTIONS} --log-file=$AZ_BATCH_TASK_WORKING_DIR/"com=${modifiedslug_with_sha}=${modified_module}".txt
-
+bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir" "$fullTestName" "${RESULTSDIR}" "$input_container"
+ret=${PIPESTATUS[0]}
 cd ~/
 
-case `grep -q '\[INFO\] BUILD SUCCESS' "com=$modifiedslug_with_sha=$modified_module".txt ; echo $?` in
-  0)
-    echo "com=${modifiedslug_with_sha}=${modified_module} is compiled successfully." | tee -a /$AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
-    ;;
-  1)
+if [[ $ret != 0 ]]; then 
     echo "com=${modifiedslug_with_sha}=${modified_module} is failed." | tee -a $AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
-    ;;
-esac
+else
+    echo "com=${modifiedslug_with_sha}=${modified_module} is compiled successfully." | tee -a /$AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
+fi
 
 if [[ ! -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
     zip -r "${modifiedslug_with_sha}=${modified_module}".zip ${slug%/*}

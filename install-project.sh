@@ -14,9 +14,7 @@ modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 
 if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
-    PIPESTATUS[0]=0
-    ret=${PIPESTATUS[0]}
-    exit $ret
+    exit 0
 fi
 
 echo "================Installing the project: $(date)"
@@ -150,10 +148,11 @@ else
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 fi
 
+ret=${PIPESTATUS[0]}
+
 cd ~/
 zip -r "${modifiedslug_with_sha}=${modified_module}".zip ${slug%/*}
 cp "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container
 cd ~/$slug
 
-ret=${PIPESTATUS[0]}
 exit $ret
