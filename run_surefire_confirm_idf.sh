@@ -78,7 +78,7 @@ pip install lxml
 
 echo "================Running intended and revealed orders for tests"
 
-modified_module=$(echo ${module} | sed 's/\//+/g')
+modified_module=$(echo ${module} | sed 's?\./??g' | sed 's/\//+/g')
 modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
 
 permClassFile="Tests_${modified_slug_module}"

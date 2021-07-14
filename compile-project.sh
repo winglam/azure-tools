@@ -28,7 +28,7 @@ sha=$(echo ${line} | cut -d',' -f2)
 
 fullTestName="running.idempotent"
 module=$(echo ${line} | cut -d',' -f3)
-modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
+modified_module=$(echo ${module} | sed 's?\./??g' | sed 's/\//+/g')
 
 MVNOPTIONS="-Ddependency-check.skip=true -Dmaven.repo.local=$AZ_BATCH_TASK_WORKING_DIR/$input_container/dependencies -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
 
@@ -67,9 +67,9 @@ ret=${PIPESTATUS[0]}
 cd ~/
 
 if [[ $ret != 0 ]]; then 
-    echo "com=${modifiedslug_with_sha}=${modified_module} is failed." | tee -a $AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
+    echo echo "$line,${modifiedslug_with_sha}=${modified_module},failed" | tee -a $AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
 else
-    echo "com=${modifiedslug_with_sha}=${modified_module} is compiled successfully." | tee -a /$AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
+    echo "$line,${modifiedslug_with_sha}=${modified_module},passed" | tee -a /$AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
 fi
 
 endtime=$(date)
