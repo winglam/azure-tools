@@ -35,7 +35,7 @@ short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 
 # echo "================Cloning the project"
-bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}"
+bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}" "$input_container"
 cd ~/$slug
 
 echo "================Setting up test name"

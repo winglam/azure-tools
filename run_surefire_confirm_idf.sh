@@ -20,8 +20,9 @@ cd ~/
 
 slug=$1 #$(echo ${line} | cut -d',' -f1 | rev | cut -d'/' -f1-2 | rev)
 sha=$2 #$(echo ${line} | cut -d',' -f2)
-module=$3 #$(echo ${line} | cut -d',' -f3)
-input_container=$4
+input_container=$3
+module=$4 #$(echo ${line} | cut -d',' -f3)
+
 modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 echo "================Starting experiment for input: $slug $sha $module"
 
@@ -37,7 +38,7 @@ mkdir -p ${RESULTSDIR}
 
 
 # echo "================Cloning the project"
-bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}"
+bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}" "$input_container"
 ret=${PIPESTATUS[0]}
 if [[ $ret != 0 ]]; then
     echo "Git checkout failed!"

@@ -35,7 +35,7 @@ modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
 
 # echo "================Cloning the project"
-bash $dir/clone-project.sh "$slug" "$modified_slug_module"
+bash $dir/clone-project.sh "$slug" "$modified_slug_module" "$input_container"
 cd ~/$slug
 
 if [[ -z $module ]]; then
