@@ -1,19 +1,19 @@
 slug=$1
-MVNOPTIONS="$2 -Dmaven.repo.local=$AZ_BATCH_TASK_WORKING_DIR/input/dependencies"
+MVNOPTIONS=$2
 USER=$3
 module=$4
 sha=$5
 dir=$6
 fullTestName=$7
 RESULTSDIR=$8
-projectname=${slug%/*}
+input_container=$9
 
 modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 
-if [[ ! -f "$AZ_BATCH_TASK_WORKING_DIR/input/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
+if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
     PIPESTATUS[0]=0
     ret=${PIPESTATUS[0]}
     exit $ret
@@ -151,8 +151,8 @@ else
 fi
 
 cd ~/
-zip -r "${modifiedslug_with_sha}=${modified_module}".zip $projectname
-cp "${modifiedslug_with_sha}=${modified_module}".zip ~/input
+zip -r "${modifiedslug_with_sha}=${modified_module}".zip ${slug%/*}
+cp "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container
 cd ~/$slug
 
 ret=${PIPESTATUS[0]}

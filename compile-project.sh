@@ -19,12 +19,14 @@ cd ~/
 projfile=$1
 rounds=$2
 input_container=$3
-mavenorder=$4
+pool_id=$4
 line=$(head -n 1 $projfile)
 
 echo "================Starting experiment for input: $line"
 slug=$(echo ${line} | cut -d',' -f1 | rev | cut -d'/' -f1-2 | rev)
 sha=$(echo ${line} | cut -d',' -f2)
+
+fullTestName="running.idempotent"
 module=$(echo ${line} | cut -d',' -f3)
 modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 
@@ -35,10 +37,9 @@ short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 
 # echo "================Cloning the project"
-bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}"
+bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}" "$input_container"
 cd ~/$slug
 
-echo "================Setting up test name"
 if [[ -z $module ]]; then
     module=$classloc
     while [[ "$module" != "." && "$module" != "" ]]; do
@@ -53,26 +54,6 @@ else
 fi
 echo "Location of module: $module"
 
-# echo "================Installing the project"
-bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir" "$fullTestName" "${RESULTSDIR}" "$input_container"
-ret=${PIPESTATUS[0]}
-mv mvn-install.log ${RESULTSDIR}
-if [[ $ret != 0 ]]; then
-    # mvn install does not compile - return 0
-    echo "Compilation failed. Actual: $ret"
-    exit 1
-fi
-
-# echo "================Setting up maven-surefire"
-bash $dir/setup-custom-maven.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modifiedslug_with_sha" "$module"
-cd ~/$slug
-
-echo "================Modifying pom for runOrder"
-bash $dir/pom-modify/modify-project.sh . modifyOrder=$mavenorder
-#ordering="-Dsurefire.runOrder=$mavenorder" # Disabled because OBO plugin does not support setting runOrders on the command line
-#echo "Ordering to run: $ordering"
-
-#echo "================Running maven test"
 if [[ "$slug" == "dropwizard/dropwizard" ]]; then
     # dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
     MVNOPTIONS="${MVNOPTIONS} -am"
@@ -80,15 +61,24 @@ elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
     MVNOPTIONS="${MVNOPTIONS} -DskipITs"
 fi
 
-bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering" "$sha" "$dir" "$fullTestName"
-ret=${PIPESTATUS[0]}
-cp mvn-test.log ${RESULTSDIR}
+echo "================Compiling: $(date)"
+mvn compile ${MVNOPTIONS} --log-file=$AZ_BATCH_TASK_WORKING_DIR/"com=${modifiedslug_with_sha}=${modified_module}".txt
 
-# echo "================Parsing test list"
-bash $dir/parse-test-list.sh "$dir" "$fullTestName" "$RESULTSDIR"
+cd ~/
 
-# echo "================Running rounds"
-bash $dir/rounds.sh "$rounds" "$slug" "$testarg" "$MVNOPTIONS" "$RESULTSDIR" "$module" "$dir" "$fullTestName" "$ordering" "2"
+case `grep -q '\[INFO\] BUILD SUCCESS' "com=$modifiedslug_with_sha=$modified_module".txt ; echo $?` in
+  0)
+    echo "com=${modifiedslug_with_sha}=${modified_module} is compiled successfully." | tee -a /$AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
+    ;;
+  1)
+    echo "com=${modifiedslug_with_sha}=${modified_module} is failed." | tee -a $AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
+    ;;
+esac
+
+if [[ ! -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
+    zip -r "${modifiedslug_with_sha}=${modified_module}".zip ${slug%/*}
+    cp "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container
+fi
 
 endtime=$(date)
 echo "endtime: $endtime"
