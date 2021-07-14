@@ -3,13 +3,7 @@ modified_slug_sha_module=$2
 input_container=$3
 sha=$(echo $modified_slug_sha_module | rev | cut -d'=' -f2 | cut -d'-' -f1 | rev)
 
-echo "in clone-project.sh"
-echo "slug: $slug"
-echo "sha: $sha"
-echo "modified_slug_sha_module: $modified_slug_sha_module"
-
 cd ~/
-
 
 if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$slug" ]]; then
     echo "The project is already in the working directory"
