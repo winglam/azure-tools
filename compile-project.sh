@@ -72,10 +72,5 @@ else
     echo "com=${modifiedslug_with_sha}=${modified_module} is compiled successfully." | tee -a /$AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
 fi
 
-if [[ ! -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
-    zip -r "${modifiedslug_with_sha}=${modified_module}".zip ${slug%/*}
-    cp "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container
-fi
-
 endtime=$(date)
 echo "endtime: $endtime"
