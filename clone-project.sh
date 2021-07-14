@@ -11,12 +11,13 @@ if [[ -d $slug ]]; then
     git checkout $sha
     echo "SHA is $(git rev-parse HEAD)"
 elif [[ ! -f "$input_container/$modified_slug_sha_module.zip" ]]; then
+    echo "$modified_slug_sha_module doesn't exist in the container"
     git clone https://github.com/$slug $slug
     cd $slug
     git checkout $sha
     echo "SHA is $(git rev-parse HEAD)"
 else
-    echo "$slug already exists in the container"
+    echo "$modified_slug_sha_module already exists in the container"
     cp $input_container/$modified_slug_sha_module.zip .
     unzip -q $modified_slug_sha_module.zip
     cd $slug
