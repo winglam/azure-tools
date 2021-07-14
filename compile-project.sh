@@ -19,11 +19,14 @@ cd ~/
 projfile=$1
 rounds=$2
 input_container=$3
+pool_id=$4
 line=$(head -n 1 $projfile)
 
 echo "================Starting experiment for input: $line"
 slug=$(echo ${line} | cut -d',' -f1 | rev | cut -d'/' -f1-2 | rev)
 sha=$(echo ${line} | cut -d',' -f2)
+
+fullTestName="running.idempotent"
 module=$(echo ${line} | cut -d',' -f3)
 modified_module=$(echo ${module} | cut -d'.' -f2- | cut -c 2- | sed 's/\//+/g')
 
@@ -38,24 +41,19 @@ bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}"
 cd ~/$slug
 
 if [[ -z $module ]]; then
-    echo "================ Missing module. Exiting now!"
-    exit 1
+    module=$classloc
+    while [[ "$module" != "." && "$module" != "" ]]; do
+	module=$(echo $module | rev | cut -d'/' -f2- | rev)
+	echo "Checking for pom at: $module"
+	if [[ -f $module/pom.xml ]]; then
+	    break;
+	fi
+    done
 else
     echo "Module passed in from csv."
 fi
 echo "Location of module: $module"
 
-# echo "================Installing the project"
-bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir" "$fullTestName" "${RESULTSDIR}" "$input_container"
-ret=${PIPESTATUS[0]}
-mv mvn-install.log ${RESULTSDIR}
-if [[ $ret != 0 ]]; then
-    # mvn install does not compile - return 0
-    echo "Compilation failed. Actual: $ret"
-    exit 1
-fi
-
-# echo "================Running maven test"
 if [[ "$slug" == "dropwizard/dropwizard" ]]; then
     # dropwizard module complains about missing dependency if one uses -pl for some modules. e.g., ./dropwizard-logging
     MVNOPTIONS="${MVNOPTIONS} -am"
@@ -63,20 +61,16 @@ elif [[ "$slug" == "fhoeben/hsac-fitnesse-fixtures" ]]; then
     MVNOPTIONS="${MVNOPTIONS} -DskipITs"
 fi
 
-bash $dir/mvn-test.sh "$slug" "$module" "$testarg" "$MVNOPTIONS" "$ordering" "$sha" "$dir" "$fullTestName"
+echo "================Compiling: $(date)"
+bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir" "$fullTestName" "${RESULTSDIR}" "$input_container"
 ret=${PIPESTATUS[0]}
-cp mvn-test.log ${RESULTSDIR}
+cd ~/
 
-# echo "================Parsing test list"
-bash $dir/parse-test-list.sh "$dir" "$fullTestName" "$RESULTSDIR"
-
-echo "================Clone and run JVM/JPF"
-cd $dir
-git clone https://github.com/y553546436/JPF_Homework.git
-cd $dir/JPF_Homework
-sha=$(git rev-parse HEAD)
-echo "JPF_Homework sha: $sha"
-bash run_projects/runproject.sh "$dir/JPF_Homework" "$slug" "$module" "${RESULTSDIR}"
+if [[ $ret != 0 ]]; then 
+    echo "com=${modifiedslug_with_sha}=${modified_module} is failed." | tee -a $AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
+else
+    echo "com=${modifiedslug_with_sha}=${modified_module} is compiled successfully." | tee -a /$AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
+fi
 
 endtime=$(date)
 echo "endtime: $endtime"
