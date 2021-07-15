@@ -12,9 +12,6 @@ echo "script dir: $dir"
 starttime=$(date)
 echo "starttime: $starttime"
 
-RESULTSDIR=~/output/
-mkdir -p ${RESULTSDIR}
-
 cd ~/
 projfile=$1
 rounds=$2
