@@ -66,7 +66,7 @@ cd ~/
 if [[ $ret != 0 ]]; then 
     echo "$line,${modifiedslug_with_sha}=${modified_module},failed" | tee -a $AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
 else
-    echo "$line,${modifiedslug_with_sha}=${modified_module},passed" | tee -a /$AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
+    echo "$line,${modifiedslug_with_sha}=${modified_module},passed" | tee -a $AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
 fi
 
 endtime=$(date)
