@@ -154,7 +154,7 @@ ret=${PIPESTATUS[0]}
 
 cd ~/
 zip -rq "${modifiedslug_with_sha}=${modified_module}".zip ${slug%/*}
-cp "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container
+cp "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container/projects
 echo "$AZ_BATCH_TASK_WORKING_DIR/$input_container/"${modifiedslug_with_sha}=${modified_module}".zip is created and saved"
 cd ~/$slug
 
