@@ -15,7 +15,7 @@ short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 modified_module=$(echo ${module} | sed 's?\./??g' | sed 's/\//+/g')
 
-if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
+if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
     exit 0
 fi
 
@@ -154,8 +154,8 @@ ret=${PIPESTATUS[0]}
 
 cd ~/
 zip -rq "${modifiedslug_with_sha}=${modified_module}".zip ${slug%/*}
-cp "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container/projects
-echo "$AZ_BATCH_TASK_WORKING_DIR/$input_container/"${modifiedslug_with_sha}=${modified_module}".zip is created and saved"
+mkdir -p ~/$input_container/projects && cp "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container/projects
+echo "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/"${modifiedslug_with_sha}=${modified_module}".zip is created and saved"
 cd ~/$slug
 
 exit $ret

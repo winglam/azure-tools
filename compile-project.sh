@@ -63,10 +63,12 @@ bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$di
 ret=${PIPESTATUS[0]}
 cd ~/
 
+mkdir -p $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/
+
 if [[ $ret != 0 ]]; then 
-    echo "$line,${modifiedslug_with_sha}=${modified_module},failed" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/"failed-${modifiedslug_with_sha}=${modified_module}-results".txt
+    echo "$line,${modifiedslug_with_sha}=${modified_module},failed" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"failed-${modifiedslug_with_sha}=${modified_module}-results".txt
 else
-    echo "$line,${modifiedslug_with_sha}=${modified_module},passed" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/"passed-${modifiedslug_with_sha}=${modified_module}-results".txt
+    echo "$line,${modifiedslug_with_sha}=${modified_module},passed" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"passed-${modifiedslug_with_sha}=${modified_module}-results".txt
 fi
 
 endtime=$(date)
