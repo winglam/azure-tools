@@ -55,8 +55,8 @@ bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}"
 ret=${PIPESTATUS[0]}
 if [[ $ret != 0 ]]; then
     if [[ $ret == 2 ]]; then
-      echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_clone" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
-    else
+        echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_clone" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
+    elif [[ $ret == 1 ]]; then
         echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_checkout" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
     fi  
     echo "Compilation failed. Actual: $ret"
