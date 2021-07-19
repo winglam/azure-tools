@@ -40,14 +40,13 @@ bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}"
 ret=${PIPESTATUS[0]}
 if [[ $ret != 0 ]]; then
     if [[ $ret == 2 ]]; then
-      echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_clone" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
+        echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_clone" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
     else
         echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_checkout" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
     fi  
     echo "Compilation failed. Actual: $ret"
     exit 1
 fi
-cd ~/$slug
 
 echo "================Setting up test name: $(date)"
 testarg=""
@@ -87,7 +86,6 @@ if [[ $ret != 0 ]]; then
     exit 1
 fi
 
-cd ~/$slug
 echo "================Setup to parse test list: $(date)"
 pip install BeautifulSoup4
 pip install lxml

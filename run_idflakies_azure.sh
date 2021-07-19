@@ -46,7 +46,6 @@ if [[ $ret != 0 ]]; then
     echo "Compilation failed. Actual: $ret"
     exit 1
 fi
-cd ~/$slug
 
 if [[ -z $module ]]; then
     echo "================ Missing module. Exiting now!"

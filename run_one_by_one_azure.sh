@@ -54,7 +54,6 @@ if [[ $ret != 0 ]]; then
     echo "Compilation failed. Actual: $ret"
     exit 1
 fi
-cd ~/$slug
 
 echo "================Setting up test name"
 testarg=""

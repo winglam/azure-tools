@@ -39,15 +39,14 @@ ret=${PIPESTATUS[0]}
 if [[ $ret != 0 ]]; then
     if [[ $ret == 2 ]]; then
       echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_clone" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
-    else
+    elif [[ $ret == 1 ]]; then
         echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_checkout" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
     fi  
     echo "Compilation failed. Actual: $ret"
     exit 1
 fi
 
-cd ~/$slug
-
+# echo "================Installing the project"
 if [[ -z $module ]]; then
     module=$classloc
     while [[ "$module" != "." && "$module" != "" ]]; do
@@ -74,7 +73,7 @@ bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$di
 ret=${PIPESTATUS[0]}
 cd ~/
 
-mkdir -p $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/
+mkdir -p $AZ_BATCH_TASK_WORKING_DIR/$input_container/results
 
 if [[ $ret != 0 ]]; then 
     echo "$line,${modifiedslug_with_sha}=${modified_module},failed" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv

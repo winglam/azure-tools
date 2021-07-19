@@ -23,24 +23,36 @@ modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 
-echo "================Installing the project"
+echo "================Clonning the project"
 MVNOPTIONS="-fn -Ddependency-check.skip=true -Dmaven.repo.local=$AZ_BATCH_TASK_WORKING_DIR/dependencies_${modifiedslug_with_sha} -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip"
-git clone https://github.com/$slug $slug
-cd $slug
-git checkout $sha 
+bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}" "$input_container"
+ret=${PIPESTATUS[0]}
+if [[ $ret != 0 ]]; then
+    if [[ $ret == 2 ]]; then
+      echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_clone" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
+    elif [[ $ret == 1 ]]; then
+        echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_checkout" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
+    fi  
+    echo "Compilation failed. Actual: $ret"
+    exit 1
+fi
 
-if [[ "$slug" == "apache/incubator-dubbo" ]]; then
-    sudo chown -R $USER .
-    mvn clean install -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
-elif [[ "$slug" == "openpojo/openpojo" ]]; then
-    wget https://files-cdn.liferay.com/mirrors/download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u80-linux-x64.tar.gz
-    tar -zxf jdk-7u80-linux-x64.tar.gz
-    dir=$(pwd)
-    export JAVA_HOME=$dir/jdk1.7.0_80/
-    MVNOPTIONS="${MVNOPTIONS} -Dhttps.protocols=TLSv1.2"
-    mvn clean install -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+if [[ -z $module ]]; then
+    echo "================ Missing module. Exiting now!"
+    exit 1
 else
-    mvn clean install -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
+    echo "Module passed in from csv."
+fi
+echo "Location of module: $module"
+
+# echo "================Installing the project"
+bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir" "$fullTestName" "${RESULTSDIR}" "$input_container"
+ret=${PIPESTATUS[0]}
+mv mvn-install.log ${RESULTSDIR}
+if [[ $ret != 0 ]]; then
+    # mvn install does not compile - return 0
+    echo "Compilation failed. Actual: $ret"
+    exit 1
 fi
 
 ret=${PIPESTATUS[0]}
