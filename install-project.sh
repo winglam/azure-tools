@@ -154,6 +154,10 @@ ret=${PIPESTATUS[0]}
 
 cd ~/
 zip -rq "${modifiedslug_with_sha}=${modified_module}".zip ${slug%/*}
+if [[ ! -f "$input_container/dependencies_$modified_slug_sha_module.zip" ]]; then
+    zip -rq "dependencies_${modifiedslug_with_sha}=${modified_module}".zip dependencies_${modifiedslug_with_sha}=${modified_module}
+    cp "dependencies_${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container
+fi
 mkdir -p ~/$input_container/projects && cp "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container/projects
 echo "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/"${modifiedslug_with_sha}=${modified_module}".zip is created and saved"
 cd ~/$slug
