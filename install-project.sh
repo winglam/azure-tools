@@ -15,7 +15,12 @@ short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 modified_module=$(echo ${module} | sed 's?\./??g' | sed 's/\//+/g')
 
-if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
+#We expect that clone-project.sh script is run before this script. If the project zip exists, 
+#then clone-project.sh should have unzipped an installed version of the project already. 
+#Therefore, we do not install the project again and we use the already installed and zipped project
+
+if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
+    echo "Project/sha/module zip already exist in input container and should be unzipped from clone-project.sh already. Skipping installation"
     exit 0
 fi
 
@@ -66,6 +71,13 @@ elif [[ "$slug" == "apache/hadoop" ]]; then
     fi
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$slug" == "openpojo/openpojo" ]]; then
+    #the commented rows were in the run_cloc_azure.sh
+    #wget https://files-cdn.liferay.com/mirrors/download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u80-linux-x64.tar.gz
+    #tar -zxf jdk-7u80-linux-x64.tar.gz
+    #dir=$(pwd)
+    #export JAVA_HOME=$dir/jdk1.7.0_80/
+    #MVNOPTIONS="${MVNOPTIONS} -Dhttps.protocols=TLSv1.2"
+    #mvn clean install -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
     sed -i '70s/.*/return null;/' src/main/java/com/openpojo/random/generator/security/CredentialsRandomGenerator.java
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 elif [[ "$modifiedslug_with_sha" == "nationalsecurityagency.timely-16a6223" ]]; then
@@ -154,8 +166,12 @@ ret=${PIPESTATUS[0]}
 
 cd ~/
 zip -rq "${modifiedslug_with_sha}=${modified_module}".zip ${slug%/*}
-cp "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container
-echo "$AZ_BATCH_TASK_WORKING_DIR/$input_container/"${modifiedslug_with_sha}=${modified_module}".zip is created and saved"
+if [[ ! -f "$input_container/dependencies_$modified_slug_sha_module.zip" ]]; then
+    zip -rq "dependencies_${modifiedslug_with_sha}=${modified_module}".zip dependencies_${modifiedslug_with_sha}=${modified_module}
+    mv "dependencies_${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container
+fi
+mkdir -p ~/$input_container/projects && mv "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container/projects
+echo "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/"${modifiedslug_with_sha}=${modified_module}".zip is created and saved"
 cd ~/$slug
 
 exit $ret

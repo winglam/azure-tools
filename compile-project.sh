@@ -27,16 +27,26 @@ fullTestName="running.idempotent"
 module=$(echo ${line} | cut -d',' -f3)
 modified_module=$(echo ${module} | sed 's?\./??g' | sed 's/\//+/g')
 
-MVNOPTIONS="-Ddependency-check.skip=true -Dmaven.repo.local=$AZ_BATCH_TASK_WORKING_DIR/$input_container/dependencies -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
-
 modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 
+MVNOPTIONS="-Ddependency-check.skip=true -Dmaven.repo.local=$AZ_BATCH_TASK_WORKING_DIR/dependencies_${modifiedslug_with_sha}=${modified_module} -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
+
 # echo "================Cloning the project"
 bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}" "$input_container"
-cd ~/$slug
+ret=${PIPESTATUS[0]}
+if [[ $ret != 0 ]]; then
+    if [[ $ret == 2 ]]; then
+        echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_clone" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
+    elif [[ $ret == 1 ]]; then
+        echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_checkout" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
+    fi  
+    echo "Compilation failed. Actual: $ret"
+    exit 1
+fi
 
+# echo "================Installing the project"
 if [[ -z $module ]]; then
     module=$classloc
     while [[ "$module" != "." && "$module" != "" ]]; do
@@ -63,10 +73,12 @@ bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$di
 ret=${PIPESTATUS[0]}
 cd ~/
 
+mkdir -p $AZ_BATCH_TASK_WORKING_DIR/$input_container/results
+
 if [[ $ret != 0 ]]; then 
-    echo "$line,${modifiedslug_with_sha}=${modified_module},failed" | tee -a $AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
+    echo "$line,${modifiedslug_with_sha}=${modified_module},failed" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
 else
-    echo "$line,${modifiedslug_with_sha}=${modified_module},passed" | tee -a $AZ_BATCH_TASK_WORKING_DIR/$input_container/"$pool_id-results".txt
+    echo "$line,${modifiedslug_with_sha}=${modified_module},passed" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
 fi
 
 endtime=$(date)

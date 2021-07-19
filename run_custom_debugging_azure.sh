@@ -28,11 +28,44 @@ fullTestName=$(echo ${line} | cut -d',' -f3)
 module=$(echo ${line} | cut -d',' -f4)
 polluter=$(echo ${line} | cut -d',' -f5)
 
-MVNOPTIONS="-Ddependency-check.skip=true -Dmaven.repo.local=$AZ_BATCH_TASK_WORKING_DIR/$input_container/dependencies -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
-
 modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
+modified_module=$(echo ${module} | sed 's?\./??g' | sed 's/\//+/g')
+modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
+
+MVNOPTIONS="-Ddependency-check.skip=true -Dmaven.repo.local=$AZ_BATCH_TASK_WORKING_DIR/dependencies_${modifiedslug_with_sha}=${modified_module} -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
+
+# echo "================Cloning the project"
+bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}" "$input_container"
+ret=${PIPESTATUS[0]}
+if [[ $ret != 0 ]]; then
+    if [[ $ret == 2 ]]; then
+        echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_clone" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
+    elif [[ $ret == 1 ]]; then
+        echo "$line,${modifiedslug_with_sha}=${modified_module},cannot_checkout" >> $AZ_BATCH_TASK_WORKING_DIR/$input_container/results/"${modifiedslug_with_sha}=${modified_module}-results".csv
+    fi  
+    echo "Compilation failed. Actual: $ret"
+    exit 1
+fi
+
+if [[ -z $module ]]; then
+    echo "================ Missing module. Exiting now!"
+    exit 1
+else
+    echo "Module passed in from csv."
+fi
+echo "Location of module: $module"
+
+# echo "================Installing the project"
+bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir" "$fullTestName" "${RESULTSDIR}" "$input_container"
+ret=${PIPESTATUS[0]}
+mv mvn-install.log ${RESULTSDIR}
+if [[ $ret != 0 ]]; then
+    # mvn install does not compile - return 0
+    echo "Compilation failed. Actual: $ret"
+    exit 1
+fi
 
 echo "================Setup to emacs and maven path"
 sudo apt-get update -y --allow-unauthenticated
