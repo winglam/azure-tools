@@ -20,6 +20,7 @@ modified_module=$(echo ${module} | sed 's?\./??g' | sed 's/\//+/g')
 #Therefore, we do not install the project again and we use the already installed and zipped project
 
 if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
+    echo "Project/sha/module zip already exist in input container and should be unzipped from clone-project.sh already. Skipping installation"
     exit 0
 fi
 
@@ -41,7 +42,7 @@ elif [[ "$slug" == "spring-projects/spring-mvc-showcase" ]]; then
     echo "Cannot compile because the old SHA uses java7, and something is not compatible with java8"
     exit 1
 elif [[ "$slug" == "spring-projects/spring-test-mvc" ]]; then
-    echo "Repository not found in Github"fapache/incubator-dubbo
+    echo "Repository not found in Github"
     exit 1
 elif [[ "$slug" == "twitter/ambrose" ]]; then
     sed -i '74s/2.9.2/2.10.4/' pom.xml
