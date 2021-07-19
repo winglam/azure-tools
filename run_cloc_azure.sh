@@ -22,6 +22,7 @@ sha=$(echo ${line} | cut -d',' -f2)
 modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
+module = '.'
 
 # echo "================Cloning the project"
 bash $dir/clone-project.sh "$slug" "${modifiedslug_with_sha}=${modified_module}" "$input_container"
