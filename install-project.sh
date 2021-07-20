@@ -14,12 +14,13 @@ modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
 modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 modified_module=$(echo ${module} | sed 's?\./??g' | sed 's/\//+/g')
+modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
 
 #We expect that clone-project.sh script is run before this script. If the project zip exists, 
 #then clone-project.sh should have unzipped an installed version of the project already. 
 #Therefore, we do not install the project again and we use the already installed and zipped project
 
-if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/"${modifiedslug_with_sha}=${modified_module}".zip" ]]; then
+if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/$modified_slug_module.zip" ]]; then
     echo "Project/sha/module zip already exist in input container and should be unzipped from clone-project.sh already. Skipping installation"
     exit 0
 fi
@@ -165,13 +166,13 @@ fi
 ret=${PIPESTATUS[0]}
 
 cd ~/
-zip -rq "${modifiedslug_with_sha}=${modified_module}".zip ${slug%/*}
-if [[ ! -f "$input_container/dependencies_$modified_slug_sha_module.zip" ]]; then
-    zip -rq "dependencies_${modifiedslug_with_sha}=${modified_module}".zip dependencies_${modifiedslug_with_sha}=${modified_module}
-    mv "dependencies_${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container
+zip -rq $modified_slug_module.zip ${slug%/*}
+if [[ ! -f "$input_container/dependencies_$modified_slug_module.zip" ]]; then
+    zip -rq "dependencies_$modified_slug_module".zip dependencies_$modified_slug_module
+    mv "dependencies_$modified_slug_module".zip ~/$input_container
 fi
-mkdir -p ~/$input_container/projects && mv "${modifiedslug_with_sha}=${modified_module}".zip ~/$input_container/projects
-echo "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/"${modifiedslug_with_sha}=${modified_module}".zip is created and saved"
+mkdir -p ~/$input_container/projects && mv $modified_slug_module.zip ~/$input_container/projects
+echo "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/"$modified_slug_module".zip is created and saved"
 cd ~/$slug
 
 exit $ret
