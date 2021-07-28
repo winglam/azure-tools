@@ -164,10 +164,8 @@ elif [[ "$slug" == "apache/servicecomb-pack" ]]; then
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
 else
     mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log
-
 fi
 echo "mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log" |& tee mvn-install-command.sh
-
 ret=${PIPESTATUS[0]}
 
 if [[ $ret == 0 ]]; then
