@@ -31,7 +31,6 @@ echo "================Installing the project: $(date)"
 if [[ "$slug" == "apache/incubator-dubbo" ]]; then
     sudo chown -R $USER .
     command=$(mvn clean install -DskipTests ${MVNOPTIONS} |& tee mvn-install.log)
-    echo "$command"
 elif [[ "$slug" == "caelum/vraptor" ]] || [[ "$slug" == "mozilla-metrics/akela" ]]; then
     echo "Cannot compile even in the latest master, some remote dependency is missing"
     exit 1
@@ -140,8 +139,9 @@ elif [[ "$modifiedslug_with_sha" == "apache.struts-13d9053" || "$modifiedslug_wi
 elif [[ "$slug" == "apache/servicecomb-pack" ]]; then
     cd $module
 fi
-echo "$command"
-echo "mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log" |& tee mvn-install-command.sh
+
+eval "$command"
+echo "$command" |& tee mvn-install-command.sh
 ret=${PIPESTATUS[0]}
 
 if [[ $ret == 0 ]]; then
