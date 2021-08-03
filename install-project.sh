@@ -147,9 +147,9 @@ ret=${PIPESTATUS[0]}
 if [[ $ret == 0 ]]; then
     cd ~/
     zip -rq $modified_slug_module.zip ${slug%/*}
-    if [[ ! -f "$input_container/dependencies_$modified_slug_module.zip" ]]; then
+    if [[ ! -f "$input_container/dependencies/dependencies_$modified_slug_module.zip" ]]; then
         zip -rq "dependencies_$modified_slug_module".zip dependencies_$modified_slug_module
-        mv "dependencies_$modified_slug_module".zip ~/$input_container
+        mv "dependencies_$modified_slug_module".zip ~/$input_container/dependencies
     fi
     mkdir -p ~/$input_container/projects && mv $modified_slug_module.zip ~/$input_container/projects
     echo "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/"$modified_slug_module".zip is created and saved"
