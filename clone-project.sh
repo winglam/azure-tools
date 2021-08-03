@@ -5,8 +5,9 @@ sha=$(echo $modified_slug_sha_module | rev | cut -d'=' -f2 | cut -d'-' -f1 | rev
 
 cd ~/
 
-if [[ ! -d "dependencies_$modified_slug_sha_module" ]] && [[ -f "$input_container/dependencies/dependencies_$modified_slug_sha_module.zip" ]]; then
-    cp $input_container/dependencies/dependencies_$modified_slug_sha_module.zip .
+if [[ ! -d "dependencies/dependencies_$modified_slug_sha_module" ]] && [[ -f "$input_container/dependencies/dependencies_$modified_slug_sha_module.zip" ]]; then
+    mkdir dependencies
+    cp $input_container/dependencies/dependencies_$modified_slug_sha_module.zip dependencies
     unzip -q dependencies_$modified_slug_sha_module.zip
 fi
 
