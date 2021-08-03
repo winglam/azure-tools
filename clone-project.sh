@@ -8,7 +8,9 @@ cd ~/
 if [[ ! -d "dependencies/dependencies_$modified_slug_sha_module" ]] && [[ -f "$input_container/dependencies/dependencies_$modified_slug_sha_module.zip" ]]; then
     mkdir dependencies
     cp $input_container/dependencies/dependencies_$modified_slug_sha_module.zip dependencies
+    cd dependencies
     unzip -q dependencies_$modified_slug_sha_module.zip
+    cd ~/
 fi
 
 if [[ -d $slug ]]; then
