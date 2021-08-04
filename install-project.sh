@@ -25,7 +25,7 @@ if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/$modified_slug_mo
     exit 0
 fi
 
-command=$(mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log)
+command="mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log"
 
 echo "================Installing the project: $(date)"
 if [[ "$slug" == "apache/incubator-dubbo" ]]; then
