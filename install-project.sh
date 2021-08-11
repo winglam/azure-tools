@@ -105,6 +105,25 @@ elif [[ "$modifiedslug_with_sha" == "elasticjob.elastic-job-lite-3e5f30f" ]]; th
     rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/internal/AllInternalTests.java
     rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/plugin/sharding/strategy/AllPluginTests.java
     rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/reg/AllRegTests.java
+elif [[ "$modifiedslug_with_sha" == "elasticjob.elastic-job-lite-b022898" ]]; then
+    # Removing tests that hang or is just invoking other test classes (the polluter is the same class as the victim)
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/AllTests.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/api/AllApiTests.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/exception/AllExceptionTests.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/integrate/AllIntegrateTests.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/integrate/std/dataflow/sequence/OneOffSequenceDataFlowElasticJobTest.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/integrate/std/dataflow/sequence/StreamingSequenceDataFlowElasticJobTest.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/integrate/std/dataflow/throughput/OneOffThroughputDataFlowElasticJobTest.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForExecuteFailureTest.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForExecuteThrowsExceptionTest.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForMultipleThreadsTest.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForNotMonitorTest.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobTest.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/integrate/std/simple/DisabledJobTest.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/integrate/std/simple/SimpleElasticJobTest.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/internal/AllInternalTests.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/plugin/sharding/strategy/AllPluginTests.java
+    rm -rf elastic-job-core/src/test/java/io/elasticjob/lite/reg/AllRegTests.java
 elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-01b2479" ]]; then
     sed -i '165s/4\.5/4\.12/' pom.xml
     sed -i 's?http://repo2.maven.org/maven2?https://repo.maven.apache.org/maven2?' pom.xml
