@@ -106,7 +106,7 @@ elif [[ "$modifiedslug_with_sha" == "elasticjob.elastic-job-lite-3e5f30f" ]]; th
     rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/plugin/sharding/strategy/AllPluginTests.java
     rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/reg/AllRegTests.java
 elif [[ "$modifiedslug_with_sha" == "elasticjob.elastic-job-lite-b022898" ]]; then
-    # Removing tests that hang or is just invoking other test classes (the polluter is the same class as the victim)
+    # Removing test classes that are just invoking other test classes
     rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/AllLiteCoreTests.java
     rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/api/AllApiTests.java
     rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/config/AllConfigTests.java
