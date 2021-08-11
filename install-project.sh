@@ -105,6 +105,20 @@ elif [[ "$modifiedslug_with_sha" == "elasticjob.elastic-job-lite-3e5f30f" ]]; th
     rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/internal/AllInternalTests.java
     rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/plugin/sharding/strategy/AllPluginTests.java
     rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/reg/AllRegTests.java
+elif [[ "$modifiedslug_with_sha" == "elasticjob.elastic-job-lite-b022898" ]]; then
+    # Removing test classes that are just invoking other test classes
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/AllLiteCoreTests.java
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/api/AllApiTests.java
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/config/AllConfigTests.java
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/context/AllContextTests.java
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/event/AllEventTests.java
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/executor/AllExecutorTests.java
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/exception/AllExceptionTests.java
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/integrate/AllIntegrateTests.java
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/internal/AllInternalTests.java
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/reg/AllRegTests.java
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/statistics/AllStatisticsTests.java
+    rm -rf elastic-job-lite-core/src/test/java/io/elasticjob/lite/util/AllUtilTests.java
 elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-01b2479" ]]; then
     sed -i '165s/4\.5/4\.12/' pom.xml
     sed -i 's?http://repo2.maven.org/maven2?https://repo.maven.apache.org/maven2?' pom.xml
