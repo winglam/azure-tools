@@ -10,6 +10,9 @@ ordering=$9
 start=${10}
 
 echo "================Running rounds"
+pip install BeautifulSoup4
+pip install lxml
+
 set -x
 for ((i=start;i<=rounds;i++)); do
     echo "Iteration: $i / $rounds"
