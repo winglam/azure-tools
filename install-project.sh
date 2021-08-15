@@ -87,24 +87,38 @@ elif [[ "$modifiedslug_with_sha" == "tools4j.unix4j-1c9524d" ]]; then
     sed -i "s?@Ignore?//@Ignore?" $(find -name FindFileTimeDependentTest.java)
 elif [[ "$modifiedslug_with_sha" == "elasticjob.elastic-job-lite-3e5f30f" ]]; then
     # Removing tests that hang or is just invoking other test classes (the polluter is the same class as the victim)
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/AllTests.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/AllJobTests.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/api/AllApiTests.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/exception/AllExceptionTests.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/AllIntegrateTests.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/sequence/OneOffSequenceDataFlowElasticJobTest.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/sequence/StreamingSequenceDataFlowElasticJobTest.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/OneOffThroughputDataFlowElasticJobTest.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForExecuteFailureTest.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForExecuteThrowsExceptionTest.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForMultipleThreadsTest.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForNotMonitorTest.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobTest.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/simple/DisabledJobTest.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/simple/SimpleElasticJobTest.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/internal/AllInternalTests.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/job/plugin/sharding/strategy/AllPluginTests.java
-    rm -rf elastic-job-core/src/test/java/com/dangdang/ddframe/reg/AllRegTests.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/AllTests.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/AllJobTests.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/api/AllApiTests.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/exception/AllExceptionTests.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/AllIntegrateTests.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/sequence/OneOffSequenceDataFlowElasticJobTest.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/sequence/StreamingSequenceDataFlowElasticJobTest.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/OneOffThroughputDataFlowElasticJobTest.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForExecuteFailureTest.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForExecuteThrowsExceptionTest.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForMultipleThreadsTest.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobForNotMonitorTest.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/dataflow/throughput/StreamingThroughputDataFlowElasticJobTest.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/simple/DisabledJobTest.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/integrate/std/simple/SimpleElasticJobTest.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/internal/AllInternalTests.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/job/plugin/sharding/strategy/AllPluginTests.java
+    rm -f elastic-job-core/src/test/java/com/dangdang/ddframe/reg/AllRegTests.java
+elif [[ "$modifiedslug_with_sha" == "elasticjob.elastic-job-lite-b022898" ]]; then
+    # Removing test classes that are just invoking other test classes
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/AllLiteCoreTests.java
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/api/AllApiTests.java
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/config/AllConfigTests.java
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/context/AllContextTests.java
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/event/AllEventTests.java
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/executor/AllExecutorTests.java
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/exception/AllExceptionTests.java
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/integrate/AllIntegrateTests.java
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/internal/AllInternalTests.java
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/reg/AllRegTests.java
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/statistics/AllStatisticsTests.java
+    rm -f elastic-job-lite-core/src/test/java/io/elasticjob/lite/util/AllUtilTests.java
 elif [[ "$modifiedslug_with_sha" == "alibaba.fastjson-01b2479" ]]; then
     sed -i '165s/4\.5/4\.12/' pom.xml
     sed -i 's?http://repo2.maven.org/maven2?https://repo.maven.apache.org/maven2?' pom.xml
@@ -145,13 +159,13 @@ echo "$command" |& tee mvn-install-command.sh
 ret=${PIPESTATUS[0]}
 
 if [[ $ret == 0 ]]; then
-    cd ~/
+    cd $AZ_BATCH_TASK_WORKING_DIR
     zip -rq $modified_slug_module.zip ${slug%/*}
     if [[ ! -f "$input_container/dependencies/dependencies_$modified_slug_module.zip" ]]; then
         cd dependencies
         zip -rq "dependencies_$modified_slug_module".zip dependencies_$modified_slug_module
         mv "dependencies_$modified_slug_module".zip $AZ_BATCH_TASK_WORKING_DIR/$input_container/dependencies
-        cd ~/
+        cd $AZ_BATCH_TASK_WORKING_DIR
     fi
     mkdir -p ~/$input_container/projects && mv $modified_slug_module.zip ~/$input_container/projects
     echo "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/"$modified_slug_module".zip is created and saved"

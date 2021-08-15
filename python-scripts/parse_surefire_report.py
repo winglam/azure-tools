@@ -29,10 +29,10 @@ def output_xml_results(xml_file):
             tout.append(str.format("{},{},{},{},{}", t, s, f["time"], xml_file[2], xml_file[1]))
 
         if failedconstructor != "":
-            print failedconstructor
+            print (failedconstructor)
         else:
             for f in tout:
-                print f
+                print (f)
             
 if __name__ == '__main__':
     output_xml_results(sys.argv)

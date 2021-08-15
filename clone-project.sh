@@ -3,14 +3,14 @@ modified_slug_sha_module=$2
 input_container=$3
 sha=$(echo $modified_slug_sha_module | rev | cut -d'=' -f2 | cut -d'-' -f1 | rev)
 
-cd ~/
+cd $AZ_BATCH_TASK_WORKING_DIR
 
 if [[ ! -d "dependencies/dependencies_$modified_slug_sha_module" ]] && [[ -f "$input_container/dependencies/dependencies_$modified_slug_sha_module.zip" ]]; then
     mkdir dependencies
     cp $input_container/dependencies/dependencies_$modified_slug_sha_module.zip dependencies
     cd dependencies
     unzip -q dependencies_$modified_slug_sha_module.zip
-    cd ~/
+    cd $AZ_BATCH_TASK_WORKING_DIR
 fi
 
 if [[ -d $slug ]]; then
