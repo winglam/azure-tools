@@ -1,0 +1,22 @@
+apache.incubator-dubbo,./dubbo-rpc/dubbo-rpc-dubbo,234.901,apache.incubator-dubbo-737f7a7=dubbo-rpc+dubbo-rpc-dubbo_output.csv
+wro4j.wro4j,./wro4j-extensions,174.755,wro4j.wro4j-185ab60=wro4j-extensions_output.csv
+spinn3r.noxy,./noxy-discovery-zookeeper,169.383,spinn3r.noxy-d53a494=noxy-discovery-zookeeper_output.csv
+zalando.riptide,./riptide-failsafe,139.184,zalando.riptide-8277e11=riptide-failsafe_output.csv
+TooTallNate.Java-WebSocket,.,113.563,tootallnate.java-websocket-fa3909c=._output.csv
+alibaba.fastjson,.,78.977,alibaba.fastjson-e05e9c5=._output.csv
+davidmoten.rxjava2-extras,.,77.607,davidmoten.rxjava2-extras-d0315b6=._output.csv
+nationalsecurityagency.timely,./server,74.011,nationalsecurityagency.timely-3a8cbd3=server_output.csv
+fluent.fluent-logger-java,.,56.047,fluent.fluent-logger-java-da14ec3=._output.csv
+javadelight.delight-nashorn-sandbox,.,45.678,javadelight.delight-nashorn-sandbox-da35edc=._output.csv
+OryxProject.oryx,./framework/oryx-common,35.457,oryxproject.oryx-72ae4bb=framework+oryx-common_output.csv
+kagkarlsson.db-scheduler,.,27.559,kagkarlsson.db-scheduler-4a8a28e=._output.csv
+wso2.carbon-apimgt,./analyzer-modules/org.wso2.carbon.apimgt.throttling.siddhi.extension,24.141,wso2.carbon-apimgt-a82213e=analyzer-modules+org.wso2.carbon.apimgt.throttling.siddhi.extension_output.csv
+flaxsearch.luwak,./luwak,24.06,flaxsearch.luwak-c27ec08=luwak_output.csv
+elasticjob.elastic-job-lite,./elastic-job-lite-core,23.776,elasticjob.elastic-job-lite-b022898=elastic-job-lite-core_output.csv
+orbit.orbit,./actors/runtime,13.466,orbit.orbit-c4904af=actors+runtime_output.csv
+square.retrofit,./retrofit,12.189,square.retrofit-ae28c3d=retrofit-adapters+rxjava_output.csv square.retrofit-ae28c3d=retrofit_output.csv
+codingchili.excelastic,.,10.868,codingchili.excelastic-6bb7884=._output.csv
+espertechinc.esper,./examples/rfidassetzone,9.364,espertechinc.esper-590fa9c=examples+rfidassetzone_output.csv
+square.retrofit,./retrofit-adapters/rxjava,4.232,square.retrofit-ae28c3d=retrofit-adapters+rxjava_output.csv
+feroult.yawp,./yawp-testing/yawp-testing-appengine,3.585,feroult.yawp-b3bcf9c=yawp-testing+yawp-testing-appengine_output.csv
+looly.hutool,./hutool-cron,0.634,looly.hutool-91565d0=hutool-cron_output.csv

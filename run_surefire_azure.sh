@@ -34,6 +34,7 @@ modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
 
 RESULTSDIR=$AZ_BATCH_TASK_WORKING_DIR/${modified_slug_module}_output/
+rm -rf ${RESULTSDIR}
 mkdir -p ${RESULTSDIR}
 
 MVNOPTIONS="-Ddependency-check.skip=true -Dmaven.repo.local=$AZ_BATCH_TASK_WORKING_DIR/dependencies/dependencies_${modified_slug_module} -Dgpg.skip=true -DfailIfNoTests=false -Dskip.installnodenpm -Dskip.npm -Dskip.yarn -Dlicense.skip -Dcheckstyle.skip -Drat.skip -Denforcer.skip -Danimal.sniffer.skip -Dmaven.javadoc.skip -Dfindbugs.skip -Dwarbucks.skip -Dmodernizer.skip -Dimpsort.skip -Dmdep.analyze.skip -Dpgpverify.skip -Dxml.skip -Dcobertura.skip=true -Dfindbugs.skip=true"
@@ -89,7 +90,7 @@ echo "Location of module: $module"
 # echo "================Installing the project"
 bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir" "$fullTestName" "${RESULTSDIR}" "$input_container"
 ret=${PIPESTATUS[0]}
-mv mvn-install.log ${RESULTSDIR}
+cp mvn-install.log ${RESULTSDIR}
 if [[ $ret != 0 ]]; then
     # mvn install does not compile - return 0
     echo "Compilation failed. Actual: $ret"
@@ -97,13 +98,13 @@ if [[ $ret != 0 ]]; then
 fi
 
 # echo "================Setting up maven-surefire"
-bash $dir/setup-custom-maven-tri.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modifiedslug_with_sha" "$module" "true"
+bash $dir/setup-custom-maven-tri.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modified_slug_module" "true"
 cd $AZ_BATCH_TASK_WORKING_DIR/$slug
 
-echo "================Modifying pom for runOrder"
-bash $dir/pom-modify/modify-project.sh . modifyOrder=$mavenorder
-#ordering="-Dsurefire.runOrder=$mavenorder" # Disabled because OBO plugin does not support setting runOrders on the command line
-#echo "Ordering to run: $ordering"
+# echo "================Modifying pom for runOrder"
+# bash $dir/pom-modify/modify-project.sh . modifyOrder=$mavenorder
+ordering="-Dsurefire.runOrder=$mavenorder" # Disabled because OBO plugin does not support setting runOrders on the command line
+echo "Ordering to run: $ordering"
 
 #echo "================Running maven test"
 if [[ "$slug" == "dropwizard/dropwizard" ]]; then

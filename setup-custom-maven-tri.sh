@@ -1,15 +1,14 @@
 RESULTSDIR=$1
 dir=$2
 fullTestName=$3
-modifiedslug_with_sha=$4
-module=$5
-use_zip=$6
+modified_slug_module=$4
+use_zip=$5
 
 cd $AZ_BATCH_TASK_WORKING_DIR
 
 if [[ "$use_zip" == "true" ]]; then
     if [ ! -d $AZ_BATCH_TASK_WORKING_DIR/custom-maven-surefire-m2 ]; then
-	wget https://mir.cs.illinois.edu/winglam/personal/custom-maven-surefire-m2.zip
+	wget http://mir.cs.illinois.edu/winglam/personal/custom-maven-surefire-m2.zip
 	unzip -q custom-maven-surefire-m2.zip
     fi
     cp -r $AZ_BATCH_TASK_WORKING_DIR/custom-maven-surefire-m2/* dependencies/dependencies_${modified_slug_module}/

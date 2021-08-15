@@ -6,7 +6,7 @@ sha=$(echo $modified_slug_sha_module | rev | cut -d'=' -f2 | cut -d'-' -f1 | rev
 cd $AZ_BATCH_TASK_WORKING_DIR
 
 if [[ ! -d "dependencies/dependencies_$modified_slug_sha_module" ]] && [[ -f "$input_container/dependencies/dependencies_$modified_slug_sha_module.zip" ]]; then
-    mkdir dependencies
+    mkdir -p dependencies
     cp $input_container/dependencies/dependencies_$modified_slug_sha_module.zip dependencies
     cd dependencies
     unzip -q dependencies_$modified_slug_sha_module.zip
