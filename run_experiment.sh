@@ -7,6 +7,7 @@ AZ_BATCH_TASK_WORKING_DIR=$2
 output_dir=$3
 inputfile=$4 # from http://mir.cs.illinois.edu/winglam/personal/testTimes-file.csv
 rounds=$5
+starttime=$(date +%s)
 
 echo "================ Test starttime: $(date)"
 echo "================ script vers: $(git rev-parse HEAD)"
@@ -26,7 +27,7 @@ do
     RESULTSDIR=${modified_slug_module}_output/
     mv $dir/${just_name}_output.log ${RESULTSDIR}
     zip -rq ${just_name}.zip ${RESULTSDIR}
-    mkdir -p $output_dir
-    mv ${just_name}.zip $output_dir
+    mkdir -p ${output_dir}-${starttime}
+    mv ${just_name}.zip ${output_dir}-${starttime}
 done
 echo "================ Test endtime: $(date)"
