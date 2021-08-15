@@ -1,0 +1,23 @@
+1) create file /tmp/connection.cfg with 
+accountName XXX
+accountKey XXX
+containerName compiled-projects-w-deps
+
+
+2) Set blobfuse
+    bash -c 'DIR=$(pwd) && mkdir $DIR/compiled-projects-w-deps && export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/ && wget http://mir.cs.illinois.edu/winglam/personal/apache-maven-3.5.4-bin.tar.gz && tar -xzf apache-maven-3.5.4-bin.tar.gz && mv apache-maven-3.5.4/ apache-maven/ && export PATH=$DIR/apache-maven/bin:${PATH} && wget https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb && apt-get update && apt-get -y install blobfuse && mkdir -p /mnt/blobfusecache && blobfuse $DIR/compiled-projects-w-deps --tmp-path=/mnt/blobfusecache -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --config-file=/tmp/connection.cfg --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120 -o nonempty'
+
+3) Nano ~/.bashrc
+export PATH=/mnt/batch/tasks/workitems/SUA_tmp_r2_8M4d21h17m42s/job-1/apache-maven/bin:$PATH
+export AZ_BATCH_TASK_WORKING_DIR=/mnt/batch/tasks/workitems/SUA_tmp_r2_8M4d21h17m42s/job-1
+Git clone azure-tools
+
+4) Get input files
+wget http://mir.cs.illinois.edu/winglam/personal/raft-issre-mods.zip
+unzip -q
+
+5) run run_experiment.sh in azure-tools, replace the paths correctly and the output path in the container
+https://github.com/winglam/azure-tools/blob/master/run_experiment.sh
+
+6) Upload files with scp to rtp2
+scp -P 50000 ba1.zip rtp2@20.84.225.154:/mnt/batch/tasks/workitems/SUA_tmp_r2_7M21d18h23m34s/job-1/raft-results/ba1.zip

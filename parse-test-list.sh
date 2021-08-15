@@ -2,7 +2,7 @@ dir=$1
 fullTestName=$2
 RESULTSDIR=$3
 
-echo "================Parsing test list"
+echo "================Parsing test list: $(date)"
 pip install BeautifulSoup4
 pip install lxml
 

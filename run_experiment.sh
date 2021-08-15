@@ -1,5 +1,4 @@
-# Usage: bash run_experiment.sh /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1/raft-issre-mods /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1 compiled-projects-w-deps/ba2 testTimes-file.csv 100 |& tee all-results.log
-# bash run_experiment.sh /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1/raft-issre-mods /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1 compiled-projects-w-deps/test tmp-test.csv 3 |& tee all-results.log
+# Usage: bash run_experiment.sh /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1/raft-issre-mods /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1 compiled-projects-w-deps/ba2 testTimes-file.csv 100 |& tee /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1/compiled-projects-w-deps/ba2/all-results.log
 
 dir=$(pwd)
 dir_path=$1

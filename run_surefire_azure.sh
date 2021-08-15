@@ -72,7 +72,7 @@ fi
 
 cd $AZ_BATCH_TASK_WORKING_DIR/$slug
 
-echo "================Setting up test name"
+echo "================Setting up test name: $(date)"
 if [[ -z $module ]]; then
     module=$classloc
     while [[ "$module" != "." && "$module" != "" ]]; do
@@ -97,7 +97,7 @@ if [[ $ret != 0 ]]; then
     exit 1
 fi
 
-# echo "================Setting up maven-surefire"
+echo "================Setting up maven-surefire: $(date)"
 bash $dir/setup-custom-maven-tri.sh "${RESULTSDIR}" "$dir" "$fullTestName" "$modified_slug_module" "true"
 cd $AZ_BATCH_TASK_WORKING_DIR/$slug
 

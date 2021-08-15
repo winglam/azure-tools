@@ -9,13 +9,13 @@ fullTestName=$8
 ordering=$9
 start=${10}
 
-echo "================Running rounds"
+echo "================Running rounds: $(date)"
 pip install BeautifulSoup4
 pip install lxml
 
 set -x
 for ((i=start;i<=rounds;i++)); do
-    echo "Iteration: $i / $rounds"
+    echo "Iteration: $i / $rounds : $(date)"
     find -name "TEST-*.xml" -delete
 
     mvn test -pl $module ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test-$i.log

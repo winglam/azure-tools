@@ -13,7 +13,7 @@ modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 
 # When updating this script, be sure that run_nondex_azure.sh (which doesn't call mvn-test.sh) is properly updated as needed
 
-echo "================Running maven test"
+echo "================Running maven test: $(date)"
 
 if [[ "$module" == "." ]]; then 
     mvn test -fn ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test.log
