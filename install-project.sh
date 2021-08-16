@@ -23,6 +23,8 @@ modified_slug_module="${modifiedslug_with_sha}=${modified_module}"
 if [[ -f "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/$modified_slug_module.zip" ]]; then
     echo "Project/sha/module zip already exist in input container and should be unzipped from clone-project.sh already. Skipping installation"
     exit 0
+else
+    echo "$AZ_BATCH_TASK_WORKING_DIR/$input_container/projects/$modified_slug_module.zip not found. Installing project."
 fi
 
 command="mvn clean install -am -pl $module -DskipTests ${MVNOPTIONS} |& tee mvn-install.log"
