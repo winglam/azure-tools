@@ -1,4 +1,4 @@
-# Usage: bash run_experiment.sh /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1/raft-issre-mods /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1 compiled-projects-w-deps/ba2 testTimes-file.csv 100 |& tee /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1/compiled-projects-w-deps/ba2/all-results.log
+# Usage: starttime=$(date +%s); bash run_experiment.sh /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1/raft-issre-mods /mnt/batch/tasks/workitems/SUA_tmp_r2_8M7d9h7m23s/job-1 compiled-projects-w-deps/ba2 testTimes-file.csv 100 $starttime |& tee all-results-$starttime.log
 
 dir=$(pwd)
 dir_path=$1
@@ -6,7 +6,7 @@ AZ_BATCH_TASK_WORKING_DIR=$2
 output_dir=$3
 inputfile=$4 # from http://mir.cs.illinois.edu/winglam/personal/testTimes-file.csv
 rounds=$5
-starttime=$(date +%s)
+starttime=$6
 
 echo "================ Test starttime: $(date)"
 echo "================ script vers: $(git rev-parse HEAD)"

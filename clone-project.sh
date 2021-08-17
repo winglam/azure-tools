@@ -19,7 +19,7 @@ if [[ -d $slug ]]; then
     git checkout $sha
     echo "SHA is $(git rev-parse HEAD)"
 elif [[ ! -f "$input_container/projects/$modified_slug_sha_module.zip" ]]; then
-    echo "$modified_slug_sha_module doesn't exist in the container"
+    echo "$input_container/projects/$modified_slug_sha_module.zip doesn't exist in the container"
     git clone https://github.com/$slug $slug
     ret=${PIPESTATUS[0]}
     if [[ $ret != 0 ]]; then

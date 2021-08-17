@@ -3,7 +3,7 @@ accountName XXX
 accountKey XXX
 containerName compiled-projects-w-deps
 
-2) Set blobfuse
+2) Set blobfuse. You need to run this command outside of emacs shell
     bash -c 'DIR=$(pwd) && mkdir $DIR/compiled-projects-w-deps && export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/ && wget http://mir.cs.illinois.edu/winglam/personal/apache-maven-3.5.4-bin.tar.gz && tar -xzf apache-maven-3.5.4-bin.tar.gz && mv apache-maven-3.5.4/ apache-maven/ && export PATH=$DIR/apache-maven/bin:${PATH} && wget https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb && apt-get update && apt-get -y install blobfuse && mkdir -p /mnt/blobfusecache && blobfuse $DIR/compiled-projects-w-deps --tmp-path=/mnt/blobfusecache -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120 --config-file=/tmp/connection.cfg --log-level=LOG_DEBUG --file-cache-timeout-in-seconds=120 -o nonempty'
 
 3) Nano ~/.bashrc
@@ -18,7 +18,7 @@ unzip -q
 4.1) Setup maven extension
 http://mir.cs.illinois.edu/winglam/personal/surefire-changing-maven-extension-1.0-SNAPSHOT.jar
 
-5) run run_experiment.sh in azure-tools, replace the paths correctly and the output path in the container
+5) run run_experiment.sh in azure-tools, replace the paths correctly and the output path in the container. You need to run as sudo
 https://github.com/winglam/azure-tools/blob/master/run_experiment.sh
 
 6) Upload files with scp to rtp2
