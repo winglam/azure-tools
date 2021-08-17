@@ -55,6 +55,14 @@ elif [[ "$modifiedslug_with_sha" == "logzio.sawmill-e493c2e" ]]; then
     sed -i '20,48d' sawmill-core/pom.xml
 elif [[ "$modifiedslug_with_sha" == "logzio.sawmill-84bb9f9" ]]; then
     sed -i '16,44d' sawmill-core/pom.xml
+elif [[ "$modifiedslug_with_sha" == "tootallnate.java-websocket-fa3909c"]]; then 
+    rm -f src/test/java/org/java_websocket/AllTests.java
+    rm -f src/test/java/org/java_websocket/client/AllClientTests.java
+    rm -f src/test/java/org/java_websocket/drafts/AllDraftTests.java
+    rm -f src/test/java/org/java_websocket/issues/AllIssueTests.java
+    rm -f src/test/java/org/java_websocket/misc/AllMiscTests.java
+    rm -f src/test/java/org/java_websocket/protocols/AllProtocolTests.java
+    rm -f src/test/java/org/java_websocket/framing/AllFramingTests.java
 elif [[ "$slug" == "apache/hadoop" ]]; then
     sudo apt-get install autoconf automake libtool curl make g++ unzip -y --allow-unauthenticated;
     wget -nv https://github.com/protocolbuffers/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz;
