@@ -15,11 +15,13 @@ modifiedslug_with_sha="${modifiedslug}-${short_sha}"
 
 echo "================Running maven test: $(date)"
 
+set -x
 if [[ "$module" == "." ]]; then 
     mvn test -fn ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test.log
 else
     mvn test -X -pl $module ${testarg} ${MVNOPTIONS} $ordering |& tee mvn-test.log
 fi
+set +x
 
 ret=${PIPESTATUS[0]}
 exit $ret
