@@ -160,7 +160,7 @@ fi
 bash $dir/parse-test-list.sh "$dir" "$fullTestName" "$RESULTSDIR"
 
 # echo "================Running rounds"
-bash $dir/rounds.sh "$rounds" "$slug" "$testarg" "$MVNOPTIONS" "$RESULTSDIR" "$module" "$dir" "$fullTestName" "$ordering" "2"
+bash $dir/rounds.sh "$rounds" "$modified_slug_module" "$testarg" "$MVNOPTIONS" "$RESULTSDIR" "$module" "$dir" "$fullTestName" "$ordering" "2"
 
 endtime=$(date)
 echo "endtime: $endtime"
