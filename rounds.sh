@@ -43,7 +43,7 @@ for ((i=start;i<=rounds;i++)); do
         cd $AZ_BATCH_TASK_WORKING_DIR/dependencies
         rm -rf dependencies_${modified_slug_sha_module}
         unzip -q dependencies_${modified_slug_sha_module}.zip
-        cp -r $AZ_BATCH_TASK_WORKING_DIR/custom-maven-surefire-m2/* dependencies/dependencies_${modified_slug_sha_module}/
+        cp -r $AZ_BATCH_TASK_WORKING_DIR/custom-maven-surefire-m2/* dependencies_${modified_slug_sha_module}/
         cd ${curr_dir}
     fi
 done
