@@ -35,17 +35,16 @@ for ((i=start;i<=rounds;i++)); do
     mv mvn-test-$i.log ${RESULTSDIR}/isolation/$i
     for f in $(find -name "TEST-*.xml" -not -path "*target/surefire-reports/junitreports/*"); do mv $f ${RESULTSDIR}/isolation/$i; done
 
-    if [[ "$modified_slug_sha_module" == "alibaba.fastjson-e05e9c5=." ]]; then
-	# Added because alibaba-fastjson's JVM would crash during 100 rounds with run_surefire_azure.sh if dependencies were not reset.
-	# Dependencies that causes the crash after ~50 runs: winglam2@mir.cs.illinois.edu:/home/winglam2/public_html/personal/dependencies_alibaba.fastjson-e05e9c5=.-bak.zip
-        echo "==== Clearing dependencies for alibaba.fastjson-e05e9c5=."
-        curr_dir=$(pwd)
-        cd $AZ_BATCH_TASK_WORKING_DIR/dependencies
-        rm -rf dependencies_${modified_slug_sha_module}
-        unzip -q dependencies_${modified_slug_sha_module}.zip
-        cp -r $AZ_BATCH_TASK_WORKING_DIR/custom-maven-surefire-m2/* dependencies_${modified_slug_sha_module}/
-        cd ${curr_dir}
-    fi
+    # Both nationalsecurityagency.timely-3a8cbd3=server and alibaba.fastjson-e05e9c5=. have been found to have issues completing all 100 rounds without reset dependencies
+    # Added because alibaba-fastjson's JVM would crash during 100 rounds with run_surefire_azure.sh if dependencies were not reset.
+    # Dependencies that causes the crash after ~50 runs: winglam2@mir.cs.illinois.edu:/home/winglam2/public_html/personal/dependencies_alibaba.fastjson-e05e9c5=.-bak.zip
+    echo "==== Clearing dependencies $AZ_BATCH_TASK_WORKING_DIR/dependencies/dependencies_${modified_slug_sha_module}"
+    curr_dir=$(pwd)
+    cd $AZ_BATCH_TASK_WORKING_DIR/dependencies
+    rm -rf dependencies_${modified_slug_sha_module}
+    unzip -q dependencies_${modified_slug_sha_module}.zip
+    cp -r $AZ_BATCH_TASK_WORKING_DIR/custom-maven-surefire-m2/* dependencies_${modified_slug_sha_module}/
+    cd ${curr_dir}
 done
 
 mv rounds-test-results.csv ${RESULTSDIR}/isolation
