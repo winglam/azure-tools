@@ -31,12 +31,6 @@ git clone https://github.com/denini08/run-projects-flakeflagger
 cd run-projects-flakeflagger/
 bash run.sh $slug $runs $exp
 
-echo "================Setup to emacs and maven path"
-sudo apt-get update -y --allow-unauthenticated
-sudo apt-get install emacs -y --allow-unauthenticated
-sudo apt-get install tmux -y --allow-unauthenticated
-sudo apt-get install xclip -y --allow-unauthenticated
-
 mv ~/results/ ${RESULTSDIR}/
 mv ./results/ ${RESULTSDIR}/
 
