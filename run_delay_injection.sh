@@ -28,7 +28,7 @@ runs=$(echo ${line} | cut -d',' -f3)
 
 git clone https://github.com/denini08/run-projects-flakeflagger
 
-cd hbase-instrumentation-exec/
+cd run-projects-flakeflagger/
 bash run.sh $slug $runs $exp
 
 echo "================Setup to emacs and maven path"
