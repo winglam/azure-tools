@@ -26,7 +26,7 @@ slug=$(echo ${line} | cut -d',' -f1 )
 exp=$(echo ${line} | cut -d',' -f2)
 runs=$(echo ${line} | cut -d',' -f3)
 
-git clone https://github.com/denini08/run-projects-flakeflagger
+git clone https://github.com/winglam/run-projects-flakeflagger
 
 cd run-projects-flakeflagger/
 bash run.sh $slug $runs $exp
