@@ -37,5 +37,8 @@ sudo apt-get install emacs -y --allow-unauthenticated
 sudo apt-get install tmux -y --allow-unauthenticated
 sudo apt-get install xclip -y --allow-unauthenticated
 
+mv ~/results/ ${RESULTSDIR}/
+mv ./results/ ${RESULTSDIR}/
+
 endtime=$(date)
 echo "endtime: $endtime"
