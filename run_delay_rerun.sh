@@ -29,7 +29,7 @@ runs=$(echo ${line} | cut -d',' -f3)
 git clone https://github.com/winglam/run-projects-flakeflagger
 
 cd run-projects-flakeflagger/
-bash rerun.sh $slug $runs $exp
+bash rerun.sh $slug $runs
 
 mv ~/results/ ${RESULTSDIR}/
 mv ./results/ ${RESULTSDIR}/
