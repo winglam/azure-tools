@@ -26,7 +26,6 @@ slug=$(echo ${line} | cut -d',' -f1 | rev | cut -d'/' -f1-2 | rev)
 sha=$(echo ${line} | cut -d',' -f2)
 fullTestName=$(echo ${line} | cut -d',' -f3)
 module=$(echo ${line} | cut -d',' -f4)
-polluter=$(echo ${line} | cut -d',' -f5)
 
 modifiedslug=$(echo ${slug} | sed 's;/;.;' | tr '[:upper:]' '[:lower:]')
 short_sha=${sha:0:7}
@@ -84,6 +83,7 @@ fi
 echo "Location of module: $module"
 
 # echo "================Installing the project"
+set -x
 bash $dir/install-project.sh "$slug" "$MVNOPTIONS" "$USER" "$module" "$sha" "$dir" "$fullTestName" "${RESULTSDIR}" "$input_container"
 ret=${PIPESTATUS[0]}
 mv mvn-install.log ${RESULTSDIR}
@@ -92,6 +92,8 @@ if [[ $ret != 0 ]]; then
     echo "Compilation failed. Actual: $ret"
     exit 1
 fi
+
+set +x
 
 cd ~/apache-maven
 M2_HOME=$(pwd)
