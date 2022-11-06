@@ -55,7 +55,7 @@ elif [[ "$modifiedslug_with_sha" == "logzio.sawmill-e493c2e" ]]; then
     sed -i '20,48d' sawmill-core/pom.xml
 elif [[ "$modifiedslug_with_sha" == "logzio.sawmill-84bb9f9" ]]; then
     sed -i '16,44d' sawmill-core/pom.xml
-elif [[ "$modifiedslug_with_sha" == "tootallnate.java-websocket-fa3909c"]]; then 
+elif [[ "$modifiedslug_with_sha" == "tootallnate.java-websocket-fa3909c" ]]; then 
     rm -f src/test/java/org/java_websocket/AllTests.java
     rm -f src/test/java/org/java_websocket/client/AllClientTests.java
     rm -f src/test/java/org/java_websocket/drafts/AllDraftTests.java
